@@ -10,7 +10,7 @@ s.source        = { :git => "https://github.com/ttlock/iOS_TTLock_Demo.git", :ta
 s.vendored_frameworks = "TTLockFrameworks/TTLock.framework"
 s.framework     = "CoreBluetooth"
 s.library       = "z"
-s.dependency "DFUDependence"
 s.requires_arc  = true
+s.dependency "DFUDependence"
   
 end
