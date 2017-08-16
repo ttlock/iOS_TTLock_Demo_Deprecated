@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16D30" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Key" representedClassName="Key" syncable="YES">
+        <attribute name="adminPwd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="aesKeyStr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deletePwd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deletePwdTmp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="electricQuantity" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="keyId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="keyStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockAlias" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockFlagPos" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lockId" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lockKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockMac" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockVersion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noKeyPwd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="noKeyPwdTmp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="peripheralUUIDStr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="timezoneRawOffset" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userType" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Key" positionX="-63" positionY="-18" width="128" height="390"/>
+    </elements>
+</model>

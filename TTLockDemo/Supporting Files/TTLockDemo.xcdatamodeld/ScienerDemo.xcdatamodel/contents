@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="14F27" minimumToolsVersion="Xcode 4.3">
+    <entity name="Key" representedClassName="Key" syncable="YES">
+        <attribute name="adminKeyboardPs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="adminKeyboardPsTmp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="aseKey" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="day1PsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day2PsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day3PsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day4PsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day5PsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day6PsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day7PsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="day10mPsIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="deletePs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deletePsTmp" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="doorName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="hasbackup" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isAdmin" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isShared" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="kid" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="lockmac" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mac" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roomid" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="scienerAccount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="unlockFlag" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="version" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="KPSCheckNumbers" representedClassName="KPSCheckNumbers" syncable="YES">
+        <attribute name="lockid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="result" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="KPSTime" representedClassName="KPSTime" syncable="YES">
+        <attribute name="lockid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timeNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="KPSTimePos" representedClassName="KPSTimePos" syncable="YES">
+        <attribute name="lockid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pos1" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="pos2" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="pos3" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="TimePS" representedClassName="TimePS" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="lockname" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Key" positionX="-63" positionY="-18" width="128" height="525"/>
+        <element name="KPSCheckNumbers" positionX="-63" positionY="135" width="128" height="90"/>
+        <element name="KPSTime" positionX="-54" positionY="144" width="128" height="90"/>
+        <element name="KPSTimePos" positionX="-36" positionY="153" width="128" height="105"/>
+        <element name="TimePS" positionX="-63" positionY="135" width="128" height="105"/>
+    </elements>
+</model>

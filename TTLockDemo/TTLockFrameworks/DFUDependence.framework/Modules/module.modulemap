@@ -1,0 +1,10 @@
+framework module DFUDependence {
+  umbrella header "DFUDependence.h"
+
+  export *
+  module * { export * }
+}
+
+module DFUDependence.Swift {
+    header "DFUDependence-Swift.h"
+}
