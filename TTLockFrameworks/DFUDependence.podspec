@@ -9,4 +9,5 @@ s.platform     = :ios, "8.0"
 s.source       = { :git => "https://github.com/ttlock/iOS_TTLock_Demo.git", :tag => "#{s.version}" }
 s.source_files  = "TTLockFrameworks/DFUDependence.framework/Headers/*.{h}" 
 s.preserve_paths = "TTLockFrameworks/DFUDependence.framework/*"
+end
 
