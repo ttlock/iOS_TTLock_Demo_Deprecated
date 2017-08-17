@@ -68,18 +68,25 @@ TTLockLock Usage
 
 5.You can connect the given Bluetooth by the way of scanning peripheral above.
 
-   [TTObject connect:peripheral];
+   [TTObject connect:peripheral];
 
 6.It will execute the delegate method of ‘onBTConnectSuccess_peripheral’ after connecting successfully.
-  In this method,firstly,you should Executing the following code :[TTObject stopBTDeviceScan],
-  secondly,you should Executing the following code:TTObject.uid = openid,
+  
+  In this method,firstly,you should Executing the following code :
+  
+  [TTObject stopBTDeviceScan];
+  
+  secondly,you should Executing the following code:
+  
+  TTObject.uid = openid;
+  
   lastly, you can send instructions such as, add administrator, open the door, etc…
 
 7.Lock will return corresponding callback after receiving the appropriate instruction, successful callback for success, error callback for  failure.
 
 8.Executing the following code in the callback of onBTDisconnect_peripheral:
 
-   [TTObject startBTDeviceScan]
+   [TTObject startBTDeviceScan];
 
 
 Scene: Add administrator
