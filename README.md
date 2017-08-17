@@ -138,7 +138,7 @@ In addition to the three generation lock administrators
 
 ### TTLockLock Notes
 
-1.The callback for ‘onFoundDevice_peripheral’ will scan all devices nearby which broadcast ‘1910’ service, just connect which you really need.
+1.The callback for ‘onFoundDevice_peripheral’ will scan all supported devices nearby, just connect which you really need.
 
 2.If you need to send many instructions at the same time ,you must send the following instruction  after the previous instruction callback.
 
