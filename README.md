@@ -146,7 +146,7 @@ Such as,you want to open the lock ,and  calibrate time.  
 
 -(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
 <br>  // unlock
--(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
+<br> -(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
     
     [TTObject unlockByUser_lockKey:lockKey aesKey:aesKeyStr startDate:startDate endDate:endDate version:version unlockFlag:unlockFlag uniqueid:uniqueid timezoneRawOffset:timezoneRawOffset];
    
