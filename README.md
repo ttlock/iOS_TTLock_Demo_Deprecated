@@ -140,7 +140,7 @@ In addition to the three generation lock administrators
 
 1.If you need to call many bluetooth interfaces at the same time ,you must call the following interface after the previous interface callback.
 
-Such as,you want to open the lock ,and  calibrate time.  
+Such as,you want to unlock ,and  calibrate time.  
 
 #### Wrong demonstration
 
