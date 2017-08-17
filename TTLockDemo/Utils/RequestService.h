@@ -161,19 +161,6 @@ protocol_version:(NSString*)protocol_version
              roomID:(int)roomid
              openid:(NSString*)openid;
 
-/*!
- @method
- @abstract  删除钥匙
- @discussion 删除某一把特定的钥匙
- @param kid         钥匙id
- @param roomid 房间id
- @param openid 用户id
- @param clientid 客户端id
- @param accessToken 访问令牌
- @result int
- */
-+(int)deleteUser_kid:(int)kid
-              roomID:(int)roomid;
 
 /*!
  @method
@@ -244,18 +231,6 @@ protocol_version:(NSString*)protocol_version
  */
 +(int)backUpkeyWithLockId:(int)lockId keyId:(int)keyId adminPs:(NSString *)adminPs nokeyPs:(NSString *)nokeyPs deletePs:(NSString *)deletePs backupPs:(NSString *)backupPs;
 
-
-/*!
- @method
- @abstract  删除备份钥匙
- @discussion
- @param clientId 客户端id
- @param accessToken 访问令牌
- @param lockId 锁id
- @param keyId  钥匙id
- @result int
- */
-+(int)deleteBackUpkeyWithLockId:(int)lockId keyId:(int)keyId;
 
 /*!
  @method

@@ -17,7 +17,7 @@
 
 #define TAG_CHANGE_NAME 10
 #define TAG_SEND_EKEY 3
-#define TAG_BACK_UP_PS 6
+
 #define TAG_ALERT_BACK_UP_PS 12
 @interface ParkKeyDetailVC ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 
@@ -42,9 +42,9 @@
 - (void)createTableView{
     //创建视图的数据源
     if ([selectedKey.userType isEqualToString:@"110301"]) {
-      _dataArray = @[@[@"上升", @"下降"],@[@"备份钥匙",@"修改锁名",@"发送电子钥匙",@"锁用户",@"读取开锁记录"]];
+      _dataArray = @[@[@"上升", @"下降"],@[@"修改锁名",@"发送电子钥匙",@"锁用户",@"读取开锁记录"]];
     }else{
-     _dataArray = @[@[@"上升",@"下降"],@[@"备份钥匙"]];
+     _dataArray = @[@[@"上升",@"下降"]];
     }
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
@@ -90,10 +90,6 @@
     [cell.label_right setHidden:YES];
     [cell.switch_right setHidden:YES];
     cell.label_left.text = _dataArray[indexPath.section][indexPath.row];
-    if (indexPath.section == 1 && indexPath.row == 0) {
-        cell.switch_right.hidden = NO;
-        [cell.switch_right setTag:TAG_BACK_UP_PS];
-    }
     
     return (UITableViewCell *) cell;
 }
@@ -138,7 +134,7 @@
         } break;
         case 1:{
             switch (indexPath.row) {
-                case 1:{
+                case 0:{
                     UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"修改锁名", nil)
                                                                     message:nil
                                                                    delegate:self
@@ -150,7 +146,7 @@
                     [alert show];
                     
                 } break;
-                case 2:{
+                case 1:{
                     //发送电子钥匙
                     UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"请输入接收方用户名(方便起见，这里默认发送电子钥匙的有效期是从当前时间开始,20分钟内有效)"
                                                                     message:nil
@@ -162,13 +158,13 @@
                     alert.tag = TAG_SEND_EKEY;
                     [alert show];
                 } break;
-                case 3:{
+                case 2:{
                     //所用户
                     UserManageViewController * unlockRecord = [[UserManageViewController alloc]initWithNibName:@"UserManageViewController" bundle:nil];
                     unlockRecord.currentKey = selectedKey;
                     [self.navigationController pushViewController:unlockRecord animated:YES];
                 }break;
-                case 4:{
+                case 3:{
                     //读取开锁记录
                     UnlockRecordsViewController * unlockRecord = [[UnlockRecordsViewController alloc]initWithNibName:@"UnlockRecordsViewController" bundle:nil];
                     unlockRecord.selectedKey = selectedKey;
@@ -188,102 +184,6 @@
     return nil;
 }
 
-- (IBAction)switchChanged:(UISwitch *)sender {
-    
-    switch (sender.tag) {
-        case TAG_BACK_UP_PS:
-        {
-            if (sender.isOn) {
-                //备份钥匙，特出输入密码，这个密码在下载备份钥匙的时候需要输入
-                UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"请输入密码", nil)
-                                                                message:NSLocalizedString(@"请输入备份密码。请牢记备份密码，在您下载备份钥匙的时候需要输入该密码", nil)
-                                                               delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
-                                                      otherButtonTitles:NSLocalizedString(@"words_sure_ok", nil),nil];
-                [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                backUpPs = [alert textFieldAtIndex:0];
-                [backUpPs setSecureTextEntry:YES];
-                alert.tag = TAG_ALERT_BACK_UP_PS;
-                [alert show];
-            }
-            else{
-                //删除备份
-                
-                dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-                
-                [ProgressHUD  show:@"请稍候"];
-                
-                __block int ret ;
-                
-                dispatch_async(queue, ^(void){
-                    
-                    dispatch_sync(queue, ^(void){
-                        ret = [RequestService deleteBackUpkeyWithLockId:selectedKey.lockId keyId:selectedKey.keyId];
-                        NSLog(@"删除备份ret:%d",ret);
-                    });
-                    dispatch_sync(dispatch_get_main_queue(), ^(void){
-                        [ProgressHUD dismiss];
-                        if (ret>=0) {
-                            //成功
-                            [sender setOn:NO];
-//                            selectedKey.hasbackup = NO;
-                            [[DBHelper sharedInstance] update];
-                            
-                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"温馨提示", nil) message:NSLocalizedString(@"删除备份钥匙成功", nil) delegate: self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles:nil, nil];
-                            [alert show];
-                        }
-                        else{
-                            
-                            [sender setOn:YES];
-                            //失败
-                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"温馨提示", nil) message:NSLocalizedString(@"删除备份钥匙失败", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles:nil, nil];
-                            [alert show];
-                        }
-                    });
-                });
-            }
-           
-        } break;
-       
-        default:
-            break;
-    }
-    
-}
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        if (alertView.tag) {
-            [ProgressHUD show:@"请稍候..."];
-            dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-            __block int ret;
-            dispatch_async(queue, ^(void){
-                dispatch_sync(queue, ^(void){
-                    ret = [RequestService backUpkeyWithLockId:selectedKey.lockId keyId:selectedKey.keyId adminPs:selectedKey.adminPwd nokeyPs:selectedKey.noKeyPwd deletePs:selectedKey.deletePwd backupPs:[TTUtils md5:backUpPs.text]];
-                });
-                dispatch_sync(dispatch_get_main_queue(), ^(void){
-                    [ProgressHUD dismiss];
-                    if (ret >= 0) {
-//                        selectedKey.hasbackup = YES;
-                        [[DBHelper sharedInstance] update];
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"备份钥匙成功" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                        [alert show];
-                    }
-                    else {
-                        UISwitch *swith = [self.view viewWithTag:TAG_BACK_UP_PS];
-                        [swith setOn:NO];
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"备份钥匙失败" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-                        [alert show];
-                    }
-                });
-            });
-        }
-    }else{
-        if (alertView.tag == TAG_ALERT_BACK_UP_PS) {
-            UISwitch *swith = [self.view viewWithTag:TAG_BACK_UP_PS];
-            [swith setOn:NO];
-        }
-    }
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

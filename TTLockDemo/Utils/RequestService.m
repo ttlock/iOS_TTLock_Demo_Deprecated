@@ -556,39 +556,7 @@ protocol_version:(NSString*)protocol_version
     return errcode.intValue;
     
 }
-+(int)deleteUser_kid:(int)kid
-              roomID:(int)roomid
-{
-    
-    NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
-    NSString * url = [NSString stringWithFormat:@"%@/v3/key/delete?clientId=%@&accessToken=%@&openid=%@&date=%@&lockId=%i&keyId=%i",URL,TTAppkey,[SettingHelper getAccessToken],[SettingHelper getOpenID],date,roomid,kid];
-    
-    [MyLog logFormate:@"delete user url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    [urlRequest setTimeoutInterval:30.0f];
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:&error];
-    if (data == nil) {
-        NSLog(@"send request failed: %@", error);
-        return NET_REQUEST_ERROR_NO_DATA;
-    }
-    
-    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"response:%@",response];
-    
-    NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-    
-    NSString * errcode = [resultsDictionary objectForKey:@"errcode"];
-    
-    return errcode.intValue;
-    
-}
+
 
 +(int)requestUserInfo_userinfo:(UserInfo*)user{
     
@@ -864,37 +832,6 @@ protocol_version:(NSString*)protocol_version
     return errcode.intValue;
     
     
-}
-
-+(int)deleteBackUpkeyWithLockId:(int)lockId keyId:(int)keyId
-{
-    NSString *url = [NSString stringWithFormat:@"%@/v3/key/deleteBackup", URL];
-    NSString * body = [NSString stringWithFormat:@"clientId=%@&accessToken=%@&lockId=%d&keyId=%i&date=%@", TTAppkey,[SettingHelper getAccessToken],lockId,keyId, [XYCUtils GetCurrentTimeInMillisecond]];
-    NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    [urlRequest setTimeoutInterval:30.0f];
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setHTTPBody:[[NSMutableData alloc]initWithData:[body dataUsingEncoding:NSUTF8StringEncoding]]];
-    NSLog(@"删除备份钥匙的body = %@", body);
-    
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:&error];
-    if (data == nil) {
-        NSLog(@"send request failed: %@", error);
-        return NET_REQUEST_ERROR_NO_DATA;
-    }
-    
-    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-    
-    NSString * errcode = [resultsDictionary objectForKey:@"errcode"];
-    NSLog(@"删除备份钥匙的response = %@", response);
-    if (!errcode || errcode.intValue == 0) {
-        return 0;
-    }
-    return errcode.intValue;
 }
 
 //+(id)downloadBackup_keyWithLockId:(int)lockId keyId:(int)keyId backupPs:(NSString *)backupPs

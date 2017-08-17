@@ -35,7 +35,5 @@
 -(void)rightAction:(id)sender;
 
 
-//解绑
-- (void)deleteSelectKey;
 
 @end

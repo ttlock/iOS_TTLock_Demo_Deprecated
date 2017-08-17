@@ -29,9 +29,12 @@
     _keyArray = [[DBHelper sharedInstance] fetchKeys];
     
     [self loadData];
-    
-    
-    NSLog(@"%@+++",_keyArray);
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onResetLockNot:) name:@"onResetLockNot" object:nil];
+}
+
+- (void)onResetLockNot:(NSNotification*)noti{
+  
+    [self deleteSelectKey];
 }
 
 - (void)loadData
@@ -171,16 +174,15 @@
     switch (buttonIndex) {
         case 1:
         {
-            [NetworkHelper deleteKey:selectedKey.keyId completion:^(id info, NSError *error) {
-                if (error) return ;
-                
-                [[DBHelper sharedInstance] deleteKey:selectedKey];
-                
-                [_keyArray removeObject:selectedKey];
-                
-                [self.tableView reloadData];
-                
-            }];
+            if ([selectedKey.lockVersion hasPrefix:@"5.3"] && selectedKey.isAdmin == YES) {
+                extern  BOOL isRetLock; //是否恢复出厂设置
+                isRetLock = YES;
+                [self v3ReadyConnect];
+            }else{
+                [self deleteSelectKey];
+            }
+
+           
         }
             break;
             
@@ -189,5 +191,33 @@
     }
 }
 
+- (void)deleteSelectKey{
+     [SVProgressHUD show];
+    [NetworkHelper deleteKey:selectedKey.keyId completion:^(id info, NSError *error) {
+        if (error) return ;
+        
+        [[DBHelper sharedInstance] deleteKey:selectedKey];
+        
+        [_keyArray removeObject:selectedKey];
+        
+        [self.tableView reloadData];
+        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+        
+    }];
+}
 
+- (void)v3ReadyConnect{
+    extern NSString *v3AllowMac;
+    v3AllowMac = selectedKey.lockMac;
+    if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
+        [SVProgressHUD show];
+        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+        if (selectedKey.peripheralUUIDStr.length != 0 ) {
+            [BLEHelper connectLock:selectedKey];
+        }
+    }
+}
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 @end

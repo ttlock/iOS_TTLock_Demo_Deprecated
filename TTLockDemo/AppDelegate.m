@@ -88,11 +88,16 @@ NSString *wristbandKey;
 }
 -(void)TTError:(TTError)error command:(int)command errorMsg:(NSString *)errorMsg{
     
-    if (error == TTErrorNoPermisston || error == TTErrorIsInvalidFlag ||  error == TTErrorIsWrongPS || error ==  TTErrorNoAdmin || error == TTErrorIsWrongDynamicPS||error == TTErrorHadReseted){
+    if (error == TTErrorNoPermisston || error == TTErrorIsInvalidFlag ||  error == TTErrorIsWrongPS || error ==  TTErrorNoAdmin || error == TTErrorIsWrongDynamicPS||error == TTErrorHadReseted) {
+        
         if (isRetLock == YES) {
-            [root deleteSelectKey];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"onResetLockNot" object:self.currentKey.lockMac];
+            isRetLock= NO;
+   
         }
+
     }
+
     isRetLock = NO; //是否恢复出厂设置
     isGetOperator = NO; //是否获取操作记录
     isGetLockTime = NO;  //是否获取锁时间
@@ -290,9 +295,8 @@ NSString *wristbandKey;
 - (void)onResetLock{
     //成功后发送通知
     isRetLock = NO;
-    [root deleteSelectKey];
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"恢复出厂设置操作成功"];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"onResetLockNot" object:self.currentKey.lockMac];
+
 }
 
 - (void)onGetOperateLog_LockOpenRecordStr:(NSString *)LockOpenRecordStr{

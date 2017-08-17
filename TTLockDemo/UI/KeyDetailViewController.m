@@ -125,7 +125,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
            
             //@"IC卡操作",@"指纹操作",@"设置锁里的手环key"] 要根据特征值  TTSpecialValueUtil
             
-            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"设置管理员开门密码",@"校准时钟"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"],@[@"点击开门",@"读取操作记录",@"获取锁时间",@"恢复出厂设置",@"获取设备特征"],@[@"锁升级",@"IC卡操作",@"指纹操作",@"设置锁里的手环key"]];
+            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"设置管理员开门密码",@"校准时钟"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"],@[@"点击开门",@"读取操作记录",@"获取锁时间",@"获取设备特征"],@[@"锁升级",@"IC卡操作",@"指纹操作",@"设置锁里的手环key"]];
         }else{
             _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"设置管理员开门密码",@"设置管理员删除密码",@"校准时钟"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"]];
         }
@@ -440,11 +440,6 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                     [self v3ReadyConnect];
                 }break;
                 case 3:{
-                    extern  BOOL isRetLock; //是否恢复出厂设置
-                    isRetLock = YES;
-                    [self v3ReadyConnect];
-                }break;
-                case 4:{
                    
                     extern  BOOL isGetCharacteristic;
                     isGetCharacteristic = YES;
