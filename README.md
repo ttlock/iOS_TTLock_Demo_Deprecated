@@ -37,17 +37,23 @@ Usage
 
 TTLockLock Usage
 
-1.Import header file : #import <TTLock/TTLock.h>
+1.Import header file :
+
+ #import <TTLock/TTLock.h>
 
 2.Create a singleton object for TTLock
+
     TTLock *TTObject = [[TTLock alloc]initWithDelegate:self];   
 
   Create a Bluetooth central object and starts Bluetooth
+  
     [TTObject setupBlueTooth];  
-   
+    
   Do you want to open the SDK log? YES print, NO does not print, and defaults to No
+  
     [TTLock setDebug:YES]; 
-
+    
+    
 3.Executing the following code in the callback of TTLockManagerDidUpdateState what is Bluetooth state changing:
 
     if (central.state == CBCentralManagerStatePoweredOn) {
@@ -61,6 +67,7 @@ TTLockLock Usage
 4.It will execute the delegate method of ‘onFoundDevice_peripheral’ after scanning the device, you can get the basic information about the peripherals, such as, Bluetooth name, MAC address, broadcast data and so on.
 
 5.You can connect the given Bluetooth by the way of scanning peripheral above.
+
    [TTObject connect:peripheral];
 
 6.It will execute the delegate method of ‘onBTConnectSuccess_peripheral’ after connecting successfully.
@@ -71,6 +78,7 @@ TTLockLock Usage
 7.Lock will return corresponding callback after receiving the appropriate instruction, successful callback for success, error callback for  failure.
 
 8.Executing the following code in the callback of onBTDisconnect_peripheral:
+
    [TTObject startBTDeviceScan]
 
 
@@ -116,6 +124,7 @@ TTLockLock Notes
 3.All callbacks in the TTLockLock are in the child thread.
 
 4.In order to record who operates the lock,you should assign values to attributes 'uid' before Sending instruction in the callback 'onBTConnectSuccess_peripheral'. 
+  
   TTObject.uid = openid; 
  
 
