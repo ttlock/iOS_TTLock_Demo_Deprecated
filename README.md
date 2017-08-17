@@ -36,6 +36,7 @@ TTLockDFU has been designed to make it easy to upgrade devices into your applica
 Usage
 
 TTLockLock Usage
+
 1.Import header file : #import <TTLock/TTLock.h>
 
 2.Create a singleton object for TTLock
@@ -48,6 +49,7 @@ TTLockLock Usage
     [TTLock setDebug:YES]; 
 
 3.Executing the following code in the callback of TTLockManagerDidUpdateState what is Bluetooth state changing:
+
     if (central.state == CBCentralManagerStatePoweredOn) {
         [TTObject startBTDeviceScan]; //start scanning
     }else if (central.state == CBCentralManagerStatePoweredOff){ 
@@ -74,29 +76,45 @@ TTLockLock Usage
 
 Scene: Add administrator
 1.Scan devices nearby
+
 2.Connect the lock which you want to add administrator(You can add administrator only if there is no administrator in this lock, and you can judge it by parameter ‘isContainAdmin’)
   [TTObject connect:peripheral];(This parameter 'peripheral' is in the callback 'onFoundDevice_peripheralWithInfoDic')
+
 3.After the connection is successful, you can call Bluetooth interface ‘addAdministrator’.
+
 4.Use the network interface(v3/lock/init) to upload data after receiving the callback of 'onAddAdministrator'. 
 
 Scene: Delete the lock
+
 The three generation lock administrators delete the lock
+
 1、Connect the lock you want to delete, then call Bluetooth interface ‘resetLock’.
+
 2、Call the network interface 'v3/key/delete' after receiving the callback 'onResetLock'.
+
 In addition to the three generation lock administrators 
+
 1、Call the network interface 'v3/key/delete' directly.
 
 Scene: Open the door
+
 1.Administrator calls bluetooth interface ‘unlockByAdministrator’ ,Ekey calls bluetooth interface ‘unlockByUser’ after connecting the lock which you want to open.
+
 2.Call Bluetooth interface 'setLockTime' after receiving the callback of ‘onUnlockWithLockTime’. 
+
 3.Receive the callback(‘onSetLockTime’) of successful calibrate the time.
 
 
 Notes
+
 TTLockLock Notes
+
 1.The callback for ‘onFoundDevice_peripheral’ will scan all devices nearby which broadcast ‘1910’ service, just connect which you really need.
+
 2.If you need to send many instructions at the same time ,you must send the following instruction  after the previous instruction callback.
+
 3.All callbacks in the TTLockLock are in the child thread.
+
 4.In order to record who operates the lock,you should assign values to attributes 'uid' before Sending instruction in the callback 'onBTConnectSuccess_peripheral'. 
   TTObject.uid = openid; 
  
