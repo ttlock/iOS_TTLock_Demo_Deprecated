@@ -87,6 +87,7 @@ TTLockDFU has been designed to make it easy to upgrade devices into your applica
   [TTObject stopBTDeviceScan];
 ``` 
 
+secondly,you should Executing the following code:  
 ```objective-c
   TTObject.uid = openid;
 ```
