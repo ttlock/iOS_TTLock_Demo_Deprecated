@@ -142,21 +142,21 @@ In addition to the three generation lock administrators
 
 Such as,you want to open the lock ,and  calibrate time.  
 
-Wrong demonstration
+#### Wrong demonstration
 
 -(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
-   
-   //unlock
+    
+    //unlock
    
-   [TTObject unlockByUser_lockKey:lockKey aesKey:aesKeyStr startDate:startDate endDate:endDate version:version unlockFlag:unlockFlag uniqueid:uniqueid timezoneRawOffset:timezoneRawOffset];
+    [TTObject unlockByUser_lockKey:lockKey aesKey:aesKeyStr startDate:startDate endDate:endDate version:version unlockFlag:unlockFlag uniqueid:uniqueid timezoneRawOffset:timezoneRawOffset];
    
    //calibrate time
    
-   [TTObject setLockTime_lockKey:lockKey aesKey:aesKeyStr version:version unlockFlag:unlockFlag referenceTime:referenceTime timezoneRawOffset:timezoneRawOffset];
+    [TTObject setLockTime_lockKey:lockKey aesKey:aesKeyStr version:version unlockFlag:unlockFlag referenceTime:referenceTime timezoneRawOffset:timezoneRawOffset];
 
 }
 
-Correct demonstration
+#### Correct demonstration
 ```objective-c   
 -(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
 
