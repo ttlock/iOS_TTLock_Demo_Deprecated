@@ -1,8 +1,14 @@
 # TTLock.framework
 
-## Minimum iOS Target: iOS 8.0
 
-## Minimum Xcode Version: Xcode 8.3.3
+## Minimum iOS Target:
+   iOS 8.0
+
+
+## Minimum Xcode Version: 
+   Xcode 8.3.3
+   
+
 
 ## Installation
 
@@ -14,13 +20,15 @@ Second, install TTLock into your project:
 
 pod install
 
-### Manually
+Manually
 
 1.Drag the TTLock.framework and DFUDependence.framework into your project.
 
 2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the two frameworks above.
 
 3.Add the CoreBluetooth framework to your project (Targets->Build Phases -> Link Binary With Libraries).
+
+
 
 ## Introduction
 
@@ -32,6 +40,8 @@ TTLockGateway has been designed to make it easy to  communicate with  Wi-Fi modu
 
 ### TTLockDFU (Device Firmware Upgrade)
 TTLockDFU has been designed to make it easy to upgrade devices into your application by mobile phone bluetooth.
+
+
 
 ## Usage
 
@@ -118,6 +128,7 @@ In addition to the three generation lock administrators
 2.Call Bluetooth interface 'setLockTime' after receiving the callback of ‘onUnlockWithLockTime’. 
 
 3.Receive the callback(‘onSetLockTime’) of successful calibrate the time.
+
 
 
 ## Notes
