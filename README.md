@@ -85,10 +85,11 @@ if (central.state == CBCentralManagerStatePoweredOn) {
   
 ```objective-c
 [TTObject stopBTDeviceScan];
-``` 
+```
 
 secondly,you should Executing the following code:  
-```objective-c
+
+``` objective-c
 TTObject.uid = openid;
 ```
   lastly, you can send instructions such as, add administrator, open the door, etc…
