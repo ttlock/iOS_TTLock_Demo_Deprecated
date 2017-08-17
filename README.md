@@ -138,7 +138,7 @@ In addition to the three generation lock administrators
 
 ### TTLockLock Notes
 
-1.If you need to call many bluetooth interfaces at the same time ,you must call the following interface after the previous interface callback.
+*** 1.If you need to call many bluetooth interfaces at the same time ,you must call the following interface after the previous interface callback.
 
 Such as,you want to open the lock ,and  calibrate time.  
 
@@ -146,6 +146,7 @@ Such as,you want to open the lock ,and  calibrate time.  
 
 -(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
     
+    
     //unlock
    
     [TTObject unlockByUser_lockKey:lockKey aesKey:aesKeyStr startDate:startDate endDate:endDate version:version unlockFlag:unlockFlag uniqueid:uniqueid timezoneRawOffset:timezoneRawOffset];
