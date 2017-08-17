@@ -63,7 +63,7 @@ TTLock *TTObject = [[TTLock alloc]initWithDelegate:self];
   ```objective-c
 [TTLock setDebug:YES]; 
  ```   
-3.Executing the following code in the callback of TTLockManagerDidUpdateState what is Bluetooth state changing:
+3.Executing the following code in the callback of 'TTLockManagerDidUpdateState' what is Bluetooth state changing:
 ```objective-c
 if (central.state == CBCentralManagerStatePoweredOn) {
   [TTObject startBTDeviceScan]; //start scanning
@@ -92,11 +92,11 @@ secondly,you should Executing the following code:
 ``` objective-c
 TTObject.uid = openid;
 ```
-  lastly, you can send instructions such as, add administrator, open the door, etc…
+  lastly, you can call interface such as, add administrator, open the door, etc…
 
-7.Lock will return corresponding callback after receiving the appropriate instruction, successful callback for success, error callback for  failure.
+7.It can receive corresponding callback after call appropriate interface, successful callback for success, error callback for failure.
 
-8.Executing the following code in the callback of onBTDisconnect_peripheral:
+8.Executing the following code in the callback of 'onBTDisconnect_peripheral':
 ```objective-c
 [TTObject startBTDeviceScan];
 ```
@@ -108,7 +108,7 @@ TTObject.uid = openid;
 ```objective-c
 [TTObject connect:peripheral];(This parameter 'peripheral' is in the callback 'onFoundDevice_peripheralWithInfoDic')
 ```
-3.After the connection is successful, you can call Bluetooth interface ‘addAdministrator’.
+3.After the connection is successful, you can call bluetooth interface ‘addAdministrator’.
 
 4.Use the network interface(v3/lock/init) to upload data after receiving the callback of 'onAddAdministrator'. 
 
@@ -124,7 +124,7 @@ In addition to the three generation lock administrators
 
 1、Call the network interface 'v3/key/delete' directly.
 
-### Scene: Open the door
+### Scene: Unlock
 
 1.Administrator calls bluetooth interface ‘unlockByAdministrator’ ,Ekey calls bluetooth interface ‘unlockByUser’ after connecting the lock which you want to open.
 
@@ -138,9 +138,39 @@ In addition to the three generation lock administrators
 
 ### TTLockLock Notes
 
-1.The callback for ‘onFoundDevice_peripheral’ will scan all supported devices nearby, just connect which you really need.
+1.If you need to call many bluetooth interfaces at the same time ,you must call the following interface after the previous interface callback.
 
-2.If you need to send many instructions at the same time ,you must send the following instruction  after the previous instruction callback.
+Such as,you want to open the lock ,and  calibrate time.  
+
+Wrong demonstration
+-(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
+   //unlock
+   [TTObject unlockByUser_lockKey:lockKey aesKey:aesKeyStr startDate:startDate endDate:endDate version:version unlockFlag:unlockFlag uniqueid:uniqueid timezoneRawOffset:timezoneRawOffset];
+   //calibrate time
+   [TTObject setLockTime_lockKey:lockKey aesKey:aesKeyStr version:version unlockFlag:unlockFlag referenceTime:referenceTime timezoneRawOffset:timezoneRawOffset];
+}
+
+Correct demonstration
+```objective-c   
+-(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
+
+// unlock
+ 
+[TTObject unlockByUser_lockKey:lockKey aesKey:aesKeyStr startDate:startDate endDate:endDate version:version unlockFlag:unlockFlag uniqueid:uniqueid timezoneRawOffset:timezoneRawOffset];
+}
+
+//after receiving the callback of unlock successfully
+-(void)onUnlockWithLockTime:(NSTimeInterval)lockTime{
+
+//calibrate time
+
+[TTObject setLockTime_lockKey:lockKey aesKey:aesKeyStr version:version unlockFlag:unlockFlag referenceTime:referenceTime timezoneRawOffset:timezoneRawOffset];
+}
+ ```
+  
+
+
+2.The callback for ‘onFoundDevice_peripheral’ will scan all supported devices nearby, just connect which you really need.
 
 3.All callbacks in the TTLockLock are in the child thread.
 
