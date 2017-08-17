@@ -49,47 +49,47 @@ TTLockDFU has been designed to make it easy to upgrade devices into your applica
 
 1.Import header file :
 ```objective-c
- #import <TTLock/TTLock.h>
+#import <TTLock/TTLock.h>
 ```
 2.Create a singleton object for TTLock
 ```objective-c
-    TTLock *TTObject = [[TTLock alloc]initWithDelegate:self];   
+TTLock *TTObject = [[TTLock alloc]initWithDelegate:self];   
 ```
   Create a Bluetooth central object and starts Bluetooth
 ```objective-c  
-    [TTObject setupBlueTooth];  
+[TTObject setupBlueTooth];  
 ```    
   Do you want to open the SDK log? YES print, NO does not print, and defaults to No
   ```objective-c
-    [TTLock setDebug:YES]; 
+[TTLock setDebug:YES]; 
  ```   
 3.Executing the following code in the callback of TTLockManagerDidUpdateState what is Bluetooth state changing:
 ```objective-c
-    if (central.state == CBCentralManagerStatePoweredOn) {
-        [TTObject startBTDeviceScan]; //start scanning
-    }else if (central.state == CBCentralManagerStatePoweredOff){ 
-        [TTObject stopBTDeviceScan];  // stop scanning
-    }else if(central.state == CBCentralManagerStateUnsupported){    
-        NSLog(@"Your device does not support ble4.0, unable to use our app.");   
-    }
+if (central.state == CBCentralManagerStatePoweredOn) {
+  [TTObject startBTDeviceScan]; //start scanning
+}else if (central.state == CBCentralManagerStatePoweredOff){ 
+  [TTObject stopBTDeviceScan];  // stop scanning
+}else if(central.state == CBCentralManagerStateUnsupported){    
+  NSLog(@"Your device does not support ble4.0, unable to use our app.");   
+}
 ```
 4.It will execute the delegate method of ‘onFoundDevice_peripheral’ after scanning the device, you can get the basic information about the peripherals, such as, Bluetooth name, MAC address, broadcast data and so on.
 
 5.You can connect the given Bluetooth by the way of scanning peripheral above.
 ```objective-c
-   [TTObject connect:peripheral];
+[TTObject connect:peripheral];
 ```
 6.It will execute the delegate method of ‘onBTConnectSuccess_peripheral’ after connecting successfully.
   
   In this method,firstly,you should Executing the following code :
   
 ```objective-c
-  [TTObject stopBTDeviceScan];
+[TTObject stopBTDeviceScan];
 ``` 
 
 secondly,you should Executing the following code:  
 ```objective-c
-  TTObject.uid = openid;
+TTObject.uid = openid;
 ```
   lastly, you can send instructions such as, add administrator, open the door, etc…
 
@@ -97,7 +97,7 @@ secondly,you should Executing the following code:
 
 8.Executing the following code in the callback of onBTDisconnect_peripheral:
 ```objective-c
-   [TTObject startBTDeviceScan];
+[TTObject startBTDeviceScan];
 ```
 
 ### Scene: Add administrator
@@ -105,7 +105,7 @@ secondly,you should Executing the following code:
 
 2.Connect the lock which you want to add administrator(You can add administrator only if there is no administrator in this lock, and you can judge it by parameter ‘isContainAdmin’)
 ```objective-c
-  [TTObject connect:peripheral];(This parameter 'peripheral' is in the callback 'onFoundDevice_peripheralWithInfoDic')
+[TTObject connect:peripheral];(This parameter 'peripheral' is in the callback 'onFoundDevice_peripheralWithInfoDic')
 ```
 3.After the connection is successful, you can call Bluetooth interface ‘addAdministrator’.
 
@@ -145,7 +145,7 @@ In addition to the three generation lock administrators
 
 4.In order to record who operates the lock,you should assign values to attributes 'uid' before Sending instruction in the callback 'onBTConnectSuccess_peripheral'. 
 ```objective-c  
-  TTObject.uid = openid; 
+TTObject.uid = openid; 
  ```
 
 
