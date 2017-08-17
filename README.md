@@ -85,10 +85,12 @@ TTLockDFU has been designed to make it easy to upgrade devices into your applica
  ```objective-c 
   [TTObject stopBTDeviceScan];
  ``` 
+ 
   secondly,you should Executing the following code:
 ```objective-c  
   TTObject.uid = openid;
 ```  
+
   lastly, you can send instructions such as, add administrator, open the door, etc…
 
 7.Lock will return corresponding callback after receiving the appropriate instruction, successful callback for success, error callback for  failure.
