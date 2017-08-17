@@ -82,10 +82,13 @@ TTLockDFU has been designed to make it easy to upgrade devices into your applica
 6.It will execute the delegate method of ‘onBTConnectSuccess_peripheral’ after connecting successfully.
   
   In this method,firstly,you should Executing the following code :
+  
 ```objective-c
   [TTObject stopBTDeviceScan];
 ``` 
+
   secondly,you should Executing the following code:
+  
 ```objective-c  
   TTObject.uid = openid;
 ```
