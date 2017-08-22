@@ -8,7 +8,7 @@ s.author        = { "ttlock" => "chensg@sciener.cn" }
 s.platform      = :ios, "8.0"
 s.source        = { :git => "https://github.com/ttlock/iOS_TTLock_Demo.git", :tag => "#{s.version}" }
 s.vendored_frameworks = "TTLockFrameworks/TTLock.framework"
-s.preserve_paths      = "TTLockFrameworks/TTLock.framework/*"
+s.preserve_paths      = "TTLockFrameworks/TTLock.framework"
 s.framework     = "CoreBluetooth"
 s.library       = "z"
 s.requires_arc  = true
