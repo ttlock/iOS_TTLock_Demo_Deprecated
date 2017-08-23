@@ -11,5 +11,7 @@ s.vendored_frameworks = "TTLockFrameworks/DFUDependence.framework"
 s.preserve_paths      = "TTLockFrameworks/DFUDependence.framework"
 s.library   = "z"
 s.requires_arc = true
+s.xcconfig = { "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES" => "YES" }
 end
+
 
