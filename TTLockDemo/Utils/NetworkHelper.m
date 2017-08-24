@@ -465,38 +465,35 @@ static NSString *const AppDomain = @"AppDomain";
 + (id)apiResponseParse:(id)responseObject error:(NSError **)error
 {
     
-     NSDictionary *data = nil;
-    NSString *errorCode = nil;
-    NSString *errorMsg = nil;
 
-    if (errorCode == nil || errorCode.intValue == 0) {
-         data = responseObject;
-    }else{
-        errorCode = responseObject[@"errorCode"];
-        errorMsg = responseObject[@"errorMsg"];
+      NSDictionary *data = responseObject;
+      NSString * errorCode = responseObject[@"errcode"];
+      NSString * errorMsg  = responseObject[@"errmsg"];
+        //统一显示网络请求失败错误
+    if (errorCode.intValue < 0) {
         //统一显示网络请求失败错误
         [SVProgressHUD showErrorWithStatus:errorMsg];
     }
+
     
-    id valueData = nil;
-    
-    BOOL isValid = (errorCode == nil || [errorCode intValue] == 0);
-    valueData = data;
-    if (!isValid) {
-        if (nil != error) {
-            *error = [NSError errorWithDomain:AppDomain code:[errorCode integerValue] userInfo:@{NSLocalizedDescriptionKey:errorMsg}];
-            
-            if ([errorCode intValue] == 10004) {
-                // token过期了
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"invalid grant" object:nil];
+        id valueData = nil;
+        BOOL isValid = (errorCode == nil || [errorCode intValue] == 0);
+        valueData = data;
+        if (!isValid) {
+            if (nil != error) {
+                *error = [NSError errorWithDomain:AppDomain code:[errorCode integerValue] userInfo:@{NSLocalizedDescriptionKey:errorMsg}];
+                
+                if ([errorCode intValue] == 10004) {
+                    // token过期了
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"invalid grant" object:nil];
+                }
             }
+            valueData = nil;
         }
-        valueData = nil;
-    }
-    if ([valueData isKindOfClass:[NSNull class]]) {
-        valueData = nil;
-    }
-    return valueData;
+        if ([valueData isKindOfClass:[NSNull class]]) {
+            valueData = nil;
+        }
+        return valueData;
 }
 
 

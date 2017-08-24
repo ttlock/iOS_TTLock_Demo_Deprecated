@@ -130,6 +130,23 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
             _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"设置管理员开门密码",@"设置管理员删除密码",@"校准时钟"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"]];
         }
         
+        [NetworkHelper getKeyboardPwdVersion:selectedKey.lockId completion:^(id info, NSError *error) {
+            KeyboardPwdVersion *version = [KeyboardPwdVersion mj_objectWithKeyValues:info];
+            if (version.keyboardPwdVersion == 0) {
+                _keyboardPwdVersion = @"未知";
+            }else if (version.keyboardPwdVersion == 1) {
+                _keyboardPwdVersion = @"老版900个键盘密码";
+            }else if (version.keyboardPwdVersion == 2) {
+                _keyboardPwdVersion = @"新版300个键盘密码，最长180天";
+            }else if (version.keyboardPwdVersion == 3) {
+                _keyboardPwdVersion = @"新版300个键盘密码，支持月份和永久";
+            }else if (version.keyboardPwdVersion == 4) {
+                _keyboardPwdVersion = @"三代锁的密码版本，支持限时和循环等类型";
+            }
+            [customTableView reloadData];
+        }];
+        
+        
     }else{
         if ([selectedKey.lockVersion hasPrefix:@"5.3"]){
             _dataArray = @[@[@"校准时钟"],@[@"键盘密码版本"],@[@"点击开门",@"读取操作记录",@"获取锁时间"]];
@@ -138,23 +155,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
         }
     }
     
-    [NetworkHelper getKeyboardPwdVersion:selectedKey.lockId completion:^(id info, NSError *error) {
-        KeyboardPwdVersion *version = [KeyboardPwdVersion mj_objectWithKeyValues:info];
-        if (version.keyboardPwdVersion == 0) {
-            _keyboardPwdVersion = @"未知";
-        }else if (version.keyboardPwdVersion == 1) {
-            _keyboardPwdVersion = @"老版900个键盘密码";
-        }else if (version.keyboardPwdVersion == 2) {
-            _keyboardPwdVersion = @"新版300个键盘密码，最长180天";
-        }else if (version.keyboardPwdVersion == 3) {
-            _keyboardPwdVersion = @"新版300个键盘密码，支持月份和永久";
-        }else if (version.keyboardPwdVersion == 4) {
-            _keyboardPwdVersion = @"三代锁的密码版本，支持限时和循环等类型";
-        }
-        [customTableView reloadData];
-    }];
-    
-    
+   
 
 }
 - (void)didReceiveMemoryWarning
