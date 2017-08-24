@@ -275,7 +275,7 @@
             firmwareRevision:(NSString*)firmwareRevision
               characteristic:(int)characteristic{
     
-    [NetworkHelper lockUpgradeRecheckWithLockId:self.selectedKey.lockId modelNum:modelNum hardwareRevision:hardwareRevision firmwareRevision:@"3.0.17.0721" specialValue:characteristic completion:^(id info, NSError *error) {
+    [NetworkHelper lockUpgradeRecheckWithLockId:self.selectedKey.lockId modelNum:modelNum hardwareRevision:hardwareRevision firmwareRevision:modelNum specialValue:characteristic completion:^(id info, NSError *error) {
         if (error == nil && [info isKindOfClass:[NSDictionary class]]) {
             [SVProgressHUD dismiss];
             
