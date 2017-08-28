@@ -12,6 +12,5 @@ s.preserve_paths      = "TTLockFrameworks/TTLock.framework"
 s.framework     = "CoreBluetooth"
 s.library       = "z"
 s.requires_arc  = true
-s.dependency "DFUDependence"
   
 end
