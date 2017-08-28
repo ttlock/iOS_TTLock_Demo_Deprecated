@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TTLockLock.h"
+#import "TTLock.h"
 
 @interface TTUtils : NSObject
 

@@ -32,8 +32,8 @@
     
     [super viewWillAppear:animated];
     
-    [TTLockLock sharedInstance].delegate = self;
-    [[TTLockLock sharedInstance] startBTDeviceScan];
+    [TTLock sharedInstance].delegate = self;
+    [[TTLock sharedInstance] startBTDeviceScan];
     
 }
 
@@ -46,11 +46,11 @@
     [[TTLockDFU shareInstance]stopUpgrade];
     
     if (_peripheral.state == CBPeripheralStateConnected){
-        [[TTLockLock sharedInstance] disconnect:_peripheral];
-        [TTLockLock sharedInstance].delegate = TTAppdelegate;
+        [[TTLock sharedInstance] disconnect:_peripheral];
+        [TTLock sharedInstance].delegate = TTAppdelegate;
     }else{
-        [TTLockLock sharedInstance].delegate = TTAppdelegate;
-        [[TTLockLock sharedInstance] startBTDeviceScan];
+        [TTLock sharedInstance].delegate = TTAppdelegate;
+        [[TTLock sharedInstance] startBTDeviceScan];
     }
     
 
@@ -133,12 +133,12 @@
         TTLockDFU *dfu = [TTLockDFU shareInstance];
         
         WS(weakSelf);
-        [dfu upgradeFirmwareWithClientId:TTAppkey accessToken:[SettingHelper getAccessToken] lockId:self.selectedKey.lockId module:_updateModel.modelNum hardwareRevision:_updateModel.hardwareRevision firmwareRevision:_updateModel.firmwareRevision adminPwd:self.selectedKey.adminPwd lockKey:self.selectedKey.lockKey aesKeyStr:self.selectedKey.aesKeyStr lockFlagPos:self.selectedKey.lockFlagPos timezoneRawOffset:self.selectedKey.timezoneRawOffset ttLockObject:[TTLockLock sharedInstance] lockMac:self.selectedKey.lockMac peripheralUUIDStr:self.selectedKey.peripheralUUIDStr successBlock:^(UpgradeOpration type, NSInteger process) {
+        [dfu upgradeFirmwareWithClientId:TTAppkey accessToken:[SettingHelper getAccessToken] lockId:self.selectedKey.lockId module:_updateModel.modelNum hardwareRevision:_updateModel.hardwareRevision firmwareRevision:_updateModel.firmwareRevision adminPwd:self.selectedKey.adminPwd lockKey:self.selectedKey.lockKey aesKeyStr:self.selectedKey.aesKeyStr lockFlagPos:self.selectedKey.lockFlagPos timezoneRawOffset:self.selectedKey.timezoneRawOffset ttLockObject:[TTLock sharedInstance] lockMac:self.selectedKey.lockMac peripheralUUIDStr:self.selectedKey.peripheralUUIDStr successBlock:^(UpgradeOpration type, NSInteger process) {
             
             if (type == UpgradeOprationSuccess ) {
                 
                 //把代理给到这个类
-                [TTLockLock sharedInstance].delegate = weakSelf;
+                [TTLock sharedInstance].delegate = weakSelf;
                 
                 weakSelf.bottomBtn.tag = 101;
                 [SVProgressHUD showSuccessWithStatus:@"升级成功"];
@@ -214,7 +214,7 @@
             _selectedKey.peripheralUUIDStr = peripheral.identifier.UUIDString;
             [[DBHelper sharedInstance] update];
         }
-        [[TTLockLock sharedInstance] connect:peripheral];
+        [[TTLock sharedInstance] connect:peripheral];
         
     }
 }
@@ -223,15 +223,15 @@
     
     _v3AllowMac = nil;
     _peripheral = peripheral;
-    [[TTLockLock sharedInstance] stopBTDeviceScan];
+    [[TTLock sharedInstance] stopBTDeviceScan];
     if (isgetChara) {
-        [[TTLockLock sharedInstance] getDeviceCharacteristic_lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr];
+        [[TTLock sharedInstance] getDeviceCharacteristic_lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr];
     }
     else if (isGetDeviceInfo) {
-        [[TTLockLock sharedInstance] getDeviceInfo_lockKey:_selectedKey.lockKey  aesKey:_selectedKey.aesKeyStr];
+        [[TTLock sharedInstance] getDeviceInfo_lockKey:_selectedKey.lockKey  aesKey:_selectedKey.aesKeyStr];
         isGetDeviceInfo = NO;
     }else{
-        [[TTLockLock sharedInstance] upgradeFirmware_adminPS:_selectedKey.adminPwd lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr unlockFlag:_selectedKey.lockFlagPos];
+        [[TTLock sharedInstance] upgradeFirmware_adminPS:_selectedKey.adminPwd lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr unlockFlag:_selectedKey.lockFlagPos];
     }
     
     
@@ -246,19 +246,19 @@
     _tempUpdateModel.modelNum = modelNum;
     _tempUpdateModel.hardwareRevision = hardwareRevision;
     _tempUpdateModel.firmwareRevision = firmwareRevision;
-    [[TTLockLock sharedInstance] getDeviceCharacteristic_lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr];
+    [[TTLock sharedInstance] getDeviceCharacteristic_lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr];
     
 }
 
 - (void)onBTDisconnect_peripheral:(CBPeripheral *)periphera{
     NSLog(@"断开连接");
-    [[TTLockLock sharedInstance] startBTDeviceScan];
+    [[TTLock sharedInstance] startBTDeviceScan];
     
 }
 - (void)TTError:(TTError)error command:(int)command errorMsg:(NSString *)errorMsg{
     [SVProgressHUD dismiss];
     if (_peripheral.state == CBPeripheralStateConnected){
-        [[TTLockLock sharedInstance] disconnect:_peripheral];
+        [[TTLock sharedInstance] disconnect:_peripheral];
     }
     NSLog(@"%@",[NSString stringWithFormat:@"ERROR:%ld COMAND %d errorMsg%@",(long)error,command,errorMsg]);
     
@@ -275,7 +275,7 @@
             firmwareRevision:(NSString*)firmwareRevision
               characteristic:(int)characteristic{
     
-    [NetworkHelper lockUpgradeRecheckWithLockId:self.selectedKey.lockId modelNum:modelNum hardwareRevision:hardwareRevision firmwareRevision:modelNum specialValue:characteristic completion:^(id info, NSError *error) {
+    [NetworkHelper lockUpgradeRecheckWithLockId:self.selectedKey.lockId modelNum:modelNum hardwareRevision:hardwareRevision firmwareRevision:@"0.0" specialValue:characteristic completion:^(id info, NSError *error) {
         if (error == nil && [info isKindOfClass:[NSDictionary class]]) {
             [SVProgressHUD dismiss];
             

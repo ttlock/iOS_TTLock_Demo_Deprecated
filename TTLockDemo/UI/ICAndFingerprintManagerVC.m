@@ -24,7 +24,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear: animated];
     fingerprintOprationType = -1;
-    [TTLockLock sharedInstance].delegate = self;
+    [TTLock sharedInstance].delegate = self;
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -100,7 +100,7 @@
                 _selectedKey.peripheralUUIDStr = deviceModel.peripheral.identifier.UUIDString;
                 [[DBHelper sharedInstance]update];
             }
-            [[TTLockLock sharedInstance] connect:deviceModel.peripheral];
+            [[TTLock sharedInstance] connect:deviceModel.peripheral];
         }
     }
 
@@ -109,12 +109,12 @@
 
 - (void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString *)lockName{
    //先停止扫描
-    [[TTLockLock sharedInstance] stopBTDeviceScan];
+    [[TTLock sharedInstance] stopBTDeviceScan];
     if (_type == 0) {
-         [[TTLockLock sharedInstance] operate_type:fingerprintOprationType adminPS:_selectedKey.adminPwd lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr ICNumber:_Number  startDate:[NSDate dateWithTimeIntervalSinceNow:1000] endDate:[NSDate dateWithTimeIntervalSinceNow:10000] unlockFlag:_selectedKey.lockFlagPos timezoneRawOffset:_selectedKey.timezoneRawOffset];
+         [[TTLock sharedInstance] operate_type:fingerprintOprationType adminPS:_selectedKey.adminPwd lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr ICNumber:_Number  startDate:[NSDate dateWithTimeIntervalSinceNow:1000] endDate:[NSDate dateWithTimeIntervalSinceNow:10000] unlockFlag:_selectedKey.lockFlagPos timezoneRawOffset:_selectedKey.timezoneRawOffset];
         
     }else{
-      [[TTLockLock sharedInstance] operateFingerprint_type:fingerprintOprationType adminPS:_selectedKey.adminPwd lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr FingerprintNumber:_Number  startDate:[NSDate dateWithTimeIntervalSinceNow:1000] endDate:[NSDate dateWithTimeIntervalSinceNow:10000] unlockFlag:_selectedKey.lockFlagPos timezoneRawOffset:_selectedKey.timezoneRawOffset];
+      [[TTLock sharedInstance] operateFingerprint_type:fingerprintOprationType adminPS:_selectedKey.adminPwd lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr FingerprintNumber:_Number  startDate:[NSDate dateWithTimeIntervalSinceNow:1000] endDate:[NSDate dateWithTimeIntervalSinceNow:10000] unlockFlag:_selectedKey.lockFlagPos timezoneRawOffset:_selectedKey.timezoneRawOffset];
     }
     fingerprintOprationType = -1;
 }
@@ -203,7 +203,7 @@
     [SVProgressHUD showErrorWithStatus:errorMsg];
 }
 - (void)onBTDisconnect_peripheral:(CBPeripheral *)periphera{
-     [[TTLockLock sharedInstance] startBTDeviceScan];
+     [[TTLock sharedInstance] startBTDeviceScan];
     NSLog(@"断开蓝牙 disconnect");
 }
 - (void)didReceiveMemoryWarning {

@@ -2,8 +2,8 @@
 //  DFUDependence.h
 //  DFUDependence
 //
-//  Created by 王娟娟 on 2017/8/11.
-//  Copyright © 2017年 wjjxx. All rights reserved.
+//  Created by TTLock on 2017/8/11.
+//  Copyright © 2017年 TTLock. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

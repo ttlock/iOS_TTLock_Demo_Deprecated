@@ -130,6 +130,9 @@
 		FC6A2C541F41834A001D6B2B /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2BE01F418349001D6B2B /* SVProgressHUD.bundle */; };
 		FC6A2C551F41834A001D6B2B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BE21F418349001D6B2B /* SVProgressHUD.m */; };
 		FC6A2C561F41834A001D6B2B /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BE41F418349001D6B2B /* SVRadialGradientLayer.m */; };
+		FC83484C1F53C3F400728817 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
+		FC83484D1F53C3F600728817 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
+		FC83484E1F53C3F600728817 /* TTLockDFU.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -141,6 +144,7 @@
 			files = (
 				FC61C2F21F43EB6B009D9B25 /* DFUDependence.framework in Embed Frameworks */,
 				FC61C2F41F43EB6E009D9B25 /* TTLock.framework in Embed Frameworks */,
+				FC83484E1F53C3F600728817 /* TTLockDFU.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -363,6 +367,7 @@
 		FC6A2BE21F418349001D6B2B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		FC6A2BE31F418349001D6B2B /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		FC6A2BE41F418349001D6B2B /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		FC83484B1F53C3F400728817 /* TTLockDFU.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TTLockDFU.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,7 +380,9 @@
 				2299A8FB1A075DC700291A38 /* Foundation.framework in Frameworks */,
 				2299A8F91A075D8100291A38 /* UIKit.framework in Frameworks */,
 				FC61C2F11F43EB6B009D9B25 /* DFUDependence.framework in Frameworks */,
+				FC83484C1F53C3F400728817 /* TTLockDFU.framework in Frameworks */,
 				FC61C2F31F43EB6E009D9B25 /* TTLock.framework in Frameworks */,
+				FC83484D1F53C3F600728817 /* TTLockDFU.framework in Frameworks */,
 				228B8BB71A0085FF0060244F /* CoreBluetooth.framework in Frameworks */,
 				7694D27F5F00DB4D9E44233B /* Pods_TTLockDemo.framework in Frameworks */,
 			);
@@ -441,6 +448,7 @@
 		FC61C2EC1F43EB4E009D9B25 /* TTLockFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC83484B1F53C3F400728817 /* TTLockDFU.framework */,
 				FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */,
 				FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */,
 			);

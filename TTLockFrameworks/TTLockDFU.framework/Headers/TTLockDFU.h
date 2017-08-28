@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TTLockLock.h"
+#import <TTLock/TTLock.h>
 typedef NS_ENUM( NSInteger, UpgradeOpration) {
      UpgradeOprationPreparing  = 1,        //准备中
      UpgradeOprationUpgrading,               //升级中
@@ -68,7 +68,7 @@ typedef void(^TTLockDFUFailBlock)(UpgradeOpration type, UpgradeErrorCode code);
                           aesKeyStr:(nonnull NSString*)aesKeyStr
                         lockFlagPos:(int)lockFlagPos
                   timezoneRawOffset:(long)timezoneRawOffset
-                       ttLockObject:(nonnull TTLockLock *)ttLockObject
+                       ttLockObject:(nonnull TTLock *)ttLockObject
                             lockMac:(nonnull NSString*)lockMac
                   peripheralUUIDStr:(nullable NSString*)peripheralUUIDStr
                        successBlock:(nonnull TTLockDFUSuccessBlock)sblock

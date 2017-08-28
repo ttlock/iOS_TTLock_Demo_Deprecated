@@ -39,11 +39,11 @@ NSString *wristbandKey;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
    
-    _TTObject = [[TTLockLock alloc]initWithDelegate:self];
+    _TTObject = [[TTLock alloc]initWithDelegate:self];
     [_TTObject setupBlueTooth];
 
     //是否打印日志
-    [TTLockLock setDebug:NO];
+    [TTLock setDebug:NO];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

@@ -36,7 +36,7 @@
  @property
  @abstract 通通锁类
 */
-@property (strong, nonatomic) TTLockLock* TTObject;
+@property (strong, nonatomic) TTLock* TTObject;
 //@property (nonatomic) BOOL isCalibationLockDate;
 
 

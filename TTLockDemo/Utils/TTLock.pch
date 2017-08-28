@@ -14,6 +14,7 @@
 #import "Define.h"
 #import "SettingHelper.h"
 #import <TTLock/TTLock.h>
+#import <TTLockDFU/TTLockDFU.h>
 #import "BLEHelper.h"
 #import "NetworkHelper.h"
 #import "AppDelegate.h"

@@ -1,7 +1,7 @@
 # TTLock
 SDK2.7
-1.TTLock.h 改名 TTLockLock
-2.静态库换成动态库，增加网关(TTLockGateway.h)和升级锁功能(TTLockDFU.h)
+1.静态库换成动态库，增加网关(TTLockGateway.h)
+2.记录类型8优化
 
 SDK2.6.5
 1.增加错误码0x1D  
