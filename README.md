@@ -32,7 +32,7 @@ First, add the following line to your Podfile:
 
 pod 'TTLockDFU'
 
-Second, install TTLock into your project:
+Second, install TTLockDFU into your project:
 
 pod install
 
@@ -44,20 +44,18 @@ Manually
 
 ## Introduction
 
-### TTLockLock
-TTLockLock has been designed to communicate with devices by mobile phone bluetooth.
-
-### TTLockGateway
+### TTLock.framework
+TTLock has been designed to communicate with devices by mobile phone bluetooth.
 TTLockGateway has been designed to make it easy to  communicate with  Wi-Fi module.
 
-### TTLockDFU (Device Firmware Upgrade)
+### TTLockDFU.framework (Device Firmware Upgrade)
 TTLockDFU has been designed to make it easy to upgrade devices into your application by mobile phone bluetooth.
 
 
 
 ## Usage
 
-### TTLockLock Usage
+### TTLock Usage
 
 1.Import header file :
 ```objective-c
@@ -148,7 +146,7 @@ In addition to the three generation lock administrators
 
 ## Notes
 
-### TTLockLock Notes
+### TTLock Notes
 
 1.If you need to call many bluetooth interfaces at the same time ,you must call the following interface after the previous interface callback.
 
