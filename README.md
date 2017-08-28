@@ -1,14 +1,7 @@
 # TTLock.framework
 
-
 ## Minimum iOS Target:
    iOS 8.0
-
-
-## Minimum Xcode Version: 
-   Xcode 8.3.3
-   
-
 
 ## Installation
 
@@ -21,14 +14,34 @@ Second, install TTLock into your project:
 pod install
 
 Manually
+<br>1.Drag the TTLock.framework into your project.
+<br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the framework above.
+<br>3.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
 
-1.Drag the TTLock.framework and DFUDependence.framework into your project.
-2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the two frameworks above.
-3.Find Targets->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
-4.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
+# TTLockDFU.framework
 
+## Minimum iOS Target:
+   iOS 8.0
+   
+## Minimum Xcode Version: 
+   Xcode 8.3.3
+## Installation
 
+First, add the following line to your Podfile:
+
+pod 'TTLockDFU'
+
+Second, install TTLock into your project:
+
+pod install
+
+Manually
+
+<br>1.Drag the TTLockDFU.framework ,TTLock.framework and DFUDependence.framework into your project.
+<br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the three frameworks above.
+<br>3.Find Targets->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
+<br>4.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
 ## Introduction
 
