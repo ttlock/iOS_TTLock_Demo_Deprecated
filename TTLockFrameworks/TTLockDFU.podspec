@@ -13,5 +13,5 @@ s.framework     = "CoreBluetooth"
 s.library       = "z"
 s.requires_arc  = true
 s.dependency "DFUDependence"
-s.dependency = "TTLock"
+s.dependency "TTLock"
 end
