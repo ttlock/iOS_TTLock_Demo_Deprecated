@@ -37,7 +37,6 @@ Second, install TTLock into your project:
 pod install
 
 Manually
-
 <br>1.Drag the TTLockDFU.framework ,TTLock.framework and DFUDependence.framework into your project.
 <br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the three frameworks above.
 <br>3.Find Targets->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
