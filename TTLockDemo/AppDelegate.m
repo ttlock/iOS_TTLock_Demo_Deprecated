@@ -88,16 +88,6 @@ NSString *wristbandKey;
 }
 -(void)TTError:(TTError)error command:(int)command errorMsg:(NSString *)errorMsg{
     
-    if (error == TTErrorNoPermisston || error == TTErrorIsInvalidFlag ||  error == TTErrorIsWrongPS || error ==  TTErrorNoAdmin || error == TTErrorIsWrongDynamicPS||error == TTErrorHadReseted) {
-        
-        if (isRetLock == YES) {
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"onResetLockNot" object:self.currentKey.lockMac];
-            isRetLock= NO;
-   
-        }
-
-    }
-
     isRetLock = NO; //是否恢复出厂设置
     isGetOperator = NO; //是否获取操作记录
     isGetLockTime = NO;  //是否获取锁时间

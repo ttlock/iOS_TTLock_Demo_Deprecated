@@ -1,7 +1,14 @@
 # TTLock.framework
 
+
 ## Minimum iOS Target:
    iOS 8.0
+
+
+## Minimum Xcode Version: 
+   Xcode 8.3.3
+   
+
 
 ## Installation
 
@@ -14,48 +21,31 @@ Second, install TTLock into your project:
 pod install
 
 Manually
-<br>1.Drag the TTLock.framework into your project.
-<br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the framework above.
-<br>3.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
 
-# TTLockDFU.framework
+1.Drag the TTLock.framework and DFUDependence.framework into your project.
+2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the two frameworks above.
+3.Find Targets->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
+4.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
-## Minimum iOS Target:
-   iOS 8.0
-   
-## Minimum Xcode Version: 
-   Xcode 8.3.3
-## Installation
 
-First, add the following line to your Podfile:
-
-pod 'TTLockDFU'
-
-Second, install TTLockDFU into your project:
-
-pod install
-
-Manually
-<br>1.Drag the TTLockDFU.framework ,TTLock.framework and DFUDependence.framework into your project.
-<br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the three frameworks above.
-<br>3.Find Targets->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
-<br>4.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
 ## Introduction
 
-### TTLock.framework
-TTLock has been designed to communicate with devices by mobile phone bluetooth.
+### TTLockLock
+TTLockLock has been designed to communicate with devices by mobile phone bluetooth.
+
+### TTLockGateway
 TTLockGateway has been designed to make it easy to  communicate with  Wi-Fi module.
 
-### TTLockDFU.framework (Device Firmware Upgrade)
+### TTLockDFU (Device Firmware Upgrade)
 TTLockDFU has been designed to make it easy to upgrade devices into your application by mobile phone bluetooth.
 
 
 
 ## Usage
 
-### TTLock Usage
+### TTLockLock Usage
 
 1.Import header file :
 ```objective-c
@@ -146,7 +136,7 @@ In addition to the three generation lock administrators
 
 ## Notes
 
-### TTLock Notes
+### TTLockLock Notes
 
 1.If you need to call many bluetooth interfaces at the same time ,you must call the following interface after the previous interface callback.
 
