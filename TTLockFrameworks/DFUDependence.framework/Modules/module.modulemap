@@ -7,4 +7,5 @@ framework module DFUDependence {
 
 module DFUDependence.Swift {
     header "DFUDependence-Swift.h"
+    requires objc
 }

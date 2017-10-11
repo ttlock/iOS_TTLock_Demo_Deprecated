@@ -1,10 +1,48 @@
 # TTLock
+
+SDK2.7.2
+bug修改
+1.时间转换，兼容佛教日历、日本日历，12小时制
+2.Characteristic类型由int改为long long
+  {@link onGetDeviceCharacteristic:};
+  {@link onAddAdministrator_addAdminInfoDic:};
+ 3.断开连接里，去掉 m_password = nil; m_key = nil; m_aesKey = nil;
+
+新增属性
+ 1.@property(nonatomic, assign, readonly) TTManagerState state;
+ 2.@property(nonatomic, assign, readonly) BOOL isScanning NS_AVAILABLE(NA, 9_0);
+
+修改方法
+ 1.{@link onFoundDevice_peripheralWithInfoDic:}方法里增加锁的开关状态lockSwitchState
+ 2.{@link onGetLockSwitchState:}返回state的类型改为枚举TTLockSwitchState
+
+新增方法
+ 1.- (void)TTManagerDidUpdateState:(TTManagerState)state;
+
+// @param isScanDuplicates every time the peripheral is seen, which may be many times per second. This can be useful in specific situations.Recommend this value to be NO.
+ 2.-(void)startBTDeviceScan:(BOOL)isScanDuplicates;
+ 3.- (void)scanAllBluetoothDeviceNearby:(BOOL)isScanDuplicates;
+ 4.- (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray<NSString *>*)servicesArray isScanDuplicates:(BOOL)isScanDuplicates;
+ 5.-(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
+6. 指纹采集（添加）
+ - (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber currentCount:(int)currentCount totalCount:(int)totalCount ;
+
+废弃方法
+ 1.- (void)TTLockManagerDidUpdateState:(CBCentralManager *)central;
+ 2.-(void)cancelConnectPeripheral:(CBPeripheral *)peripheral;
+ 3.-(void)startBTDeviceScan;
+ 4.- (void)scanAllBluetoothDeviceNearby ;
+ 5.- (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray*)servicesArray;
+ 6.-(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid;
+ 7.- (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber;
+ 
 SDK2.7.1
 1.完善重置(删除)锁成功的处理
 
 SDK2.7
 1.静态库换成动态库，增加网关(TTLockGateway.h)
 2.记录类型8优化
+
 
 SDK2.6.5
 1.增加错误码0x1D  
@@ -101,3 +139,5 @@ SDK2.0
 4. 修复了之前sdk一些已知的bug，同时对其进行了优化。
 5. 电量：通过getPower获取的电量值如果为-1，说明没有获取到电量，而不是电量为-1
 
+
+使用方法 可以参照TTLockDemo ！！！！

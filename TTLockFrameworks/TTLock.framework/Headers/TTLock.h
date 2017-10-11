@@ -1,5 +1,5 @@
 //
-//  r2.7
+//  r2.7.2
 //
 //  Created by TTLock on 2017/8/11.
 //  Copyright © 2017年 TTLock. All rights reserved.
@@ -12,104 +12,16 @@
 #import "TTUtils.h"
 #import "SecurityUtil.h"
 #import "TTLockGateway.h"
-/** 错误码
- *
- */
-typedef NS_ENUM(NSInteger, TTError)
-{
-    TTErrorHadReseted = 0,                              /** 锁可能已被重置 */
-    TTErrorDataCRCError = 0x01,                         /** CRC校验出错 */
-    TTErrorNoPermisston = 0x02,                         /** 身份校验失败，无操作权限(非管理员) */
-    TTErrorIsWrongPS = 0x03,                            /** 管理员密码不正确 */
-    TTErrorNoMemory = 0x04,                             /** 存储空间不足, 超出保存用户的最大数量 */
-    TTErrorInSettingMode = 0x05,                        /** 处于设置模式(开门必须处于非设置模式) */
-    TTErrorNoAdmin = 0x06,                              /** 不存在管理员 */
-    TTErrorIsNotSettingMode = 0x07,                     /** 处于非设置模式(添加管理员必须处于设置模式) */
-    TTErrorIsWrongDynamicPS = 0x08,                     /** 动态密码错误(约定数字于随机数之和错误) */
-    TTErrorIsNoPower = 0x0a,                            /** 电池没电, 无法开门 */
-    TTErrorResetKeyboardPs = 0x0b,                      /** 设置900密码失败 */
-    TTErrorUpdateKeyboardIndex = 0x0c,                  /** 更新键盘密码序列出错 */
-    TTErrorIsInvalidFlag = 0x0d,                        /** 失效flag */
-    TTErrorEkeyOutOfDate = 0x0e,                        /** ekey过期 */
-    TTErrorPasswordLengthInvalid = 0x0f,                 /** 密码长度无效 */
-    TTErrorSuperPasswordIsSameWithDeletePassword = 0x10,  /** 管理员密码与删除密码相等 */
-    TTErrorEkeyNotToDate = 0x11,                        /** 未到有效期 */
-    TTErrorAesKey = 0x12,                               /** 未登录 无操作权限 */
-    TTErrorFail = 0x13,                               /** 操作失败 */
-    TTErrorPsswordExist = 0x14,                          /** 添加的密码已经存在 */
-    TTErrorPasswordNotExist = 0x15,                     /** 删除或者修改的密码不存在 */
-    TTErrorNoFree_Memory = 0x16,						  /** 存储空间不足（比如添加密码时，超过存储容量）*/
-    TTErrorInvalidParaLength = 0x17,					  /** 参数长度无效 */
-    TTErrorCardNotExist =	0x18,					      /** IC卡不存在 */
-    TTErrorFingerprintDuplication =	0x19,			  /** 重复指纹 */
-    TTErrorFingerprintNotExist = 0x1A,                   /** 指纹不存在 */
-    TTErrorInvalidClientPara = 0x1D,                   /** 无效的特殊字符串 */
-    TTErrorNotSupportModifyPwd = 0x60                   /** 不支持修改密码 */
-    
-};
-
-/** 键盘密码类型
- *
- */
-typedef NS_ENUM(NSInteger, KeyboardPsType)
-{
-    KeyboardPsTypeOnce = 1,          /** 单次密码 */
-    KeyboardPsTypePermanent = 2,     /** 永久密码 */
-    KeyboardPsTypePeriod = 3,        /** 时限密码 */
-    KeyboardPsTypeCycle = 4          /** 循环密码 **/
-};
-
-/** 密码 IC卡等操作类型
- *
- */
-typedef NS_ENUM(NSInteger,OprationType)
-{
-    OprationTypeClear = 1,     /** 清空 */
-    OprationTypeAdd = 2,       /** 添加 */
-    OprationTypeDelete = 3,    /** 删除 */
-    OprationTypeModify = 4,    /** 修改 */
-    OprationTypeQuery = 5,      /** 查询 */
-    OprationTypeRecover = 6     /** 恢复 */
-    
-};
-
-/** 添加 IC 卡返回的状态类型
- *
- */
-typedef NS_ENUM(NSInteger,AddICState)
-{
-    AddICStateHadAdd = 1,   /** 识别到IC卡并成功添加 */
-    AddICStateCanAdd = 2,   /** 成功启动添加IC卡模式 */
-    
-};
-
-/** 添加指纹返回的状态类型
- *
- */
-typedef NS_ENUM(NSInteger,AddFingerprintState)
-{
-    AddFingerprintCollectSuccess = 1,     /**  添加指纹成功 包含指纹编号,其他状态无此字段。*/
-    AddFingerprintCanCollect = 2,         /** 成功启动添加指纹模式，这时候App可以提示“请按手指” */
-    AddFingerprintCanCollectAgain = 3,    /** 第一次采集指纹成功，开始第二次采集，这时候App可以提示“请再次按手指” */
-};
-
-/** 读取设备信息的类型
- *
- */
-typedef NS_ENUM(NSInteger,DeviceInfoType) {
-    DeviceInfoTypeOfProductionModel = 1,    /**  1-	产品型号 */
-    DeviceInfoTypeOfHardwareVersion = 2,    /**  2-	硬件版本号 */
-    DeviceInfoTypeOfFirmwareVersion = 3,    /**  3-	固件版本号 */
-    DeviceInfoTypeOfProductionDate = 4,     /**  4-	生产日期 */
-    DeviceInfoTypeOfProductionMac = 5,      /**  5-	蓝牙地址 */
-    DeviceInfoTypeOfProductionClock = 6     /**  6-	时钟 */
-    
-};
 
 /**回调 TTSDK代理*/
 @protocol TTSDKDelegate <NSObject>
 
 @optional
+
+/**
+ *  蓝牙的状态改变时 The central manager whose state has changed.
+ */
+- (void)TTManagerDidUpdateState:(TTManagerState)state;
 
 /**
  *  相关回调 错误码
@@ -129,12 +41,12 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  *  mac            锁的mac地址
  *  advertisementData   锁的广播
  *  isContainAdmin      锁是否存在管理员（即是否处于设置模式）  例：YES存在（非设置模式）  NO不存在（设置模式）
- *  isAllowUnlock  三代锁中广播的一个信号值 YES为有人摸锁， 二代锁一直为YES
+ *  isAllowUnlock  三代锁中广播的一个信号值 YES为有人摸锁， 二代锁一直为YES 车位锁一直为NO
  *  oneMeterRSSI   三代锁中广播的一个信号值 这个数值是离锁一米左右的rssi  二代锁为固定的值
  *  protocolCategory    协议类别   例：5 是门锁  10 是车位锁  0x3412 是手环
  *  protocolVersion     协议版本   返回的值 1是LOCK  4是二代锁 3是三代锁
- *  scene                应用场景   返回的值 1是普通二代门锁 2二代锁带永久密码功能的门锁 、三代锁默认也是这个值 3是荣域定制的门锁 4是门禁 5是保险箱锁 6是自行车锁
- 
+ *  scene      类型：DoorSceneType   应用场景 
+ *  lockSwitchState   类型：TTLockSwitchState  车位锁（scene == 7）的开关状态 ,不支持此功能的锁返回的值为TTLockSwitchStateUnknown
  */
 -(void)onFoundDevice_peripheralWithInfoDic:(NSDictionary*)infoDic;
 
@@ -150,7 +62,7 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
 /**
  *  断开与蓝牙的连接
  *
- *  @param peripheral     搜索到的蓝牙对象
+ *  @param periphera   搜索到的蓝牙对象
  */
 -(void)onBTDisconnect_peripheral:(CBPeripheral*)periphera;
 
@@ -160,7 +72,7 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  */
 -(void)onGetProtocolVersion:(NSString*)versionStr;
 /**
- *  添加管理员成功  已字典形式返回参数
+ *  添加管理员成功  以字典形式返回参数
  *  adminPS 管理员密码 管理员开门时校验管理员身份的
  *  lockkey 约定数开门使用
  *  aesKey  开门使用
@@ -171,7 +83,7 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  *  electricQuantity 如果为-1 则表示没有获取到电量
  *  adminPassword   管理员开门密码
  *  deletePassword  管理员删除密码
- *  Characteristic  锁的特征值 使用类 TTSpecialValueUtil 来判断支持什么功能
+ *  Characteristic(LongLong) 锁的特征值 使用类 TTSpecialValueUtil 来判断支持什么功能
  *  unlockFlag   标记位 添加成功的时候为0  注：如果这里没有返回这个参数 需要写成0即可
  *  DeviceInfoType 读取设备的信息 1 2 3 4 5 6 参考枚举   包括 1-产品型号 2-硬件版本号 3-固件版本号 4-生产日期 5-蓝牙地址 6-时钟
  *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)
@@ -233,7 +145,7 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  *  获取特征值 (只有三代锁有)
  characteristic  锁的特征值 使用类 TTSpecialValueUtil 来判断支持什么功能
  */
-- (void)onGetDeviceCharacteristic:(int)characteristic;
+- (void)onGetDeviceCharacteristic:(long long)characteristic;
 /**
  *  获取锁时间 (只有三代锁有)
  */
@@ -263,10 +175,7 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  *  断开扫描
  */
 -(void)onStopBTDeviceScan;
-/**
- *  蓝牙的状态改变时 The central manager whose state has changed.
- */
-- (void)TTLockManagerDidUpdateState:(CBCentralManager *)central;
+
 
 #pragma mark ------ IC卡
 /**
@@ -289,7 +198,16 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  */
 - (void)onModifyIC;
 #pragma mark ------ 指纹 添加 清空 删除 修改
-- (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber;
+
+/**
+ 指纹采集（添加）
+
+ @param state AddFingerprintState
+ @param fingerprintNumber 状态AddFingerprintCollectSuccess包含指纹编号，其他状态无此状态
+ @param currentCount 当前录入指纹的次数（-1表示次数未知）,第一次返回当前采集次数为0，最后一次直接返回状态1及指纹编号 状态AddFingerprintCollectProgress时返回
+ @param totalCount   需要录入指纹的次数（-1表示次数未知） 状态AddFingerprintCollectProgress时返回
+ */
+- (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber currentCount:(int)currentCount totalCount:(int)totalCount ;
 
 - (void)onClearFingerprint;
 
@@ -308,10 +226,9 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
 - (void)onEnterFirmwareUpgradeMode;
 
 #pragma mark ------ 0-关锁 1-开锁 2未知状态
-- (void)onGetLockSwitchState:(BOOL)state;
+- (void)onGetLockSwitchState:(TTLockSwitchState)state;
 
 #pragma mark ------ 是否在屏幕上显示输入的密码
-
 /**
  查询屏幕上显示状态成功
  
@@ -332,13 +249,22 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  恢复键盘密码
  */
 - (void)onRecoverUserKeyBoardPassword;
+/**
+ *  读取新密码方案参数（约定数、映射数、删除日期）键盘密码成功(只有三代锁有)
+ */
+-(void)onGetPasswordData_timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo;
 
 #pragma mark --- 废弃
 -(void)onFoundDevice_peripheral:(CBPeripheral *)peripheral RSSI:(NSNumber*)rssi lockName:(NSString*)lockName mac:(NSString*)mac advertisementData:(NSDictionary *)advertisementData isContainAdmin:(BOOL)isContainAdmin protocolCategory:(int)protocolCategory __attribute__((deprecated("SDK2.6 onFoundDevice_peripheralWithInfoDic" )));
 -(void)onAddAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)versionStr mac:(NSString*)mac timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo electricQuantity:(int)electricQuantity adminPassword:(NSString*)adminPassward deletePassword:(NSString*)deletePassward Characteristic:(int)characteristic  __attribute__((deprecated("onAddAdministrator_addAdminInfoDic")));
 -(void)onAddAdministrator_password:(NSString*)password key:(NSString*)key aesKey:(NSString*)aesKeyData version:(NSString*)versionStr mac:(NSString*)mac __attribute__((deprecated("onAddAdministrator_addAdminInfoDic")));
 -(void)onLock __attribute__((deprecated("SDK2.6.3 onLockingWithLockTime")));
+/**
+ *  蓝牙的状态改变时 The central manager whose state has changed.
+ */
+- (void)TTLockManagerDidUpdateState:(CBCentralManager *)central __attribute__((deprecated("SDK2.6.3 onLockingWithLockTime")));
 
+- (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber __attribute__((deprecated("SDK2.6.3 onLockingWithLockTime")));
 @end
 
 
@@ -349,17 +275,31 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
 + (void)setDebug:(BOOL)debug;
 /** SDK 代理*/
 @property (nonatomic, weak) id <TTSDKDelegate> delegate;
-/**中心设备对象*/
-@property (nonatomic,strong) CBCentralManager *manager;
-/**服务器上用户的唯一标识，用于锁内部存储操作记录*/
+/**服务器上用户的唯一标识，用于锁内部存储操作记录 即openid */
 @property (nonatomic, strong) NSString *uid;
 /**三代锁锁添加管理员时的固定数据 可不设置，用完一次后就会恢复为默认值*/
 @property (nonatomic, strong) NSString *setClientPara;
-/**当前连接的蓝牙*/
-@property (nonatomic, readonly) CBPeripheral *activePeripheral;
 /**设置系统的弹框是否显示，创建完TTLock单例对象就调用 yes开 no关  默认是关闭（启动APP时,如果蓝牙未打开，系统会弹框提醒*/
 @property (nonatomic,assign) BOOL isShowBleAlert;
-
+/**中心设备对象*/
+@property (nonatomic,strong,readonly) CBCentralManager *manager;
+/**当前连接的蓝牙*/
+@property (nonatomic,strong, readonly) CBPeripheral *activePeripheral;
+/*!
+ *  @property state
+ *
+ *  @discussion The current state of the manager, initially set to <code>TTLockManagerStateUnknown</code>.
+ *				Updates are provided by required delegate method {@link TTLockManagerDidUpdateState:}.
+ *
+ */
+@property(nonatomic, assign, readonly) TTManagerState state;
+/*!
+ *  @property isScanning
+ *
+ *  @discussion Whether or not the central is currently scanning.
+ *
+ */
+@property(nonatomic, assign, readonly) BOOL isScanning NS_AVAILABLE(NA, 9_0);
 
 /**初始化科蓝牙类*/
 -(id)initWithDelegate:(id<TTSDKDelegate>)TTDelegate;
@@ -370,21 +310,33 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
 /**创建蓝牙对象*/
 -(void)setupBlueTooth;
 
-/** 开始扫描附近的蓝牙 特定服务的门锁 推荐使用 */
--(void)startBTDeviceScan;
+/**
+ 开始扫描附近的蓝牙 特定服务的门锁 推荐使用
 
-/** 开始扫描附近的蓝牙 所有蓝牙设备 如果开发手环的需要 可以用 */
-- (void)scanAllBluetoothDeviceNearby;
+ @param isScanDuplicates every time the peripheral is seen, which may be many times per second. This can be useful in specific situations.Recommend this value to be NO.
 
-/** 开始扫描附近特定服务的蓝牙
- * servicesArray 数组里的元素要NSString类型
  */
-- (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray*)servicesArray;
+-(void)startBTDeviceScan:(BOOL)isScanDuplicates;
+/**
+ 开始扫描附近的蓝牙 所有蓝牙设备 如果开发手环的需要 可以用
+
+ @param isScanDuplicates every time the peripheral is seen, which may be many times per second. This can be useful in specific situations.Recommend this value to be NO
+
+ */
+- (void)scanAllBluetoothDeviceNearby:(BOOL)isScanDuplicates;
+
+/**
+ 开始扫描附近特定服务的蓝牙
+
+ @param servicesArray 服务
+ @param isScanDuplicates  every time the peripheral is seen, which may be many times per second. This can be useful in specific situations.Recommend this value to be NO
+ */
+- (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray<NSString *>*)servicesArray isScanDuplicates:(BOOL)isScanDuplicates;
 
 /** 停止扫描附近的蓝牙*/
 -(void)stopBTDeviceScan;
 
-/** 连接蓝牙
+/** 连接蓝牙 Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect}.
  */
 -(void)connect:(CBPeripheral *)peripheral;
 
@@ -392,9 +344,16 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  */
 -(void)disconnect:(CBPeripheral *)peripheral;
 
-/** 取消连接蓝牙
+/**
+ 连接蓝牙 Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link cancelConnectPeripheralWithLockMac}.
+ @param lockMac 锁的mac地址（老的锁没有mac地址就传lockName锁名）
  */
--(void)cancelConnectPeripheral:(CBPeripheral *)peripheral;
+- (void)connectPeripheralWithLockMac:(NSString *)lockMac;
+/**
+ 取消连接蓝牙
+ @param lockMac 锁的mac地址（老的锁没有mac地址就传lockName锁名）
+ */
+- (void)cancelConnectPeripheralWithLockMac:(NSString *)lockMac;
 
 /**
  *  获取锁电量 调用指令成功后，再调用此接口
@@ -422,8 +381,9 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
  *  flag  标记位
  *  uniqueid  记录唯一标识 用于锁内部存储开锁记录 大小不能超过4个字节 建议传时间戳（秒为单位）
+ *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
  */
--(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid;
+-(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
 
 /** eKey开锁
  *  lockkey 约定数开门使用
@@ -453,12 +413,12 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
 /**
  关（闭）锁 （适用车位锁以及支持此功能的门锁）
  @param lockkey  约定数
- @param aesKey
+ @param aesKey  aesKey
  @param  flag  标记位
  @param uniqueid 记录唯一标识 用于锁内部存储开锁记录 大小不能超过4个字节 建议传时间戳（秒为单位）
  @param isAdmin  YSE为管理员 反之为普通用户  管理员开始和结束时间可任意传
- @param startDate 开始时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2000-1-1 0:0
- @param endDate   结束时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2099-12-31 23:59
+ @param sdate 开始时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2000-1-1 0:0
+ @param edate   结束时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2099-12-31 23:59
  @param timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
  */
 - (void)locking_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid isAdmin:(BOOL)isAdmin startDate:(NSDate *)sdate endDate:(NSDate *)edate timezoneRawOffset:(long)timezoneRawOffset;
@@ -689,7 +649,7 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  @param isShow 是否显示密码  0-隐藏  1-显示 操作类型为修改时有用
  @param adminPS  管理员密码
  @param lockkey 约定数
- @param aesKey
+ @param aesKey aesKey
  @param unlockFlag 标记位
  */
 - (void)operateScreen_type:(int)type isShow:(BOOL)isShow adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
@@ -706,11 +666,17 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
 - (void)setLockName:(NSString *)lockName adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
 /**
- *  读取开锁密码 （只有三代锁有）成功的回调是 onGetOperateLog_LockOpenRecordStr
+ *  读取开锁密码 （只有三代管理员才能读取开锁密码）成功的回调是 onGetOperateLog_LockOpenRecordStr
+ *  adminPS 管理员密码
  *  aesKey  开门使用
  *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
  */
 - (void)getKeyboardPasswordList_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+ 读取新密码方案参数（约定数、映射数、删除日期）
+ */
+- (void)getPasswordData_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
 
 #pragma mark --- 废弃
 
@@ -729,6 +695,21 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
  * 用上边的setLockTime_lockKey校准锁的时钟方法  替换此方法
  */
 -(void)setLockTime_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag __attribute__((deprecated("SDK2.6")));
+/** 取消连接蓝牙
+ */
+-(void)cancelConnectPeripheral:(CBPeripheral *)peripheral __attribute__((deprecated("SDK2.7.1")));
+/** 开始扫描附近的蓝牙 特定服务的门锁 推荐使用 */
+-(void)startBTDeviceScan __attribute__((deprecated("SDK2.7.1")));
+
+/** 开始扫描附近的蓝牙 所有蓝牙设备 如果开发手环的需要 可以用 */
+- (void)scanAllBluetoothDeviceNearby __attribute__((deprecated("SDK2.7.1")));
+
+/** 开始扫描附近特定服务的蓝牙
+ * servicesArray 数组里的元素要NSString类型
+ */
+- (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray*)servicesArray __attribute__((deprecated("SDK2.7.1")));
+/** 管理员开锁*/
+-(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid __attribute__((deprecated("SDK2.7.1")));
 @end
 
 

@@ -18,4 +18,3 @@ FOUNDATION_EXPORT const unsigned char DFUDependenceVersionString[];
 
 #import <DFUDependence/IntelHex2BinConverter.h>
 
-#import <DFUDependence/DFUDependence-Swift.h>

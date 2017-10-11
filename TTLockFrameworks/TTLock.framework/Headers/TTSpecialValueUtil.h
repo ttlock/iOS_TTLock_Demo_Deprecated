@@ -17,53 +17,53 @@
  @param specialValue 特征值
  @return YES为支持  反之不支持
  */
-+(BOOL)isSupportPwd:(int)specialValue;
++(BOOL)isSupportPwd:(long long)specialValue;
 /**
  是否支持IC卡
  */
-+(BOOL)isSupportIC:(int)specialValue;
++(BOOL)isSupportIC:(long long)specialValue;
 /**
  是否支持指纹
  */
-+ (BOOL)isSupportFingerPrint:(int)specialValue;
++ (BOOL)isSupportFingerPrint:(long long)specialValue;
 /**
  是否支持手环
  */
-+ (BOOL)isSupportWristband:(int)specialValue;
++ (BOOL)isSupportWristband:(long long)specialValue;
 /**
  是否支持自动闭锁
  */
-+ (BOOL)isSupportAutoLock:(int)specialValue;
++ (BOOL)isSupportAutoLock:(long long)specialValue;
 /**
  是否支持密码带删除功能
  */
-+ (BOOL)isSupportPasswordDeleteFunction:(int)specialValue;
++ (BOOL)isSupportPasswordDeleteFunction:(long long)specialValue;
 /**
  是否支持固件升级
  */
-+ (BOOL)isSupportUpgradeFirmware:(int)specialValue;
++ (BOOL)isSupportUpgradeFirmware:(long long)specialValue;
 /**
  是否支持密码管理功能
  */
-+ (BOOL)isSupportPasswordManagement:(int)specialValue;
++ (BOOL)isSupportPasswordManagement:(long long)specialValue;
 /**
  是否支持闭锁指令
  */
-+ (BOOL)isSupportLocking:(int)specialValue;
++ (BOOL)isSupportLocking:(long long)specialValue;
 /**
  是否支持密码显示或者隐藏的控制
  */
-+ (BOOL)isSupportPasswordDisplayOrHideControl:(int)specialValue;
++ (BOOL)isSupportPasswordDisplayOrHideControl:(long long)specialValue;
 /**
  是否支持网关开锁指令
  */
-+ (BOOL)isSupportGatewayUnlock:(int)specialValue;
++ (BOOL)isSupportGatewayUnlock:(long long)specialValue;
 /**
  是否支持网关冻结、解冻
  */
-+ (BOOL)isSupportGatewayFreezeAndUnfreeze:(int)specialValue;
++ (BOOL)isSupportGatewayFreezeAndUnfreeze:(long long)specialValue;
 /**
  是否支持循环密码
  */
-+ (BOOL)isSupportCyclePassword:(int)specialValue;
++ (BOOL)isSupportCyclePassword:(long long)specialValue;
 @end
