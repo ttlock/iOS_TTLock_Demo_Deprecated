@@ -138,7 +138,6 @@ typedef NS_ENUM(NSInteger,AddFingerprintState)
     AddFingerprintCollectSuccess = 1,     /**  添加指纹成功 包含指纹编号,其他状态无此字段。*/
     AddFingerprintCanCollect = 2,         /** 成功启动添加指纹模式，这时候App可以提示“请按手指” */
     AddFingerprintCanCollectAgain = 3,    /** 第一次采集指纹成功，开始第二次采集，这时候App可以提示“请再次按手指” */
-    AddFingerprintCollectProgress = 4,    /** 指纹采集进度 */
 };
 
 /** 读取设备信息的类型

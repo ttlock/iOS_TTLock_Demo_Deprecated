@@ -37,15 +37,26 @@ typedef void(^TTSmartLinkFailBlock)();
 + (NSString *)getSSID;
 
 /**
- *  开始配置
+ *  开始配置（方法一）
  *
  * @param SSID     无线网名称
- * @param wifiPwd  无线密码
+ * @param wifiPwd  无线密码(不能有中文）
  * @param uid      用户id
- * @param userPwd  用户密码
+ * @param userPwd  用户密码（明文）
  */
 +(void)startWithSSID:(NSString*)SSID wifiPwd:(NSString*)wifiPwd uid:(int)uid userPwd:(NSString*)userPwd  processblock:(TTSmartLinkProcessBlock)pblock successBlock:(TTSmartLinkSuccessBlock)sblock failBlock:(TTSmartLinkFailBlock)fblock;
 
+/**
+  开始配置（方法二，功能与方法一相同）
 
+ @param infoDic   key:SSID      type:NSString
+                  key:wifiPwd   type:NSString  (不能有中文）
+                  key:uid       type:NSNumber
+                  key:userPwd   type:NSString
+ @param pblock 进度的回调
+ @param sblock 成功的回调
+ @param fblock 失败的回调
+ */
++(void)startWithInfoDic:(NSDictionary*)infoDic processblock:(TTSmartLinkProcessBlock)pblock successBlock:(TTSmartLinkSuccessBlock)sblock failBlock:(TTSmartLinkFailBlock)fblock;
 
 @end
