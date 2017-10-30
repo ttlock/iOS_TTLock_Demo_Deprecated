@@ -11,9 +11,28 @@
 
 ## Installation
 
+If you do not need to upgrade devices into your application
+
 First, add the following line to your Podfile:
 
 pod 'TTLock'
+
+Second, install TTLock into your project:
+
+pod install
+
+Manually
+
+<br>1.Drag the TTLock.framework into your project.
+<br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the framework above.
+<br>3.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
+
+
+If you need to upgrade devices into your application
+
+First, add the following line to your Podfile:
+
+pod 'TTLockDFU'
 
 Second, install TTLock into your project:
 
@@ -28,12 +47,12 @@ Manually
 
 
 
+
+
 ## Introduction
 
-### TTLockLock
-TTLockLock has been designed to communicate with devices by mobile phone bluetooth.
-
-### TTLockGateway
+### TTLock
+TTLock has been designed to communicate with devices by mobile phone bluetooth.
 TTLockGateway has been designed to make it easy to  communicate with  Wi-Fi module.
 
 ### TTLockDFU (Device Firmware Upgrade)
@@ -43,7 +62,7 @@ TTLockDFU has been designed to make it easy to upgrade devices into your applica
 
 ## Usage
 
-### TTLockLock Usage
+### TTLock Usage
 
 1.Import header file :
 ```objective-c
@@ -134,7 +153,7 @@ In addition to the three generation lock administrators
 
 ## Notes
 
-### TTLockLock Notes
+### TTLock Notes
 
 1.If you need to call many bluetooth interfaces at the same time ,you must call the following interface after the previous interface callback.
 
@@ -172,7 +191,7 @@ Such as,you want to unlock ,and  calibrate time.  
 
 2.The callback for ‘onFoundDevice_peripheral’ will scan all supported devices nearby, just connect which you really need.
 
-3.All callbacks in the TTLockLock are in the child thread.
+3.All callbacks in the TTLock are in the child thread.
 
 4.In order to record who operates the lock,you should assign values to attributes 'uid' before Sending instruction in the callback 'onBTConnectSuccess_peripheral'. 
 ```objective-c  
