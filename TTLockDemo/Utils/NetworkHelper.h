@@ -23,7 +23,7 @@ typedef void(^RequestBlock)(id info, NSError* error);
 
 #pragma mark - 锁相关接口
 //  锁初始化
-+ (void)initLock:(LockModel *)LockModel completion:(RequestBlock) completion;
++ (void)initLock:(KeyModel *)LockModel completion:(RequestBlock) completion;
 //  获取名下锁列表
 + (void)listOfLock:(NSInteger)pageNo completion:(RequestBlock) completion;
 //  获取锁的普通钥匙列表
@@ -84,12 +84,8 @@ typedef void(^RequestBlock)(id info, NSError* error);
                            modelNum:(NSString*)modelNum
                    hardwareRevision:(NSString*)hardwareRevision
                    firmwareRevision:(NSString*)firmwareRevision
-                       specialValue:(int)specialValue
+                       specialValue:(long long)specialValue
                          completion:(RequestBlock) completion;
-/**2.40	锁固件升级成功确认*/
-+(void)roomUpdateSuccessWithLockId:(int)lockId
-                      specialValue:(int)specialValue
-                        completion:(RequestBlock) completion;
 /**	下载升级包 */
 + (void)downloadZip:(NSString *)url key:(NSString *)key completion:(RequestBlock) completion;
 +(void)getRecoverDataWithClientId:(NSString*)clientId

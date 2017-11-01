@@ -28,7 +28,7 @@
 /*!
  @method
  @abstract 添加按钮
- @discussion  点击后跳转到AddLockGuider1ViewController界面
+ @discussion  点击后跳转到AddLock界面
  @param sender 点击的按钮
  @result void
  */

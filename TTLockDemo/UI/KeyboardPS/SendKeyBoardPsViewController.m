@@ -8,7 +8,6 @@
 
 #import "SendKeyBoardPsViewController.h"
 #import "CopyableLabel.h"
-#import "ProgressHUD.h"
 #import "RequestService.h"
 @interface SendKeyBoardPsViewController ()
 
@@ -116,11 +115,9 @@
 }
 //生成密码
 - (void)generateButtonClick{
-    [ProgressHUD show:NSLocalizedString(@"words_wait_please", nil)];
-
-    
+    [self showToast:LS(@"words_wait_please")];
     [NetworkHelper getKeyboardPwd:_selectedKey.lockId keyboardPwdVersion:1 keyboardPwdType:mCurTimePsGroup startDate:@"" endDate:@"" completion:^(id info, NSError *error) {
-        [ProgressHUD dismiss];
+        [self hideHUD];
         if (!error) {
             _generatePwdLabel.text = @"成功";
         }else {

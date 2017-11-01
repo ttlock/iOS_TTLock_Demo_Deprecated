@@ -13,7 +13,6 @@
 #import "UserManageCell.h"
 #import "UserInfo.h"
 #import "XYCUtils.h"
-#import "ProgressHUD.h"
 #import "MJRefresh.h"
 #import "Tab0ViewCell.h"
 #import "KMDatePicker.h"
@@ -302,13 +301,7 @@ typedef void(^TableViewPullRefrshBlock)();
         case 2:
             
         {
-            
             //解除冻结
-            
-            [ProgressHUD show:@"请稍候..."];
-            
-            [ProgressHUD dismiss];
-            
             [NetworkHelper unFreezeKey:selectedKey.keyId completion:^(id info, NSError *error) {
                 if (!error) {
                     UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:NSLocalizedString(@"words_unblock_success", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
@@ -330,10 +323,7 @@ typedef void(^TableViewPullRefrshBlock)();
             
         case 1:
         {
-            
-            [ProgressHUD show:@"请稍候..."];
-            
-            [ProgressHUD dismiss];
+
             
             [NetworkHelper freezeKey:selectedKey.keyId completion:^(id info, NSError *error) {
                 if (!error) {
@@ -358,10 +348,6 @@ typedef void(^TableViewPullRefrshBlock)();
         }
         case 0:
         {
-            
-            [ProgressHUD show:@"请稍候..."];
-            
-            [ProgressHUD dismiss];
             
             [NetworkHelper deleteKey:selectedKey.keyId completion:^(id info, NSError *error) {
                 if (!error) {

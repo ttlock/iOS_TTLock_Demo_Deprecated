@@ -24,13 +24,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear: animated];
     fingerprintOprationType = -1;
-    [TTLock sharedInstance].delegate = self;
+    TTObjectTTLockHelper.delegate = self;
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-     delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-     delegate.TTObject.delegate = delegate;
+    TTObjectTTLockHelper.delegate = TTLockHelperClass;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -66,8 +65,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [SVProgressHUD show];
-     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [self showHUD:nil];
     switch (indexPath.row) {
         case 0:{
             fingerprintOprationType = OprationTypeClear;
@@ -87,9 +85,17 @@
         default:
             break;
     }
-    if (_selectedKey.peripheralUUIDStr.length != 0 ) {
-        [BLEHelper connectLock:_selectedKey];
-    }
+    [TTObjectTTLockHelper connectPeripheralWithLockMac:_selectedKey.lockMac.length ? _selectedKey.lockMac : _selectedKey.lockName];
+    async_main(^{
+        [self performSelector:@selector(connectTimeOut) withObject:nil afterDelay:DEFAULT_CONNECT_TIMEOUT];
+    });
+}
+
+- (void)connectTimeOut{
+    [self showToast:LS(@"make_sure_the_lock_nearby")];
+    [TTLockHelper disconnectKey:_selectedKey disConnectBlock:nil];
+    
+    
 }
 #pragma mark ---- ttsdk
 -(void)onFoundDevice_peripheralWithInfoDic:(NSDictionary*)infoDic{
@@ -125,8 +131,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%ld %@",(long)state,fingerprintNumber]];
+    [self showToast:[NSString stringWithFormat:@"%ld %@",(long)state,fingerprintNumber]];
+  
    
 }
 - (void)onDeleteFingerprint{
@@ -135,8 +141,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+   [self showToast:@"删除成功"];
+
 }
 - (void)onClearFingerprint{
     _Number = @"";
@@ -144,12 +150,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"清空成功"];
+    [self showToast:@"清空成功"];
 }
 -(void)onModifyFingerprint{
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+    [self showToast:@"修改成功"];
 
 }
 #pragma mark----------- ic
@@ -159,8 +163,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"添加 状态%ld 卡号%@",(long)state,ICNumber]];
+    [self showToast:[NSString stringWithFormat:@"添加 状态%ld 卡号%@",(long)state,ICNumber]];
+
     NSLog(@"ICNumber  %@",ICNumber);
 }
 
@@ -170,13 +174,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+    [self showToast:@"删除成功"];
 }
 - (void)onModifyIC{
- 
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"修改成功"];
+   [self showToast:@"修改成功"];
 }
 - (void)onClearIC{
     _Number = @"";
@@ -184,26 +185,23 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"清空成功"];
+    [self showToast:@"清空成功"];
 }
 #pragma mark ---- 公用
 - (void)onGetOperateLog_LockOpenRecordStr:(NSString *)LockOpenRecordStr{
     if (![_selectedKey.lockVersion hasPrefix:@"10.1"]) {
-        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
         if (LockOpenRecordStr.length > 0) {
-            [SVProgressHUD showSuccessWithStatus:LockOpenRecordStr];
+            [self showToast:LockOpenRecordStr];
         }else{
-            [SVProgressHUD showSuccessWithStatus:@"读取成功 没有记录"];
+            [self showToast:@"读取成功 没有记录"];
         }
     }
 }
 - (void)TTError:(TTError)error command:(int)command errorMsg:(NSString *)errorMsg{
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showErrorWithStatus:errorMsg];
+    [self showToast:errorMsg];
 }
 - (void)onBTDisconnect_peripheral:(CBPeripheral *)periphera{
-     [[TTLock sharedInstance] startBTDeviceScan];
+    [TTObjectTTLockHelper startBTDeviceScan:YES];
     NSLog(@"断开蓝牙 disconnect");
 }
 - (void)didReceiveMemoryWarning {

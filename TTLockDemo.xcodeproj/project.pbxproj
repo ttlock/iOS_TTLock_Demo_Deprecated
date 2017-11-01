@@ -37,11 +37,9 @@
 		FC6A2BF51F418349001D6B2B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B131F418349001D6B2B /* Info.plist */; };
 		FC6A2BF61F418349001D6B2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B141F418349001D6B2B /* main.m */; };
 		FC6A2BF71F418349001D6B2B /* TTLockDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B151F418349001D6B2B /* TTLockDemo.xcdatamodeld */; };
-		FC6A2BFA1F418349001D6B2B /* BLEHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B1F1F418349001D6B2B /* BLEHelper.m */; };
 		FC6A2BFB1F418349001D6B2B /* CopyableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B211F418349001D6B2B /* CopyableLabel.m */; };
 		FC6A2BFC1F418349001D6B2B /* DBHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B231F418349001D6B2B /* DBHelper.m */; };
 		FC6A2BFD1F418349001D6B2B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B251F418349001D6B2B /* Localizable.strings */; };
-		FC6A2BFE1F418349001D6B2B /* MyLog.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B281F418349001D6B2B /* MyLog.m */; };
 		FC6A2BFF1F418349001D6B2B /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B2A1F418349001D6B2B /* NetworkHelper.m */; };
 		FC6A2C001F418349001D6B2B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B2C1F418349001D6B2B /* Reachability.m */; };
 		FC6A2C011F418349001D6B2B /* RequestService.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B2E1F418349001D6B2B /* RequestService.m */; };
@@ -49,10 +47,6 @@
 		FC6A2C031F418349001D6B2B /* UIViewController+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B331F418349001D6B2B /* UIViewController+Category.m */; };
 		FC6A2C041F418349001D6B2B /* XYCUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B351F418349001D6B2B /* XYCUtils.m */; };
 		FC6A2C051F418349001D6B2B /* AccountInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B391F418349001D6B2B /* AccountInfoViewController.m */; };
-		FC6A2C061F418349001D6B2B /* AddLockGuider1Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B3B1F418349001D6B2B /* AddLockGuider1Cell.m */; };
-		FC6A2C071F418349001D6B2B /* AddLockGuider1Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B3C1F418349001D6B2B /* AddLockGuider1Cell.xib */; };
-		FC6A2C081F418349001D6B2B /* AddLockGuider1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B3E1F418349001D6B2B /* AddLockGuider1ViewController.m */; };
-		FC6A2C091F418349001D6B2B /* AddLockGuider1ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B3F1F418349001D6B2B /* AddLockGuider1ViewController.xib */; };
 		FC6A2C0A1F418349001D6B2B /* ChangeKeyDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B411F418349001D6B2B /* ChangeKeyDateViewController.m */; };
 		FC6A2C0B1F418349001D6B2B /* ChangeKeyDateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B421F418349001D6B2B /* ChangeKeyDateViewController.xib */; };
 		FC6A2C0C1F418349001D6B2B /* TTUpgradeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B461F418349001D6B2B /* TTUpgradeViewController.m */; };
@@ -119,20 +113,20 @@
 		FC6A2C491F41834A001D6B2B /* MMSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BC81F418349001D6B2B /* MMSheetView.m */; };
 		FC6A2C4A1F41834A001D6B2B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2BC91F418349001D6B2B /* LICENSE */; };
 		FC6A2C4B1F41834A001D6B2B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BCA1F418349001D6B2B /* README.md */; };
-		FC6A2C4C1F41834A001D6B2B /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2BCC1F418349001D6B2B /* ProgressHUD.bundle */; };
-		FC6A2C4D1F41834A001D6B2B /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BCE1F418349001D6B2B /* ProgressHUD.m */; };
 		FC6A2C4E1F41834A001D6B2B /* SCNavTabBar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2BD11F418349001D6B2B /* SCNavTabBar.bundle */; };
 		FC6A2C4F1F41834A001D6B2B /* SCNavTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BD41F418349001D6B2B /* SCNavTabBarController.m */; };
 		FC6A2C501F41834A001D6B2B /* SCNavTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BD71F418349001D6B2B /* SCNavTabBar.m */; };
 		FC6A2C511F41834A001D6B2B /* SCPopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BD91F418349001D6B2B /* SCPopView.m */; };
-		FC6A2C521F41834A001D6B2B /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BDC1F418349001D6B2B /* SVIndefiniteAnimatedView.m */; };
-		FC6A2C531F41834A001D6B2B /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BDE1F418349001D6B2B /* SVProgressAnimatedView.m */; };
-		FC6A2C541F41834A001D6B2B /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2BE01F418349001D6B2B /* SVProgressHUD.bundle */; };
-		FC6A2C551F41834A001D6B2B /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BE21F418349001D6B2B /* SVProgressHUD.m */; };
-		FC6A2C561F41834A001D6B2B /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BE41F418349001D6B2B /* SVRadialGradientLayer.m */; };
+		FC72C3E61FA815270009F835 /* AddLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC72C3E51FA815270009F835 /* AddLockViewController.m */; };
+		FC72C3E91FA8158D0009F835 /* DiscoverDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC72C3E81FA8158D0009F835 /* DiscoverDeviceCell.m */; };
 		FC83484C1F53C3F400728817 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
 		FC83484D1F53C3F600728817 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
 		FC83484E1F53C3F600728817 /* TTLockDFU.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FC872A121FA708BA00DE2A4B /* TTLockHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A0F1FA708B900DE2A4B /* TTLockHelper.m */; };
+		FC872A131FA708BA00DE2A4B /* BlueToothHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A101FA708B900DE2A4B /* BlueToothHelper.m */; };
+		FC872A191FA7098000DE2A4B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A161FA7098000DE2A4B /* MBProgressHUD.m */; };
+		FC872A1A1FA7098000DE2A4B /* SSHUDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A181FA7098000DE2A4B /* SSHUDHelper.m */; };
+		FC872A1D1FA70B1800DE2A4B /* SSToastHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A1C1FA70B1700DE2A4B /* SSToastHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -191,16 +185,12 @@
 		FC6A2B161F418349001D6B2B /* ScienerDemo 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ScienerDemo 2.xcdatamodel"; sourceTree = "<group>"; };
 		FC6A2B171F418349001D6B2B /* ScienerDemo 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ScienerDemo 3.xcdatamodel"; sourceTree = "<group>"; };
 		FC6A2B181F418349001D6B2B /* ScienerDemo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ScienerDemo.xcdatamodel; sourceTree = "<group>"; };
-		FC6A2B1E1F418349001D6B2B /* BLEHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEHelper.h; sourceTree = "<group>"; };
-		FC6A2B1F1F418349001D6B2B /* BLEHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLEHelper.m; sourceTree = "<group>"; };
 		FC6A2B201F418349001D6B2B /* CopyableLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CopyableLabel.h; sourceTree = "<group>"; };
 		FC6A2B211F418349001D6B2B /* CopyableLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CopyableLabel.m; sourceTree = "<group>"; };
 		FC6A2B221F418349001D6B2B /* DBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBHelper.h; sourceTree = "<group>"; };
 		FC6A2B231F418349001D6B2B /* DBHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBHelper.m; sourceTree = "<group>"; };
 		FC6A2B241F418349001D6B2B /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
 		FC6A2B261F418349001D6B2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		FC6A2B271F418349001D6B2B /* MyLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLog.h; sourceTree = "<group>"; };
-		FC6A2B281F418349001D6B2B /* MyLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLog.m; sourceTree = "<group>"; };
 		FC6A2B291F418349001D6B2B /* NetworkHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkHelper.h; sourceTree = "<group>"; };
 		FC6A2B2A1F418349001D6B2B /* NetworkHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkHelper.m; sourceTree = "<group>"; };
 		FC6A2B2B1F418349001D6B2B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -217,12 +207,6 @@
 		FC6A2B361F418349001D6B2B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FC6A2B381F418349001D6B2B /* AccountInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountInfoViewController.h; sourceTree = "<group>"; };
 		FC6A2B391F418349001D6B2B /* AccountInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountInfoViewController.m; sourceTree = "<group>"; };
-		FC6A2B3A1F418349001D6B2B /* AddLockGuider1Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLockGuider1Cell.h; sourceTree = "<group>"; };
-		FC6A2B3B1F418349001D6B2B /* AddLockGuider1Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLockGuider1Cell.m; sourceTree = "<group>"; };
-		FC6A2B3C1F418349001D6B2B /* AddLockGuider1Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddLockGuider1Cell.xib; sourceTree = "<group>"; };
-		FC6A2B3D1F418349001D6B2B /* AddLockGuider1ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLockGuider1ViewController.h; sourceTree = "<group>"; };
-		FC6A2B3E1F418349001D6B2B /* AddLockGuider1ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLockGuider1ViewController.m; sourceTree = "<group>"; };
-		FC6A2B3F1F418349001D6B2B /* AddLockGuider1ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddLockGuider1ViewController.xib; sourceTree = "<group>"; };
 		FC6A2B401F418349001D6B2B /* ChangeKeyDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeKeyDateViewController.h; sourceTree = "<group>"; };
 		FC6A2B411F418349001D6B2B /* ChangeKeyDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeKeyDateViewController.m; sourceTree = "<group>"; };
 		FC6A2B421F418349001D6B2B /* ChangeKeyDateViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChangeKeyDateViewController.xib; sourceTree = "<group>"; };
@@ -346,9 +330,6 @@
 		FC6A2BC81F418349001D6B2B /* MMSheetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSheetView.m; sourceTree = "<group>"; };
 		FC6A2BC91F418349001D6B2B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		FC6A2BCA1F418349001D6B2B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		FC6A2BCC1F418349001D6B2B /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
-		FC6A2BCD1F418349001D6B2B /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
-		FC6A2BCE1F418349001D6B2B /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		FC6A2BD01F418349001D6B2B /* CommonMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMacro.h; sourceTree = "<group>"; };
 		FC6A2BD11F418349001D6B2B /* SCNavTabBar.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SCNavTabBar.bundle; sourceTree = "<group>"; };
 		FC6A2BD31F418349001D6B2B /* SCNavTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCNavTabBarController.h; sourceTree = "<group>"; };
@@ -357,17 +338,21 @@
 		FC6A2BD71F418349001D6B2B /* SCNavTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCNavTabBar.m; sourceTree = "<group>"; };
 		FC6A2BD81F418349001D6B2B /* SCPopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCPopView.h; sourceTree = "<group>"; };
 		FC6A2BD91F418349001D6B2B /* SCPopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCPopView.m; sourceTree = "<group>"; };
-		FC6A2BDB1F418349001D6B2B /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
-		FC6A2BDC1F418349001D6B2B /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
-		FC6A2BDD1F418349001D6B2B /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressAnimatedView.h; sourceTree = "<group>"; };
-		FC6A2BDE1F418349001D6B2B /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressAnimatedView.m; sourceTree = "<group>"; };
-		FC6A2BDF1F418349001D6B2B /* SVProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
-		FC6A2BE01F418349001D6B2B /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		FC6A2BE11F418349001D6B2B /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		FC6A2BE21F418349001D6B2B /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
-		FC6A2BE31F418349001D6B2B /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRadialGradientLayer.h; sourceTree = "<group>"; };
-		FC6A2BE41F418349001D6B2B /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRadialGradientLayer.m; sourceTree = "<group>"; };
+		FC72C3E41FA815270009F835 /* AddLockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLockViewController.h; sourceTree = "<group>"; };
+		FC72C3E51FA815270009F835 /* AddLockViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLockViewController.m; sourceTree = "<group>"; };
+		FC72C3E71FA8158D0009F835 /* DiscoverDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverDeviceCell.h; sourceTree = "<group>"; };
+		FC72C3E81FA8158D0009F835 /* DiscoverDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverDeviceCell.m; sourceTree = "<group>"; };
 		FC83484B1F53C3F400728817 /* TTLockDFU.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TTLockDFU.framework; sourceTree = "<group>"; };
+		FC872A0E1FA708B900DE2A4B /* BlueToothHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlueToothHelper.h; sourceTree = "<group>"; };
+		FC872A0F1FA708B900DE2A4B /* TTLockHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTLockHelper.m; sourceTree = "<group>"; };
+		FC872A101FA708B900DE2A4B /* BlueToothHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlueToothHelper.m; sourceTree = "<group>"; };
+		FC872A111FA708BA00DE2A4B /* TTLockHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTLockHelper.h; sourceTree = "<group>"; };
+		FC872A151FA7098000DE2A4B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		FC872A161FA7098000DE2A4B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		FC872A171FA7098000DE2A4B /* SSHUDHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSHUDHelper.h; sourceTree = "<group>"; };
+		FC872A181FA7098000DE2A4B /* SSHUDHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSHUDHelper.m; sourceTree = "<group>"; };
+		FC872A1B1FA70B1700DE2A4B /* SSToastHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSToastHelper.h; sourceTree = "<group>"; };
+		FC872A1C1FA70B1700DE2A4B /* SSToastHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSToastHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -505,17 +490,13 @@
 		FC6A2B1C1F418349001D6B2B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				FC6A2B1D1F418349001D6B2B /* BLE */,
-				FC6A2B1E1F418349001D6B2B /* BLEHelper.h */,
-				FC6A2B1F1F418349001D6B2B /* BLEHelper.m */,
+				FC872A0D1FA706A400DE2A4B /* BLEHelper */,
 				FC6A2B201F418349001D6B2B /* CopyableLabel.h */,
 				FC6A2B211F418349001D6B2B /* CopyableLabel.m */,
 				FC6A2B221F418349001D6B2B /* DBHelper.h */,
 				FC6A2B231F418349001D6B2B /* DBHelper.m */,
 				FC6A2B241F418349001D6B2B /* Define.h */,
 				FC6A2B251F418349001D6B2B /* Localizable.strings */,
-				FC6A2B271F418349001D6B2B /* MyLog.h */,
-				FC6A2B281F418349001D6B2B /* MyLog.m */,
 				FC6A2B291F418349001D6B2B /* NetworkHelper.h */,
 				FC6A2B2A1F418349001D6B2B /* NetworkHelper.m */,
 				FC6A2B2B1F418349001D6B2B /* Reachability.h */,
@@ -533,34 +514,22 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		FC6A2B1D1F418349001D6B2B /* BLE */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = BLE;
-			sourceTree = "<group>";
-		};
 		FC6A2B371F418349001D6B2B /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				FC6A2B381F418349001D6B2B /* AccountInfoViewController.h */,
-				FC6A2B391F418349001D6B2B /* AccountInfoViewController.m */,
-				FC6A2B3A1F418349001D6B2B /* AddLockGuider1Cell.h */,
-				FC6A2B3B1F418349001D6B2B /* AddLockGuider1Cell.m */,
-				FC6A2B3C1F418349001D6B2B /* AddLockGuider1Cell.xib */,
-				FC6A2B3D1F418349001D6B2B /* AddLockGuider1ViewController.h */,
-				FC6A2B3E1F418349001D6B2B /* AddLockGuider1ViewController.m */,
-				FC6A2B3F1F418349001D6B2B /* AddLockGuider1ViewController.xib */,
-				FC6A2B401F418349001D6B2B /* ChangeKeyDateViewController.h */,
-				FC6A2B411F418349001D6B2B /* ChangeKeyDateViewController.m */,
-				FC6A2B421F418349001D6B2B /* ChangeKeyDateViewController.xib */,
+				FC72C3E31FA815270009F835 /* AddLock */,
 				FC6A2B431F418349001D6B2B /* DFU */,
-				FC6A2B4B1F418349001D6B2B /* ICAndFingerprintManagerVC.h */,
-				FC6A2B4C1F418349001D6B2B /* ICAndFingerprintManagerVC.m */,
 				FC6A2B4D1F418349001D6B2B /* KeyboardPS */,
 				FC6A2B581F418349001D6B2B /* KeyDetailCell.h */,
 				FC6A2B591F418349001D6B2B /* KeyDetailCell.m */,
 				FC6A2B5A1F418349001D6B2B /* KeyDetailCell.xib */,
+				FC6A2B4B1F418349001D6B2B /* ICAndFingerprintManagerVC.h */,
+				FC6A2B4C1F418349001D6B2B /* ICAndFingerprintManagerVC.m */,
+				FC6A2B381F418349001D6B2B /* AccountInfoViewController.h */,
+				FC6A2B391F418349001D6B2B /* AccountInfoViewController.m */,
+				FC6A2B401F418349001D6B2B /* ChangeKeyDateViewController.h */,
+				FC6A2B411F418349001D6B2B /* ChangeKeyDateViewController.m */,
+				FC6A2B421F418349001D6B2B /* ChangeKeyDateViewController.xib */,
 				FC6A2B5B1F418349001D6B2B /* KeyDetailViewController.h */,
 				FC6A2B5C1F418349001D6B2B /* KeyDetailViewController.m */,
 				FC6A2B5D1F418349001D6B2B /* KeyDetailViewController.xib */,
@@ -606,7 +575,6 @@
 			children = (
 				FC6A2B441F418349001D6B2B /* controllers */,
 				FC6A2B471F418349001D6B2B /* models */,
-				FC6A2B4A1F418349001D6B2B /* views */,
 			);
 			path = DFU;
 			sourceTree = "<group>";
@@ -627,13 +595,6 @@
 				FC6A2B491F418349001D6B2B /* FirmwareUpdateModel.m */,
 			);
 			path = models;
-			sourceTree = "<group>";
-		};
-		FC6A2B4A1F418349001D6B2B /* views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = views;
 			sourceTree = "<group>";
 		};
 		FC6A2B4D1F418349001D6B2B /* KeyboardPS */ = {
@@ -699,13 +660,12 @@
 		FC6A2B8E1F418349001D6B2B /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				FC872A141FA7098000DE2A4B /* MBProgressHUD */,
 				FC6A2B8F1F418349001D6B2B /* KMDatePicker */,
 				FC6A2B981F418349001D6B2B /* Masonry */,
 				FC6A2BB51F418349001D6B2B /* MMPopup */,
 				FC6A2BBA1F418349001D6B2B /* MMPopupView */,
-				FC6A2BCB1F418349001D6B2B /* progressHUD */,
 				FC6A2BCF1F418349001D6B2B /* SCNavTabBar */,
-				FC6A2BDA1F418349001D6B2B /* SVProgressHUD */,
 			);
 			path = libs;
 			sourceTree = "<group>";
@@ -808,16 +768,6 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		FC6A2BCB1F418349001D6B2B /* progressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				FC6A2BCC1F418349001D6B2B /* ProgressHUD.bundle */,
-				FC6A2BCD1F418349001D6B2B /* ProgressHUD.h */,
-				FC6A2BCE1F418349001D6B2B /* ProgressHUD.m */,
-			);
-			path = progressHUD;
-			sourceTree = "<group>";
-		};
 		FC6A2BCF1F418349001D6B2B /* SCNavTabBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -849,21 +799,39 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		FC6A2BDA1F418349001D6B2B /* SVProgressHUD */ = {
+		FC72C3E31FA815270009F835 /* AddLock */ = {
 			isa = PBXGroup;
 			children = (
-				FC6A2BDB1F418349001D6B2B /* SVIndefiniteAnimatedView.h */,
-				FC6A2BDC1F418349001D6B2B /* SVIndefiniteAnimatedView.m */,
-				FC6A2BDD1F418349001D6B2B /* SVProgressAnimatedView.h */,
-				FC6A2BDE1F418349001D6B2B /* SVProgressAnimatedView.m */,
-				FC6A2BDF1F418349001D6B2B /* SVProgressHUD-Prefix.pch */,
-				FC6A2BE01F418349001D6B2B /* SVProgressHUD.bundle */,
-				FC6A2BE11F418349001D6B2B /* SVProgressHUD.h */,
-				FC6A2BE21F418349001D6B2B /* SVProgressHUD.m */,
-				FC6A2BE31F418349001D6B2B /* SVRadialGradientLayer.h */,
-				FC6A2BE41F418349001D6B2B /* SVRadialGradientLayer.m */,
+				FC72C3E41FA815270009F835 /* AddLockViewController.h */,
+				FC72C3E51FA815270009F835 /* AddLockViewController.m */,
+				FC72C3E71FA8158D0009F835 /* DiscoverDeviceCell.h */,
+				FC72C3E81FA8158D0009F835 /* DiscoverDeviceCell.m */,
 			);
-			path = SVProgressHUD;
+			path = AddLock;
+			sourceTree = "<group>";
+		};
+		FC872A0D1FA706A400DE2A4B /* BLEHelper */ = {
+			isa = PBXGroup;
+			children = (
+				FC872A111FA708BA00DE2A4B /* TTLockHelper.h */,
+				FC872A0F1FA708B900DE2A4B /* TTLockHelper.m */,
+				FC872A0E1FA708B900DE2A4B /* BlueToothHelper.h */,
+				FC872A101FA708B900DE2A4B /* BlueToothHelper.m */,
+			);
+			path = BLEHelper;
+			sourceTree = "<group>";
+		};
+		FC872A141FA7098000DE2A4B /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				FC872A151FA7098000DE2A4B /* MBProgressHUD.h */,
+				FC872A161FA7098000DE2A4B /* MBProgressHUD.m */,
+				FC872A171FA7098000DE2A4B /* SSHUDHelper.h */,
+				FC872A181FA7098000DE2A4B /* SSHUDHelper.m */,
+				FC872A1B1FA70B1700DE2A4B /* SSToastHelper.h */,
+				FC872A1C1FA70B1700DE2A4B /* SSToastHelper.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -935,11 +903,8 @@
 				FC6A2C4A1F41834A001D6B2B /* LICENSE in Resources */,
 				FC6A2C181F418349001D6B2B /* KeyDetailViewController.xib in Resources */,
 				FC6A2C141F418349001D6B2B /* TimePsSendedListVC.xib in Resources */,
-				FC6A2C541F41834A001D6B2B /* SVProgressHUD.bundle in Resources */,
-				FC6A2C4C1F41834A001D6B2B /* ProgressHUD.bundle in Resources */,
 				FC6A2C161F418349001D6B2B /* KeyDetailCell.xib in Resources */,
 				FC6A2BE91F418349001D6B2B /* Images.xcassets in Resources */,
-				FC6A2C071F418349001D6B2B /* AddLockGuider1Cell.xib in Resources */,
 				FC6A2BFD1F418349001D6B2B /* Localizable.strings in Resources */,
 				FC6A2C1E1F418349001D6B2B /* Tab0ViewCell.xib in Resources */,
 				FC6A2C361F418349001D6B2B /* LICENSE in Resources */,
@@ -952,7 +917,6 @@
 				FC6A2BF31F418349001D6B2B /* LaunchScreen.xib in Resources */,
 				FC6A2BEA1F418349001D6B2B /* radio_btn_checked@2x.png in Resources */,
 				FC6A2C0B1F418349001D6B2B /* ChangeKeyDateViewController.xib in Resources */,
-				FC6A2C091F418349001D6B2B /* AddLockGuider1ViewController.xib in Resources */,
 				FC6A2BF41F418349001D6B2B /* Main.storyboard in Resources */,
 				FC6A2BE61F418349001D6B2B /* btn_blue@2x.png in Resources */,
 				FC6A2C201F418349001D6B2B /* Tab0ViewController.xib in Resources */,
@@ -1018,17 +982,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC6A2C341F418349001D6B2B /* KMDatePickerDateModel.m in Sources */,
-				FC6A2C551F41834A001D6B2B /* SVProgressHUD.m in Sources */,
 				FC6A2C501F41834A001D6B2B /* SCNavTabBar.m in Sources */,
+				FC872A131FA708BA00DE2A4B /* BlueToothHelper.m in Sources */,
 				FC6A2C101F418349001D6B2B /* SendKpsViewController.m in Sources */,
 				FC6A2C2C1F418349001D6B2B /* AddWifiViewController.m in Sources */,
 				FC6A2C131F418349001D6B2B /* TimePsSendedListVC.m in Sources */,
-				FC6A2C061F418349001D6B2B /* AddLockGuider1Cell.m in Sources */,
-				FC6A2C561F41834A001D6B2B /* SVRadialGradientLayer.m in Sources */,
 				FC6A2C451F41834A001D6B2B /* MMPopupCategory.m in Sources */,
+				FC872A1D1FA70B1800DE2A4B /* SSToastHelper.m in Sources */,
 				FC6A2C0C1F418349001D6B2B /* TTUpgradeViewController.m in Sources */,
 				FC6A2C3B1F418349001D6B2B /* MASViewAttribute.m in Sources */,
-				FC6A2BFE1F418349001D6B2B /* MyLog.m in Sources */,
 				FC6A2C3F1F418349001D6B2B /* View+MASAdditions.m in Sources */,
 				FC6A2C0D1F418349001D6B2B /* FirmwareUpdateModel.m in Sources */,
 				FC6A2C151F418349001D6B2B /* KeyDetailCell.m in Sources */,
@@ -1037,10 +999,9 @@
 				FC6A2BFB1F418349001D6B2B /* CopyableLabel.m in Sources */,
 				FC6A2BF71F418349001D6B2B /* TTLockDemo.xcdatamodeld in Sources */,
 				FC6A2C3D1F418349001D6B2B /* NSArray+MASAdditions.m in Sources */,
-				FC6A2C4D1F41834A001D6B2B /* ProgressHUD.m in Sources */,
 				FC6A2C391F418349001D6B2B /* MASConstraintMaker.m in Sources */,
-				FC6A2C521F41834A001D6B2B /* SVIndefiniteAnimatedView.m in Sources */,
 				FC6A2C301F418349001D6B2B /* PlugListModel.m in Sources */,
+				FC872A1A1FA7098000DE2A4B /* SSHUDHelper.m in Sources */,
 				FC6A2C031F418349001D6B2B /* UIViewController+Category.m in Sources */,
 				FC6A2C511F41834A001D6B2B /* SCPopView.m in Sources */,
 				FC6A2C2E1F418349001D6B2B /* LockClockVC.m in Sources */,
@@ -1051,7 +1012,6 @@
 				FC6A2C011F418349001D6B2B /* RequestService.m in Sources */,
 				FC6A2C3E1F418349001D6B2B /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				FC6A2C021F418349001D6B2B /* SettingHelper.m in Sources */,
-				FC6A2C081F418349001D6B2B /* AddLockGuider1ViewController.m in Sources */,
 				FC6A2C381F418349001D6B2B /* MASConstraint.m in Sources */,
 				FC6A2C051F418349001D6B2B /* AccountInfoViewController.m in Sources */,
 				FC6A2BEF1F418349001D6B2B /* LockModel.m in Sources */,
@@ -1060,12 +1020,15 @@
 				FC6A2C491F41834A001D6B2B /* MMSheetView.m in Sources */,
 				FC6A2BF11F418349001D6B2B /* TimePsRecord.m in Sources */,
 				FC6A2C041F418349001D6B2B /* XYCUtils.m in Sources */,
+				FC872A191FA7098000DE2A4B /* MBProgressHUD.m in Sources */,
 				FC6A2C281F418349001D6B2B /* UserManageViewController.m in Sources */,
 				FC6A2BEC1F418349001D6B2B /* AddLockModel.m in Sources */,
 				FC6A2C321F418349001D6B2B /* DateHelper.m in Sources */,
 				FC6A2C261F418349001D6B2B /* UserManageCell.m in Sources */,
 				FC6A2C401F41834A001D6B2B /* ViewController+MASAdditions.m in Sources */,
+				FC72C3E91FA8158D0009F835 /* DiscoverDeviceCell.m in Sources */,
 				FC6A2C1D1F418349001D6B2B /* Tab0ViewCell.m in Sources */,
+				FC72C3E61FA815270009F835 /* AddLockViewController.m in Sources */,
 				FC6A2C0F1F418349001D6B2B /* SendKeyBoardPsViewController.m in Sources */,
 				FC6A2C311F418349001D6B2B /* PlugLockListModel.m in Sources */,
 				FC6A2C1F1F418349001D6B2B /* Tab0ViewController.m in Sources */,
@@ -1091,7 +1054,7 @@
 				FC6A2C461F41834A001D6B2B /* MMPopupitem.m in Sources */,
 				FC6A2C211F418349001D6B2B /* UnlockRecord.m in Sources */,
 				FC6A2C431F41834A001D6B2B /* MMDateView.m in Sources */,
-				FC6A2BFA1F418349001D6B2B /* BLEHelper.m in Sources */,
+				FC872A121FA708BA00DE2A4B /* TTLockHelper.m in Sources */,
 				FC6A2BF01F418349001D6B2B /* OnFoundDeviceModel.m in Sources */,
 				FC6A2C3C1F418349001D6B2B /* MASViewConstraint.m in Sources */,
 				FC6A2C4B1F41834A001D6B2B /* README.md in Sources */,
@@ -1100,7 +1063,6 @@
 				FC6A2C411F41834A001D6B2B /* README.md in Sources */,
 				FC6A2C351F418349001D6B2B /* NSDate+CalculateDay.m in Sources */,
 				FC6A2C2A1F418349001D6B2B /* V3SendkeyBoardPwdVC.m in Sources */,
-				FC6A2C531F41834A001D6B2B /* SVProgressAnimatedView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

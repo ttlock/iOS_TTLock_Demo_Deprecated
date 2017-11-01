@@ -10,14 +10,16 @@
 #define TTLock_pch
 
 #import "UIViewController+Category.h"
-#import "SVProgressHUD.h"
 #import "Define.h"
 #import "SettingHelper.h"
 #import <TTLock/TTLock.h>
 #import <TTLockDFU/TTLockDFU.h>
-#import "BLEHelper.h"
 #import "NetworkHelper.h"
 #import "AppDelegate.h"
+#import "SSToastHelper.h"
+#import "TTLockHelper.h"
+#import "BlueToothHelper.h"
+#import "DBHelper.h"
 //define this constant if you want to use Masonry without the 'mas_' prefix
 #define MAS_SHORTHAND
 //define this constant if you want to enable auto-boxing for default syntax

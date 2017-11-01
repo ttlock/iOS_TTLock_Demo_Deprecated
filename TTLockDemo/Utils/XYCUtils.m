@@ -7,7 +7,6 @@
 //
 
 #import "XYCUtils.h"
-#import "MyLog.h"
 #import "Key.h"
 #define MAX_POOL_PS_NUMBER 900
 

@@ -7,7 +7,6 @@
 //
 
 #import "DBHelper.h"
-#import "MyLog.h"
 #import "SettingHelper.h"
 @interface DBHelper()
 
@@ -64,9 +63,7 @@ bool DEBUG_DBHelper = true;
             
             
             keys = [NSMutableArray arrayWithArray:fetcher.fetchedObjects];
-            [MyLog log:@"fetch key" isdebug:DEBUG_DBHelper];
-            
-            
+           
             fetcher = nil;
             fetchRequest = nil;
         }];
@@ -81,7 +78,7 @@ bool DEBUG_DBHelper = true;
 {
     @synchronized(self){
         __block NSMutableArray *keys;
-        [MyLog log:@"fetch keys" isdebug:DEBUG_DBHelper];
+    
         [self.managedObjectContext performBlockAndWait:^(){
             NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"username = %@",[SettingHelper getOpenID]]];
@@ -104,10 +101,6 @@ bool DEBUG_DBHelper = true;
             
             
             keys = [NSMutableArray arrayWithArray:fetcher.fetchedObjects];
-            
-            [MyLog log:@"fetch key" isdebug:DEBUG_DBHelper];
-            
-            
             fetcher = nil;
             fetchRequest = nil;
         }];
@@ -446,7 +439,6 @@ bool DEBUG_DBHelper = true;
 - (NSManagedObjectContext *) managedObjectContext
 {
 
-//    [MyLog log:@"升级数据库" isdebug:YES];
     if (managedObjectContext !=nil) {
         
         return managedObjectContext;

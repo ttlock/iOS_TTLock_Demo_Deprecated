@@ -8,7 +8,6 @@
 
 #import "KeyTableViewController.h"
 #import "DBHelper.h"
-#import "MyLog.h"
 #import "Tab0ViewCell.h"
 #import "Key.h"
 #import "KeyDetailViewController.h"
@@ -166,6 +165,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+
     return YES;
 }
 
@@ -175,10 +175,25 @@
         case 1:
         {
             if ([selectedKey.lockVersion hasPrefix:@"5.3"] && selectedKey.isAdmin == YES) {
-                extern  BOOL isRetLock; //是否恢复出厂设置
-                isRetLock = YES;
-                [self v3ReadyConnect];
+                if ([BlueToothHelper getBlueState]) {
+                    [self showHUD:nil];
+                    [TTLockHelper connectKey:selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                        if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                            [self showLockNotNearToast];
+                            return ;
+                        }
+                        [TTLockHelper resetLock:selectedKey complition:^(id info, BOOL succeed) {
+                            if (succeed) {
+                                [self deleteSelectKey];
+                                return ;
+                            }
+                            [self showLockOperateFailed];
+                        }];
+                    }];
+                }
+                
             }else{
+                 [self showHUD:nil];
                 [self deleteSelectKey];
             }
 
@@ -192,7 +207,7 @@
 }
 
 - (void)deleteSelectKey{
-     [SVProgressHUD show];
+    
     [NetworkHelper deleteKey:selectedKey.keyId completion:^(id info, NSError *error) {
         if (error) return ;
         
@@ -201,23 +216,9 @@
         [_keyArray removeObject:selectedKey];
         
         [self.tableView reloadData];
-        [SVProgressHUD showSuccessWithStatus:@"删除成功"];
+        [self showToast:@"删除成功"];
         
     }];
 }
 
-- (void)v3ReadyConnect{
-    extern NSString *v3AllowMac;
-    v3AllowMac = selectedKey.lockMac;
-    if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-        [SVProgressHUD show];
-        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-        if (selectedKey.peripheralUUIDStr.length != 0 ) {
-            [BLEHelper connectLock:selectedKey];
-        }
-    }
-}
-- (void)dealloc{
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
 @end

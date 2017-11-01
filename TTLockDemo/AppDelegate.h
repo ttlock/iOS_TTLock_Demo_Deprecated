@@ -11,39 +11,13 @@
  @class
  @abstract App代理类
 */
-@interface AppDelegate : UIResponder <UIApplicationDelegate,TTSDKDelegate>
-{
-    
-   
-    UIAlertView * alertView;
-    
-}
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (nonatomic,assign) BOOL isAddPsw;
-
-@property (strong, nonatomic)  Key * currentKey;
-
-@property (strong,nonatomic) Key *currentUsedKey;
-
-@property (strong, nonatomic)  CBPeripheral * currentPeripheral;
 /*!
  @property
  @abstract 程序窗口
 */
 @property (strong, nonatomic) UIWindow *window;
-
-/*!
- @property
- @abstract 通通锁类
-*/
-@property (strong, nonatomic) TTLock* TTObject;
-//@property (nonatomic) BOOL isCalibationLockDate;
-
-
-
-
-
-
 
 
 @end

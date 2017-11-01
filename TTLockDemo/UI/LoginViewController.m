@@ -62,7 +62,7 @@
 - (void)loginButtonClick{
     [self.view endEditing:YES];
     if (_phoneField.text.length == 0 || _passField.text.length == 0) {
-        [SVProgressHUD showErrorWithStatus:@"用户名或密码不能为空"];
+        [self showToast:@"用户名或密码不能为空"];
         return;
     }
     dispatch_async(dispatch_get_global_queue(0, 0), ^{

@@ -33,7 +33,7 @@
     [super viewWillAppear:animated];
     
     [TTLock sharedInstance].delegate = self;
-    [[TTLock sharedInstance] startBTDeviceScan];
+    [[TTLock sharedInstance] startBTDeviceScan:NO];
     
 }
 
@@ -45,14 +45,8 @@
     [[TTLockDFU shareInstance] pauseUpgrade];
     [[TTLockDFU shareInstance]stopUpgrade];
     
-    if (_peripheral.state == CBPeripheralStateConnected){
-        [[TTLock sharedInstance] disconnect:_peripheral];
-        [TTLock sharedInstance].delegate = TTAppdelegate;
-    }else{
-        [TTLock sharedInstance].delegate = TTAppdelegate;
-        [[TTLock sharedInstance] startBTDeviceScan];
-    }
-    
+    TTObjectTTLockHelper.delegate = TTLockHelperClass;
+    [TTLockHelper disconnectKey:_selectedKey disConnectBlock:nil];
 
 }
 
@@ -60,7 +54,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = LS(@"Words_Lock_Upgrade");
-    [SVProgressHUD show];
+    [self showHUD:nil];
     [self createView];
     [self lockUpgradeCheck];
     
@@ -71,7 +65,7 @@
     
     [NetworkHelper lockUpgradeCheckWithLockId:self.selectedKey.lockId  completion:^(id info, NSError *error) {
         if (error == nil && [info isKindOfClass:[NSDictionary class]]) {
-            [SVProgressHUD dismiss];
+            [self hideHUD];
             
             _updateModel =  [[FirmwareUpdateModel alloc]initWithDictionary:info error:nil];
             //是否需要升级：0-否，1-是，2-未知
@@ -129,7 +123,7 @@
     
     
     if (self.bottomBtn.tag == 100) {
-        [SVProgressHUD show];
+        [self showHUD:nil];
         TTLockDFU *dfu = [TTLockDFU shareInstance];
         
         WS(weakSelf);
@@ -141,13 +135,13 @@
                 [TTLock sharedInstance].delegate = weakSelf;
                 
                 weakSelf.bottomBtn.tag = 101;
-                [SVProgressHUD showSuccessWithStatus:@"升级成功"];
+                [weakSelf showToast:@"升级成功"];
                  [weakSelf.bottomBtn setTitle:LS(@"Words_Check_for_updates") forState:UIControlStateNormal];
                 
                 return ;
             }
             
-            [SVProgressHUD showWithStatus:[NSString stringWithFormat:@"successBlock type%ld process%ld",(long)type,(long)process]];
+            [weakSelf showHUD:[NSString stringWithFormat:@"successBlock type%ld process%ld",(long)type,(long)process]];
             
         } failBlock:^(UpgradeOpration type, UpgradeErrorCode code) {
             
@@ -161,29 +155,36 @@
             }
             weakSelf.bottomBtn.tag = 105;
             [weakSelf.bottomBtn setTitle:@"重试" forState:UIControlStateNormal];
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"failBlock UpgradeOpration%ld UpgradeErrorCode%ld ",(long)type,(long)code]];
+            [weakSelf showToast:[NSString stringWithFormat:@"failBlock UpgradeOpration%ld UpgradeErrorCode%ld ",(long)type,(long)code]];
         }];
     }
-    
     if (self.bottomBtn.tag == 101) {
-        //如果是未知 那就去获取锁里的相关的数据
-        if ([BLEHelper getBlueState]) {
-            [SVProgressHUD show];
-            
+//        //如果是未知 那就去获取锁里的相关的数据
+        if ([BlueToothHelper getBlueState]) {
+            [self showHUDToWindow:nil];
             isGetDeviceInfo = YES;
-            _v3AllowMac = _selectedKey.lockMac;
-            if (_selectedKey.peripheralUUIDStr.length != 0 ) {
-                [BLEHelper connectLock:_selectedKey];
-            }
+            
+            //连接锁
+            [TTObjectTTLockHelper connectPeripheralWithLockMac:_selectedKey.lockMac.length ? _selectedKey.lockMac : _selectedKey.lockAlias];
+            
+            async_main(^{
+                [self performSelector:@selector(connectTimeOut) withObject:nil afterDelay:DEFAULT_CONNECT_TIMEOUT];
+            });
         }
         
     }
     
     if (self.bottomBtn.tag == 105) {
-         [SVProgressHUD show];
+         [self showHUD:nil];
         //重试
         [[TTLockDFU shareInstance] retry];
     }
+}
+- (void)connectTimeOut{
+    [self showToast:LS(@"make_sure_the_lock_nearby")];
+    [TTLockHelper disconnectKey:_selectedKey disConnectBlock:nil];
+    
+    
 }
 - (void)passcodeUpgrade{
     NSString *decodePwd = _selectedKey.noKeyPwd;
@@ -252,11 +253,11 @@
 
 - (void)onBTDisconnect_peripheral:(CBPeripheral *)periphera{
     NSLog(@"断开连接");
-    [[TTLock sharedInstance] startBTDeviceScan];
+    [[TTLock sharedInstance] startBTDeviceScan:NO];
     
 }
 - (void)TTError:(TTError)error command:(int)command errorMsg:(NSString *)errorMsg{
-    [SVProgressHUD dismiss];
+    [self hideHUD];
     if (_peripheral.state == CBPeripheralStateConnected){
         [[TTLock sharedInstance] disconnect:_peripheral];
     }
@@ -265,7 +266,7 @@
 }
 
 
-- (void)onGetDeviceCharacteristic:(int)characteristic{
+- (void)onGetDeviceCharacteristic:(long long)characteristic{
     
     [self initDataWithModelNum:_tempUpdateModel.modelNum hardwareRevision:_tempUpdateModel.hardwareRevision firmwareRevision:_tempUpdateModel.firmwareRevision characteristic:characteristic];;
     
@@ -273,11 +274,11 @@
 - (void)initDataWithModelNum:(NSString*)modelNum
             hardwareRevision:(NSString*)hardwareRevision
             firmwareRevision:(NSString*)firmwareRevision
-              characteristic:(int)characteristic{
+              characteristic:(long long)characteristic{
     
     [NetworkHelper lockUpgradeRecheckWithLockId:self.selectedKey.lockId modelNum:modelNum hardwareRevision:hardwareRevision firmwareRevision:@"0.0" specialValue:characteristic completion:^(id info, NSError *error) {
         if (error == nil && [info isKindOfClass:[NSDictionary class]]) {
-            [SVProgressHUD dismiss];
+            [self hideHUD];
             
             _updateModel =  [[FirmwareUpdateModel alloc]initWithDictionary:info error:nil];
             //是否需要升级：0-否，1-是，2-未知
@@ -303,8 +304,6 @@
             }
         }
     }];
-    
-    
 }
 - (void)dealloc{
     NSLog(@"  TTUpgradeViewController dealloc ");

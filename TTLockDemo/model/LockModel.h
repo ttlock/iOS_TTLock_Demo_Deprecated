@@ -21,31 +21,3 @@
 
 @end
 
-
-/*!
- @class
- @abstract 钥匙类
- */
-@interface LockModel : NSObject
-
-/**蓝牙的uuid*/
-@property (nonatomic, retain) NSString *peripheralUUIDStr;
-@property (nonatomic) int32_t lockId;
-@property (nonatomic, strong) NSString * lockName;
-@property (nonatomic, strong) NSString * lockAlias;
-@property (nonatomic, strong) NSString * lockMac;
-@property (nonatomic,strong) NSString * lockKey;
-@property (nonatomic) int32_t lockFlagPos;
-@property(nonatomic,strong)NSString *aesKeyStr;
-@property(nonatomic,strong)LockVersion *lockVersion;
-@property (nonatomic,strong)NSString *adminPwd;
-@property (nonatomic, strong) NSString * noKeyPwd;
-@property (nonatomic, strong) NSString * deletePwd;
-@property (nonatomic, retain) NSString *pwdInfo;
-@property (nonatomic, retain) NSString *timestamp;
-@property (nonatomic,assign) int32_t specialValue;
-@property (nonatomic,assign) long long timezoneRawOffset;
-@property (nonatomic, assign) int32_t electricQuantity; 
-
-
-@end

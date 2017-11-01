@@ -11,8 +11,3 @@
 
 
 @end
-
-@implementation LockModel
-
-
-@end

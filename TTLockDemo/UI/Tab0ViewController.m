@@ -9,13 +9,11 @@
 #import "Tab0ViewController.h"
 #import "DBHelper.h"
 #import "Tab0ViewCell.h"
-#import "MyLog.h"
 #import "KeyDetailViewController.h"
 #import "RequestService.h"
-#import "AddLockGuider1ViewController.h"
+#import "AddLockViewController.h"
 #import "AppDelegate.h"
 #import "Define.h"
-#import "ProgressHUD.h"
 #import "ParkKeyDetailVC.h"
 #import "LoginViewController.h"
 #import "XYCUtils.h"
@@ -30,7 +28,6 @@
     UIView * loadingView;
     
     Key * selectedKey;
-    LockModel *backupKeySelected;
     NSArray *_datas;
     NSMutableArray *keyArray;
     NSMutableArray *ekeyArray;
@@ -84,7 +81,7 @@ bool DEBUG_TAB0 = true;
         [alertView show];
         return;
     }
-    [self.navigationController pushViewController:[[AddLockGuider1ViewController alloc] initWithNibName:@"AddLockGuider1ViewController" bundle:nil] animated:YES];
+    [self.navigationController pushViewController:[AddLockViewController new] animated:YES];
     
 }
 
@@ -185,7 +182,7 @@ bool DEBUG_TAB0 = true;
     LoginViewController *loginVC = [[LoginViewController alloc]init];
     [self.navigationController pushViewController:loginVC animated:YES];
 //    AppDelegate * appdelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-//    [appdelegate.scienerObject authorize];
+//    [appdelegate.TTObject authorize];
 }
 
 

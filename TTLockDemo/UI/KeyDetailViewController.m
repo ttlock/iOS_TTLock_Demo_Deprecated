@@ -8,7 +8,6 @@
 
 #import "KeyDetailViewController.h"
 #import "Key.h"
-#import "MyLog.h"
 #import "KeyDetailCell.h"
 #import "DBHelper.h"
 #import "XYCUtils.h"
@@ -17,11 +16,9 @@
 #import "Define.h"
 #import "UnlockRecordsViewController.h"
 #import "UserManageViewController.h"
-#import "ProgressHUD.h"
 #import "SendKeyBoardPsViewController.h"
 #import "SendKpsViewController.h"
 #import "TimePsSendedListVC.h"
-#import "SVProgressHUD.h"
 #import "V3SendPwdBaseVC.h"
 #import "ICAndFingerprintManagerVC.h"
 #import "TTUpgradeViewController.h"
@@ -75,13 +72,6 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
     return self;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-    
-    [super viewDidAppear:animated];
-    extern BOOL keydetailAppear;
-    keydetailAppear = YES;
-}
-
 -(void)backAction:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -125,9 +115,9 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
            
             //@"IC卡操作",@"指纹操作",@"设置锁里的手环key"] 要根据特征值  TTSpecialValueUtil
             
-            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"设置管理员开门密码",@"校准时钟"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"],@[@"点击开门",@"读取操作记录",@"获取锁时间",@"获取设备特征"],@[@"锁升级",@"IC卡操作",@"指纹操作",@"设置锁里的手环key"]];
+            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"校准时钟",@"设置管理员开门密码"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"],@[@"点击开门",@"读取操作记录",@"获取锁时间"],@[@"锁升级",@"IC卡操作",@"指纹操作"]];
         }else{
-            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"设置管理员开门密码",@"设置管理员删除密码",@"校准时钟"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"]];
+            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"校准时钟",@"设置管理员开门密码",@"设置管理员删除密码"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"]];
         }
         
         [NetworkHelper getKeyboardPwdVersion:selectedKey.lockId completion:^(id info, NSError *error) {
@@ -245,10 +235,11 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //判断蓝牙是否打开
     if (indexPath.section != 1) {
-         if (![BLEHelper getBlueState]) {
+         if (![BlueToothHelper getBlueState]) {
              return nil;
          }
     }
+ 
     switch (indexPath.section) {
         case 0:{
             switch (indexPath.row) {
@@ -257,24 +248,29 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                     if ([selectedKey isAdmin]) {
                         //重置电子钥匙
                         UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                                      initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"重置电子钥匙，重置电子钥匙之后，所有发送的电子钥匙都将无法开门。是否重置？":NSLocalizedString(@"重置电子钥匙，重置电子钥匙之后，所有发送的电子钥匙都将无法开门。这需要您触摸唤醒锁键盘以完成操作。是否重置？", nil)
+                                                      initWithTitle:@"重置电子钥匙，重置电子钥匙之后，所有发送的电子钥匙都将无法开门。是否重置？"
                                                       delegate:self
                                                       cancelButtonTitle:NSLocalizedString(@"取消", nil)
                                                       destructiveButtonTitle:nil
                                                       otherButtonTitles:NSLocalizedString(@"重置", nil), nil];
-                        //展示actionSheet
-                        //        [actionSheet showFromTabBar:self.tabBarController.tabBar];
                         [actionSheet showInView:self.view];
                         actionSheet.tag=TAG_RESET_EKEY;
                     }else{
                         
-                        extern BOOL calibrationPress;
-                        calibrationPress = YES;
-                        if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-                            [self v3ReadyConnect];
-                        }else{
-                            [self createTouchPanel];
-                        }
+                        [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                            if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                                [self showLockNotNearToast];
+                                return;
+                            }
+                            [TTLockHelper setLockTime:self.selectedKey complition:^(id info, BOOL succeed) {
+                                if (succeed) {
+                                    return ;
+                                }
+                                [self showLockOperateFailed];
+                            }];
+                            
+                        }];
+
 
                     }
                    
@@ -282,13 +278,11 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 case 1:{
                     //初始化900密码
                     UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                                  initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"重置用户密码，选择重置之后，之前发送给用户的密码都将失效。是否重置？":@"重置用户密码，选择重置之后，之前发送给用户的密码都将失效。这需要您触摸唤醒锁键盘以完成操作。是否重置？"
+                                                  initWithTitle:@"重置用户密码，选择重置之后，之前发送给用户的密码都将失效。是否重置？"
                                                   delegate:self
                                                   cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
                                                   destructiveButtonTitle:nil
                                                   otherButtonTitles:@"重置", nil];
-                    //展示actionSheet
-                    //        [actionSheet showFromTabBar:self.tabBarController.tabBar];
                     [actionSheet showInView:self.view];
                     actionSheet.tag = TAG_SHEET_RESET_900_PS;
                     
@@ -309,13 +303,6 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 }break;
                 case 3:{
                     //管理员删除密码
-                    if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-                        extern BOOL calibrationPress;
-                        calibrationPress = YES;
-                       
-                        [self v3ReadyConnect];
-
-                    }else{
                         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"请输入管理员删除密码(4到8位数字)":@"请输入管理员删除密码(7到10位数字)"
                                                                         message:nil
                                                                        delegate:self
@@ -325,18 +312,25 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                         [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
                         alert.tag = TAG_SET_KEYBOARD_PS_DELETE;
                         [alert show];
-                    }
-                    
+  
                 }break;
                 case 4:{
-                    extern BOOL calibrationPress;
-                    calibrationPress = YES;
-                   
-                    if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-                        [self v3ReadyConnect];
-                    }else{
-                        [self createTouchPanel];
-                    }
+                 [self showHUDToWindow:nil];
+                    [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                        if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                            [self showLockNotNearToast];
+                            return;
+                        }
+                        [TTLockHelper setLockTime:self.selectedKey complition:^(id info, BOOL succeed) {
+                            if (succeed) {
+                                return ;
+                            }
+                            [self showLockOperateFailed];
+                        }];
+
+                    }];
+
+
                 }break;
                 default:
                     break;
@@ -426,26 +420,55 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
         case 2:{
             switch (indexPath.row) {
                 case 0:{
-                    [self v3ReadyConnect];
-                   
+                  [self showHUDToWindow:nil];
+                    [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                        if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                            [self showLockNotNearToast];
+                            return;
+                        }
+                        [TTLockHelper unlock:self.selectedKey unlockBlock:^(id info, BOOL succeed) {
+                            if (succeed) {
+                                return ;
+                            }
+                            [self showLockOperateFailed];
+                        }];
+                      
+                        
+                    }];
+
+
                 }break;
                 case 1:{
-                    extern  BOOL isGetOperator;
-                    isGetOperator = YES;
-                    [self v3ReadyConnect];
-                 
+                          [self showHUDToWindow:nil];
+                    [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                        if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                            [self showLockNotNearToast];
+                            return;
+                        }
+                        [TTLockHelper pullUnlockRecord:self.selectedKey complition:^(id info, BOOL succeed) {
+                            if (succeed) {
+                                return ;
+                            }
+                            [self showLockOperateFailed];
+                        }];
+                    }];
+
                 }break;
                 case 2:{
-                    extern  BOOL isGetLockTime;
-                    isGetLockTime = YES;
-                    [self v3ReadyConnect];
-                }break;
-                case 3:{
-                   
-                    extern  BOOL isGetCharacteristic;
-                    isGetCharacteristic = YES;
-                    [self v3ReadyConnect];
-              
+                          [self showHUDToWindow:nil];
+                    [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                        if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                            [self showLockNotNearToast];
+                            return;
+                        }
+                        [TTLockHelper getLockTimeWithKey:self.selectedKey complition:^(id info, BOOL succeed) {
+                            if (succeed) {
+                                return ;
+                            }
+                            [self showLockOperateFailed];
+                        }];
+                       
+                    }];
                 }break;
                 default:
                     break;
@@ -464,13 +487,6 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 vc.type =(int) indexPath.row - 1;
                 [self.navigationController pushViewController:vc animated:YES];
             }
-            if (indexPath.row == 3) {
-                extern NSString *wristbandKey;
-                wristbandKey = @"654321";
-                [self v3ReadyConnect];
-
-            }
-            
         }break;
         default:
             break;
@@ -488,9 +504,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 
             case TAG_SEND_EKEY:
             {
-                
-                [ProgressHUD show:@"请稍候..."];
-                
+                [self showHUD:nil];
                 //接收者的唯一name
                 NSString * receiver = [alertViewT textFieldAtIndex:0].text;
                 
@@ -499,7 +513,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 NSString * endDate = [NSString stringWithFormat:@"%lli",startDateInt+20*60*60*1000];
                 
                 [NetworkHelper sendKey:selectedKey.lockId receiverUsername:receiver startDate:startDate endDate:endDate remarks:@"" completion:^(id info, NSError *error) {
-                    [ProgressHUD dismiss];
+                    [self hideHUD];
                     if (!error) {
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"发送电子钥匙成功" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
                         [alert show];
@@ -519,51 +533,62 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 
                 NSString * ps = [alertViewT textFieldAtIndex:0].text;
                 
-                    selectedKey.noKeyPwdTmp = ps;
-                    selectedKey.noKeyPwd = ps;
-                    [[DBHelper sharedInstance] update];
-                    
-                    [customTableView reloadData];
-                extern NSString *v3AllowMac;
-                v3AllowMac = selectedKey.lockMac;
-                if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-                    [SVProgressHUD show];
-                    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-                    if (selectedKey.peripheralUUIDStr.length != 0 ) {
-                        [BLEHelper connectLock:selectedKey];
+                if ([selectedKey.lockVersion hasPrefix:@"5.3"])
+                    [self showHUDToWindow:nil];
+                else
+                    [self showHUDToWindow:LS(@"alter_touch_the_number_panel")];
+            
+                [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                    if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                         [self showLockNotNearToast];
+                        return;
                     }
-                }else{
-                    [self createTouchPanel];
-                }
-
+                    [TTLockHelper setAdminKeyboardPassword:ps key:self.selectedKey complition:^(id info, BOOL succeed) {
+                        if (succeed) {
+                            async_main(^{
+                                selectedKey.noKeyPwd = ps;
+                                [[DBHelper sharedInstance] update];
+                                
+                                [customTableView reloadData];
+                            });
+                            return ;
+                        }
+                        [self showLockOperateFailed];
+                    }];
                     
-                
+                }];
+
                 break;
             }
             case TAG_SET_KEYBOARD_PS_DELETE:
             {
-                //设置管理员删除密码
-                
                 NSString * ps = [alertViewT textFieldAtIndex:0].text;
                 
-                    selectedKey.deletePwdTmp = ps;
-                    selectedKey.deletePwd = ps;
-                    [[DBHelper sharedInstance] update];
-                    
-                    [customTableView reloadData];
-                
-                extern NSString *v3AllowMac;
-                v3AllowMac = selectedKey.lockMac;
-                if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-                    [SVProgressHUD show];
-                    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-                    if (selectedKey.peripheralUUIDStr.length != 0 ) {
-                        [BLEHelper connectLock:selectedKey];
-                    }
-                }else{
-                    [self createTouchPanel];
-                }
+                //设置管理员删除密码
+                if ([selectedKey.lockVersion hasPrefix:@"5.3"])
+                    [self showHUDToWindow:nil];
+                else
+                    [self showHUDToWindow:LS(@"alter_touch_the_number_panel")];
 
+                [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                    if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                        [self showLockNotNearToast];
+                        return;
+                    }
+                    [TTLockHelper setAdminDeleteKeyBoardPassword:ps key:self.selectedKey complition:^(id info, BOOL succeed) {
+                        if (succeed) {
+                            async_main(^{
+                                selectedKey.deletePwd = ps;
+                                [[DBHelper sharedInstance] update];
+                                
+                                [customTableView reloadData];
+                            });
+                            return ;
+                        }
+                        [self showLockOperateFailed];
+                    }];
+                    
+                }];
                 
                 break;
             }
@@ -580,11 +605,9 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                     }
                     
                     [psPoolProgressView setHidden:NO];
-                    [ProgressHUD show:NSLocalizedString(@"请稍候", nil)];
-                    
-                    
+                    [self showHUD:nil];
                     [NetworkHelper rename:[alertViewT textFieldAtIndex:0].text lockId:selectedKey.lockId completion:^(id info, NSError *error) {
-                        [ProgressHUD dismiss];
+                        [self hideHUD];
                         if (!error) {
                             UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"温馨提示", nil)
                                                                             message:@"修改成功"
@@ -621,10 +644,6 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
     
 }
 
-- (void)createTouchPanel{
-    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-    [SVProgressHUD showSuccessWithStatus:@"请触摸唤醒锁键盘以完成操作"];
-}
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
 
@@ -632,43 +651,49 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
         case TAG_RESET_EKEY:
         {
             if (!buttonIndex) {
-                
-                extern BOOL isInvalidFlagUpdated;;
-                isInvalidFlagUpdated = YES;
-                extern NSString *v3AllowMac;
-                v3AllowMac = selectedKey.lockMac;
-              
-                if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-                    [SVProgressHUD show];
-                    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-                    if (selectedKey.peripheralUUIDStr.length != 0 ) {
-                        [BLEHelper connectLock:selectedKey];
+                if ([selectedKey.lockVersion hasPrefix:@"5.3"])
+                    [self showHUDToWindow:nil];
+                else
+                    [self showHUDToWindow:LS(@"alter_touch_the_number_panel")];
+            
+                [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                    if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                        [self showLockNotNearToast];
+                        return;
                     }
-                }else{
-                    [self createTouchPanel];
-                }
-                
-                
+                    [TTLockHelper resetEkey:self.selectedKey complition:^(id info, BOOL succeed) {
+                        if (succeed) {
+                           
+                            return ;
+                        }
+                        [self showLockOperateFailed];
+                        
+                    }];
+                }];
             }
             break;
         }
         case TAG_SHEET_RESET_900_PS:
         {
             if (!buttonIndex) {
-                
-                extern BOOL isInitPsPool;
-                isInitPsPool = YES;
-                extern NSString *v3AllowMac;
-                v3AllowMac = selectedKey.lockMac;
-                if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
-                    [SVProgressHUD show];
-                    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-                    if (selectedKey.peripheralUUIDStr.length != 0 ) {
-                        [BLEHelper connectLock:selectedKey];
+                if ([selectedKey.lockVersion hasPrefix:@"5.3"])
+                    [self showHUDToWindow:nil];
+                else
+                    [self showHUDToWindow:LS(@"alter_touch_the_number_panel")];
+
+                [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                    if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                        [self showLockNotNearToast];
+                        return;
                     }
-                }else{
-                    [self createTouchPanel];
-                }
+                    [TTLockHelper resetKeyboardPassword:self.selectedKey complition:^(id info, BOOL succeed) {
+                        if (succeed) {
+                            return ;
+                        }
+                        [self showLockOperateFailed];
+                        
+                    }];
+                }];
             }
             break;
 
@@ -678,12 +703,6 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
             break;
     }
     
-}
-
-
-- (void)v3ReadyConnect{
-    extern NSString *v3AllowMac;
-    v3AllowMac = selectedKey.lockMac;
 }
 
 @end

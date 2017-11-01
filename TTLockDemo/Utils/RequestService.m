@@ -8,7 +8,6 @@
 
 #import "RequestService.h"
 #import "XYCUtils.h"
-#import "MyLog.h"
 #import "Define.h"
 #import "UnlockRecord.h"
 #import "AppDelegate.h"
@@ -22,7 +21,7 @@
 @implementation RequestService
 
 /*绑定管理员 */
-+(int)bindLock:(LockModel*)LockModel
++(int)bindLock:(KeyModel*)LockModel
  protocol_type:(NSString*)protocol_type
 protocol_version:(NSString*)protocol_version
          scene:(NSString*)scene
@@ -59,7 +58,6 @@ protocol_version:(NSString*)protocol_version
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    //  [MyLog logFormate:@"response:%@",response];
     NSLog(@"绑定管理员的response:%@", response);
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
@@ -83,7 +81,7 @@ protocol_version:(NSString*)protocol_version
 +(int)unbindLockId:(int)lockId
               date:(NSString*)date{
     NSString * url = [NSString stringWithFormat:@"%@/v3/lock/unbind?clientId=%@&accessToken=%@&date=%@&lockId=%i",URL,TTAppkey,[SettingHelper getAccessToken],date,lockId];
-    [MyLog logFormate:@"解除绑定url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+   
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
     [urlRequest setHTTPMethod:@"GET"];
@@ -94,7 +92,6 @@ protocol_version:(NSString*)protocol_version
         return NET_REQUEST_ERROR_NO_DATA;
     }
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    [MyLog logFormate:@"response:%@",response];
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -180,8 +177,6 @@ protocol_version:(NSString*)protocol_version
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/key/send?clientId=%@&accessToken=%@&receiverUsername=%@&lockId=%@&date=%@&startDate=%@&endDate=%@&remarks=%@",URL,TTAppkey,[SettingHelper getAccessToken],receiver,roomid,date,startDate,endDate,message];
     
-    [MyLog logFormate:@"发送电子钥匙url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
     [urlRequest setHTTPMethod:@"GET"];
@@ -193,8 +188,7 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"response:%@",response];
+
     NSLog(@"发送电子钥匙response:%@",response);
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
@@ -214,8 +208,6 @@ protocol_version:(NSString*)protocol_version
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/key/listShareKey?clientId=%@&accessToken=%@&date=%@",URL,TTAppkey,[SettingHelper getAccessToken],date];
     
-    [MyLog logFormate:@"ekey列表 url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
     [urlRequest setHTTPMethod:@"GET"];
@@ -228,8 +220,6 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"获取电子钥匙列表response:%@",response];
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -248,7 +238,7 @@ protocol_version:(NSString*)protocol_version
             NSNumber * room_id = [keyItem objectForKey:@"lockId"];
 //            NSNumber * date = [keyItem objectForKey:@"date"];
             
-            LockModel * key = [[LockModel alloc]init];
+            KeyModel * key = [[KeyModel alloc]init];
 //            key.startDate = start_date.longLongValue/1000;
 //            key.endDate = end_date.longLongValue/1000;
 //            key.date = date.longLongValue/1000;
@@ -264,80 +254,12 @@ protocol_version:(NSString*)protocol_version
     return Nil;
 }
 
-//下载电子钥匙
-//+(int)downloadEkey_key:(LockModel*)key
-//
-//{
-//    NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
-//    NSString * url = [NSString stringWithFormat:@"%@/v3/key/download?clientId=%@&accessToken=%@&date=%@&keyId=%i&lockId=%i",URL,TTAppkey,[SettingHelper getAccessToken],date,key.keyId,key.lockId];
-//    
-//    [MyLog logFormate:@"下载电子钥匙url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-//    [urlRequest setTimeoutInterval:30.0f];
-//    [urlRequest setHTTPMethod:@"GET"];
-//    
-//    NSError *error = nil;
-//    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:&error];
-//    if (data == nil) {
-//        NSLog(@"send request failed: %@", error);
-//        return NET_REQUEST_ERROR_NO_DATA;
-//    }
-//    
-//    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSLog(@"下载电子钥匙response:%@",response);
-//    [MyLog logFormate:@"下载电子钥匙response:%@",response];
-//    
-//    NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-//    NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-//    
-//    NSString * errcode = [resultsDictionary objectForKey:@"errcode"];
-//    
-//    
-//    if (!errcode) {
-//        
-//        NSString * lock_name = [resultsDictionary objectForKey:@"lockName"];
-//        
-//        key.lockKey = [resultsDictionary objectForKey:@"lockKey"];
-//        
-//        NSTimeInterval startDate = 0;
-//        NSTimeInterval endDate = 0;
-//        NSNumber *sdate = [resultsDictionary objectForKey:@"startDate"];
-//        NSNumber *edate = [resultsDictionary objectForKey:@"endDate"];
-//        if (sdate && edate) {
-//            startDate = sdate.longLongValue / 1000;
-//            endDate = edate.longLongValue / 1000;
-//        }
-//        else {
-//            
-//        }
-//        NSNumber * date = [resultsDictionary objectForKey:@"date"];
-//        NSNumber * unlock_flag = [resultsDictionary objectForKey:@"lockFlagPos"];
-//        key.aesKeyStr =  [resultsDictionary objectForKey:@"aesKeyStr"];;
-//        
-//        key.lockVersion = [NSString stringWithFormat:@"%@.%@.%@.%@.%@",[resultsDictionary objectForKey:@"protocolType"],[resultsDictionary objectForKey:@"protocolVersion"],[resultsDictionary objectForKey:@"scene"],[resultsDictionary objectForKey:@"groupId"],[resultsDictionary objectForKey:@"orgId"]];
-//        key.lockMac =  [resultsDictionary objectForKey:@"lockMac"];;
-//        key.date = date.longLongValue/1000;
-//        key.startDate = startDate;
-//        key.endDate = endDate;
-//        key.lockName = lock_name;
-//        key.lockAlias = lock_name;
-//        key.lockFlagPos = unlock_flag.intValue;
-//        key.isAdmin = NO;
-//        return 0;
-//        
-//    }
-//    
-//    return errcode.intValue;
-//}
 
 +(int)uploadUnlockRecord_success:(BOOL)success
                           roomID:(int)roomid{
     
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/lock/uploadRecord?clientId=%@&accessToken=%@&date=%@&lockId=%i&success=%i&unlockDate=%@",URL,TTAppkey,[SettingHelper getAccessToken],date,roomid,success,date];
-    
-    [MyLog logFormate:@"上传开锁记录url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
@@ -351,9 +273,6 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"response:%@",response];
-    
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
     NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
@@ -375,8 +294,6 @@ protocol_version:(NSString*)protocol_version
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/lock/listRecords?clientId=%@&accessToken=%@&date=%@&pageNo=%i&lockId=%i&pageSize=20",URL,TTAppkey,[SettingHelper getAccessToken],date,page,roomid];
     
-    [MyLog logFormate:@"获取开锁记录url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
     [urlRequest setHTTPMethod:@"GET"];
@@ -389,8 +306,6 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"response:%@",response];
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -433,8 +348,6 @@ protocol_version:(NSString*)protocol_version
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/lock/listAllKey?clientId=%@&accessToken=%@&date=%@&lockId=%i",URL,TTAppkey,[SettingHelper getAccessToken],date,roomid];
     
-    [MyLog logFormate:@"获取锁用户url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
     [urlRequest setHTTPMethod:@"GET"];
@@ -447,8 +360,6 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"response:%@",response];
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -497,8 +408,7 @@ protocol_version:(NSString*)protocol_version
     
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/key/freeze?clientId=%@&accessToken=%@&openid=%@&date=%@&lockId=%i&keyId=%i",URL,TTAppkey,[SettingHelper getAccessToken],openid,date,roomid,kid];
-    
-    [MyLog logFormate:@"冻结url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
     
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
@@ -512,8 +422,6 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"response:%@",response];
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -531,8 +439,6 @@ protocol_version:(NSString*)protocol_version
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/key/unfreeze?clientId=%@&accessToken=%@&openid=%@&date=%@&lockId=%i&keyId=%i",URL,TTAppkey,[SettingHelper getAccessToken],[SettingHelper getOpenID],date,roomid,kid];
     
-    [MyLog logFormate:@"解除冻结url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
     [urlRequest setHTTPMethod:@"GET"];
@@ -545,8 +451,7 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"response:%@",response];
+
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -563,8 +468,6 @@ protocol_version:(NSString*)protocol_version
     NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
     NSString * url = [NSString stringWithFormat:@"%@/v3/user/getUserInfo?clientId=%@&clientSecret=%@&openid=%@&date=%@",URL,TTAppkey,TTAppSecret,user.openid,date];
     
-    [MyLog logFormate:@"delete user url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
     [urlRequest setHTTPMethod:@"GET"];
@@ -577,8 +480,6 @@ protocol_version:(NSString*)protocol_version
     }
     
     NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    [MyLog logFormate:@"33333333333333response:%@",response];
     
     NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -639,8 +540,6 @@ protocol_version:(NSString*)protocol_version
     
     NSString *url = [NSString stringWithFormat:@"%@/v3/keyboardPwd/get",URL];
     NSString * body = [NSString stringWithFormat:@"clientId=%@&accessToken=%@&lockId=%@&keyboardPwdVersion=%d&keyboardPwdType=%d&receiverUsername=%@&date=%@&startDate=%@&endDate=%@", TTAppkey, [SettingHelper getAccessToken],[NSString stringWithFormat:@"%d", lockId], keyboardPwdVersion, keyboardPwdType, receiverUsername, [XYCUtils GetCurrentTimeInMillisecond],startDate,endDate];
-    
-    [MyLog logFormate:@"delete user url:%@", [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
     [urlRequest setTimeoutInterval:30.0f];
@@ -834,73 +733,6 @@ protocol_version:(NSString*)protocol_version
     
 }
 
-//+(id)downloadBackup_keyWithLockId:(int)lockId keyId:(int)keyId backupPs:(NSString *)backupPs
-//{
-//    NSString *url = [NSString stringWithFormat:@"%@/v3/key/downloadBackup", URL];
-//    NSString * body = [NSString stringWithFormat:@"clientId=%@&accessToken=%@&lockId=%d&keyId=%i&md5BackupPs=%@&date=%@", TTAppkey,[SettingHelper getAccessToken],lockId,keyId,backupPs,[XYCUtils GetCurrentTimeInMillisecond]];
-//    NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-//    [urlRequest setTimeoutInterval:30.0f];
-//    [urlRequest setHTTPMethod:@"POST"];
-//    [urlRequest setHTTPBody:[[NSMutableData alloc]initWithData:[body dataUsingEncoding:NSUTF8StringEncoding]]];
-//    NSLog(@"下载备份钥匙的body = %@", body);
-//    
-//    NSError *error = nil;
-//    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:&error];
-//    if (data == nil) {
-//        NSLog(@"send request failed: %@", error);
-//        
-//        return [NSString stringWithFormat:@"%d", NET_REQUEST_ERROR_NO_DATA];
-//        
-//    }
-//    
-//    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    
-//    NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-//    
-//    NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-//    
-//    NSString * errcode = [resultsDictionary objectForKey:@"errcode"];
-//    NSLog(@"下载备份钥匙的response = %@", response);
-//    if (!errcode || errcode.intValue == 0) {
-//        
-//        LockModel *key = [[LockModel alloc] init];
-//        
-//        key.lockKey = [resultsDictionary objectForKey:@"lockKey"];
-//        
-//        key.adminPwd = [resultsDictionary objectForKey:@"adminPs"];
-//        
-//        key.aesKeyStr = [resultsDictionary objectForKey:@"aesKeyStr"];
-//        
-//        
-//        key.lockName = [resultsDictionary objectForKey:@"lockName"];
-//        key.lockAlias = key.lockName;
-//        key.startDate = [[resultsDictionary objectForKey:@"startDate"] longLongValue] / 1000;
-//        key.endDate = [[resultsDictionary objectForKey:@"endDate"] longLongValue] / 1000;
-//        key.hasbackup = YES;
-//        NSString * nokeypsStr = [SecurityUtil decodeBase64String:[resultsDictionary objectForKey:@"nokeyPs"]];
-//        key.noKeyPwd = [TTUtils DecodeSharedKeyValue:nokeypsStr];
-//        key.lockMac = [resultsDictionary objectForKey:@"lockMac"];
-//        NSString * deletePsStr = [SecurityUtil decodeBase64String:[resultsDictionary objectForKey:@"deletePs"]];
-//        key.deletePwd = [TTUtils DecodeSharedKeyValue:deletePsStr];
-//        NSString *userType = [resultsDictionary objectForKey:@"userType"];
-//        if ([userType isEqual:@"110301"]) {
-//            key.isAdmin = YES;
-//        }else{
-//            key.isAdmin = NO;
-//        }
-//        NSDictionary *dic = [NSDictionary dictionary];
-//        dic = [resultsDictionary objectForKey:@"lockVersion"];
-//        
-//        key.lockVersion = [NSString stringWithFormat:@"%d.%d.%d.%d.%d", [[dic objectForKey:@"protocolType"] intValue], [[dic objectForKey:@"protocolVersion"] intValue],[[dic objectForKey:@"scene"] intValue],[[dic objectForKey:@"groupId"] intValue],[[dic objectForKey:@"groupId"] intValue]];
-//        //        NSNumber *lockFlagPos = [resultsDictionary objectForKey:@"lockFlagPos"];
-//        //    key.invalidFlag = lo;
-//        return key;
-//    }
-//    return errcode;
-//}
-
-
-
 +(int)changeKeyNameWithLockId:(int)lockId lockAlias:(NSString *)lockAlias {
     NSString *url = [NSString stringWithFormat:@"%@/v3/lock/modifyLockInfo", URL];
     NSString * body = [NSString stringWithFormat:@"clientId=%@&accessToken=%@&lockId=%d&lockAlias=%@&date=%@", TTAppkey,[SettingHelper getAccessToken],lockId, lockAlias,[XYCUtils GetCurrentTimeInMillisecond]];
@@ -987,73 +819,6 @@ protocol_version:(NSString*)protocol_version
      */
 }
 
-
-/**
- 
- Open Api V3
- 
- */
-
-+(int)initLock:(LockModel*)LockModel
- protocol_type:(NSString*)protocol_type
-protocol_version:(NSString*)protocol_version
-         scene:(NSString*)scene
-      group_id:(NSString*)group_id
-        org_id:(NSString*)org_id
-{
-    
-    NSString* date = [XYCUtils GetCurrentTimeInMillisecond];
-    NSString *newgroup_id = group_id;
-    NSString *neworg_id = org_id;
-    if ([group_id  isEqual: @"0"]) {
-        newgroup_id = @"1";
-    }
-    if ([org_id  isEqual: @"0"]) {
-        neworg_id = @"1";
-    }
-    
-    // LockModel.lockMac = @"";
-    
-    
-    
-    NSString * url = [NSString stringWithFormat:@"%@/v3/lock/bindingAdmin?clientId=%@&accessToken=%@&date=%@&lockKey=%@&lockMac=%@&lockName=%@&lockVersion={\"protocolType\": \"%@\",\"protocolVersion\": \"%@\",\"scene\":\"%@\",\"groupId\":\"%@\",\"orgId\":\"%@\"}&aesKeyStr=%@&lockFlagPos=%d",URL,TTAppkey,[SettingHelper getAccessToken],date,LockModel.lockKey,LockModel.lockMac,LockModel.lockName,protocol_type,protocol_version,scene,newgroup_id,neworg_id,LockModel.aesKeyStr,LockModel.lockFlagPos];
-    
-    NSLog(@"绑定管理员url:%@",url);
-    NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    
-    [urlRequest setTimeoutInterval:30.0f];
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:&error];
-    if (data == nil) {
-        NSLog(@"绑定管理员 send request failed: %@", error);
-        return NET_REQUEST_ERROR_NO_DATA;
-    }
-    
-    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    //  [MyLog logFormate:@"response:%@",response];
-    NSLog(@"绑定管理员的response:%@", response);
-    NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-    
-    NSString * errcode = [resultsDictionary objectForKey:@"errcode"];
-    NSString * errmsg = [resultsDictionary objectForKey:@"errmsg"];
-    
-    if (!errcode) {
-        
-        NSString * roomid = [resultsDictionary objectForKey:@"lockId"];
-//        NSString * keyid = [resultsDictionary objectForKey:@"keyId"];
-        
-        LockModel.lockId = roomid.intValue;
-//        LockModel.keyId = keyid.intValue;
-        return 0;
-    }
-    NSLog(@"errmsg = %@", errmsg);
-    return errcode.intValue;
-    
-}
 
 
 @end

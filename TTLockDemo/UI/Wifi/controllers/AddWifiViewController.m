@@ -75,24 +75,25 @@
 }
 
 - (void)getUid{
-    
+
+    WS(weakSelf);
    [NetworkHelper getUidWithCompletion:^(id info, NSError *error) {
        if (!error) {
            _uid = [info[@"uid"] intValue];
            if (_wifiPwdTextField.text.length > 0 && _userPwdTextField.text.length > 0) {
                [TTLockGateway startWithSSID:self.SSID wifiPwd:_wifiPwdTextField.text uid:_uid userPwd:_userPwdTextField.text processblock:^(NSInteger process) {
-                   [SVProgressHUD showProgress:process/100.f status:[NSString stringWithFormat:@"%ld%%",(long)process]];
+                   [SSToastHelper showHUDToWindow:[NSString stringWithFormat:@"%ld",(long)process]];
                    
                } successBlock:^(NSString *ip, NSString *mac) {
                    self.wifiMac = mac;
                    [self isUploadSuccess];
                    
                } failBlock:^(NSInteger errcode) {
-                   [SVProgressHUD showInfoWithStatus :LS(@"hint_make_sure_the_gateway_is_in_adding_status")];
+                   [weakSelf showToast :LS(@"hint_make_sure_the_gateway_is_in_adding_status")];
                    
                }];
            }else{
-               [SVProgressHUD showInfoWithStatus:@"所填信息不能为空"];
+               [self showToast:@"所填信息不能为空"];
            }
        }
        
@@ -100,11 +101,11 @@
 }
 - (void)isUploadSuccess{
     
-    [SVProgressHUD show];
+    [self showHUD:nil];
     [NetworkHelper isInitSuccessWithGatewayNetMac:self.wifiMac completion:^(id info, NSError *error) {
         if (error== nil) {
             //成功
-            [SVProgressHUD showInfoWithStatus :LS(@"alter_Succeed")];
+            [self showHUD:LS(@"alter_Succeed")];
             if (self.addWifiSuccessBlock) {
                 self.addWifiSuccessBlock();
             }

@@ -44,20 +44,20 @@
     
 }
 - (void)getLockDate{
-    [SVProgressHUD show];
+    [self showHUD:nil];
     [NetworkHelper lockQueryDateWithLockId:self.model.lockId completion:^(id info, NSError *error) {
         if (!error ) {
-            [SVProgressHUD dismiss];
+            [self hideHUD];
              _timelabel.text = [XYCUtils  formateDate:[NSDate dateWithTimeIntervalSince1970:[info[@"date"] longLongValue]/1000]  format:@"yyyy.MM.dd HH:mm:ss"];
         }
     }];
  
 }
 - (void)bottomBtnClick{
-    [SVProgressHUD show];
+    [self showHUD:nil];
     [NetworkHelper lockUpdateDateWithLockId:self.model.lockId completion:^(id info, NSError *error) {
         if (!error ) {
-            [SVProgressHUD dismiss];
+           [self hideHUD];
             _timelabel.text = [XYCUtils  formateDate:[NSDate dateWithTimeIntervalSince1970:[info[@"date"] longLongValue]/1000] format:@"yyyy.MM.dd HH:mm:ss"];
         }
     }];

@@ -66,7 +66,7 @@ typedef void(^TableViewPullRefrshBlock)();
         if (error) return ;
         
         _lockArray = [NSMutableArray array];
-        NSMutableArray *datas = [LockModel mj_objectArrayWithKeyValuesArray:info[@"list"]];
+        NSMutableArray *datas = [KeyModel mj_objectArrayWithKeyValuesArray:info[@"list"]];
         if (pageNo == 1) {
             _lockArray = datas;
         }else{
@@ -95,7 +95,7 @@ typedef void(^TableViewPullRefrshBlock)();
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LockModel *lockModel = _lockArray[indexPath.row];
+    KeyModel *lockModel = _lockArray[indexPath.row];
     NSString *cellId = @"Cell";
     Tab0ViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {

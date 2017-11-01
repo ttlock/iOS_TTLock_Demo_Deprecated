@@ -52,9 +52,7 @@ typedef void(^TableViewPullRefrshBlock)();
             [weakSelf.baseWifiTableview.mj_header beginRefreshing];
         };
     }else{
-        [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
-        [SVProgressHUD showWithStatus:LS(@"hint_connect_your_phone_to_WiFi")];
-       
+        [self showToast:LS(@"hint_connect_your_phone_to_WiFi")];
     }
 }
 - (void)createTableview{

@@ -30,8 +30,6 @@
 @dynamic noKeyPwd;
 @dynamic deletePwd;
 @dynamic username;
-@dynamic noKeyPwdTmp;
-@dynamic deletePwdTmp;
 @dynamic timezoneRawOffset;
 
 - (BOOL)isAdmin

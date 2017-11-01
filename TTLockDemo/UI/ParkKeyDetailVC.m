@@ -11,7 +11,6 @@
 #import "KeyDetailCell.h"
 #import "XYCUtils.h"
 #import "AppDelegate.h"
-#import "ProgressHUD.h"
 #import "RequestService.h"
 #import "DBHelper.h"
 
@@ -106,25 +105,35 @@
         case 0:{
             switch (indexPath.row) {
                 case 0:{
-                    if ([BLEHelper getBlueState]) {
-                        extern NSString *parkAllowMac;
-                        parkAllowMac = selectedKey.lockMac;
-                        delegate.TTObject.parklockAction = YES;
-                        if (selectedKey.peripheralUUIDStr.length != 0 ) {
-                            [BLEHelper connectLock:selectedKey];
+                  if ([BlueToothHelper getBlueState]) {
+                    [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                        if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                            NSLog(@"bu KKBLE_CONNECT_SUCCESS");
+                            [self showLockNotNearToast];
+                     
+                            return ;
                         }
-                    }
-                    
+                        [TTLockHelper lock:selectedKey lockBlock:^(id info, BOOL succeed) {
+                            if (!succeed) {
+                                [self showLockOperateFailed];
+                            }
+                        }];
+                    }];
+                  }
                 }break;
                 case 1:{
-                    if ([BLEHelper getBlueState]) {
-                        
-                        extern NSString *parkAllowMac;
-                        parkAllowMac = selectedKey.lockMac;
-                        delegate.TTObject.parklockAction = NO;
-                        if (selectedKey.peripheralUUIDStr.length != 0 ) {
-                            [BLEHelper connectLock:selectedKey];
-                        }
+                    if ([BlueToothHelper getBlueState]) {
+                        [TTLockHelper connectKey:selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
+                            if (connectStatus != KKBLE_CONNECT_SUCCESS) {
+                                [self showLockNotNearToast];
+                                return ;
+                            }
+                            [TTLockHelper unlock:selectedKey unlockBlock:^(id info, BOOL succeed) {
+                                if (!succeed) {
+                                    [self showLockOperateFailed];
+                                }
+                            }];
+                        }];
                     }
                 }break;
                 

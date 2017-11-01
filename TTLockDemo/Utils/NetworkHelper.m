@@ -15,7 +15,7 @@
 static NSString *const AppDomain = @"AppDomain";
 @implementation NetworkHelper
 
-+ (void)initLock:(LockModel *)lockModel completion:(RequestBlock)completion
++ (void)initLock:(KeyModel *)lockModel completion:(RequestBlock)completion
 {
     NSMutableDictionary *parame = [NetworkHelper initParame];
     
@@ -308,7 +308,7 @@ static NSString *const AppDomain = @"AppDomain";
                    modelNum:(NSString*)modelNum
            hardwareRevision:(NSString*)hardwareRevision
            firmwareRevision:(NSString*)firmwareRevision
-               specialValue:(int)specialValue
+               specialValue:(long long)specialValue
                  completion:(RequestBlock) completion{
     NSMutableDictionary *parame = [NetworkHelper initParame];
     parame[@"lockId"] = [NSNumber numberWithInt:lockId] ;
@@ -472,7 +472,7 @@ static NSString *const AppDomain = @"AppDomain";
         //统一显示网络请求失败错误
     if (errorCode.intValue < 0) {
         //统一显示网络请求失败错误
-        [SVProgressHUD showErrorWithStatus:errorMsg];
+         [SSToastHelper showToastWithStatus:errorMsg];
     }
 
     
@@ -527,8 +527,7 @@ static NSString *const AppDomain = @"AppDomain";
         [logString appendFormat:@"Error Domain:\t\t\t\t\t\t\t%@\n", error.domain];
         [logString appendFormat:@"Error Domain Code:\t\t\t\t\t\t%ld\n", (long)error.code];
         [logString appendFormat:@"Error Localized Description:\t\t\t%@\n", error.localizedDescription];
-        
-         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+         [SSToastHelper showToastWithStatus:error.localizedDescription];
         //        [logString appendFormat:@"Error Localized Failure Reason:\t\t\t%@\n", error.localizedFailureReason];
         //        [logString appendFormat:@"Error Localized Recovery Suggestion:\t%@\n\n", error.localizedRecoverySuggestion];
     }

@@ -30,4 +30,28 @@
     NSDateComponents *theComponents = [calendar components:calendarUnit fromDate:inputDate];
     return theComponents.weekday;
 }
+- (void)showHUD:(NSString *)status{
+    [SSToastHelper showHUD:status containerView:self.view];
+}
+- (void)showToast:(NSString *)status{
+    
+    [SSToastHelper showToastWithStatus:status containerView:self.view];
+    
+}
+- (void)showHUDToWindow:(NSString *)status{
+ 
+    [SSToastHelper showHUD:status containerView:TTWindow];
+}
+- (void)hideHUD{
+    [SSToastHelper hideHUD];
+}
+- (void)showLockNotNearToast{
+       [self showToast:LS(@"make_sure_the_lock_nearby")];
+}
+- (void)showLockOperateFailed{
+    [self showToast:LS(@"alter_Failed")];
+    //主动断开
+    [TTLockHelper disconnectKey:TTLockHelperClass.currentKey disConnectBlock:nil];
+    
+}
 @end

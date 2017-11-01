@@ -12,7 +12,6 @@
 #import "DateHelper.h"
 #import "NSDate+CalculateDay.h"
 #import "AppDelegate.h"
-#import "ProgressHUD.h"
 #import "RequestService.h"
 @interface V3SendkeyBoardPwdVC ()<KMDatePickerDelegate,UITextFieldDelegate,MMChoiceViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 @property (nonatomic, strong) UITextField *txtFCurrent;
@@ -485,12 +484,10 @@ numberOfRowsInComponent:(NSInteger)component{
     }
 
     
-
-    [ProgressHUD show:NSLocalizedString(@"请稍候", nil)];
+    [self showHUD:nil];
     //连接的不是同一个lock
-
     [NetworkHelper getKeyboardPwd:_selectedKey.lockId keyboardPwdVersion:4 keyboardPwdType:[self getKeyboardPwd] startDate:sdatetime endDate:edatetime completion:^(id info, NSError *error) {
-        [ProgressHUD dismiss];
+        [self hideHUD];
         if (!error) {
             if (_selectedKey) {
                 UIPasteboard *pboard = [UIPasteboard generalPasteboard];
@@ -516,40 +513,6 @@ numberOfRowsInComponent:(NSInteger)component{
         }
     }];
 
-    
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-//    dispatch_async(queue, ^(void){
-//        __block id pw;
-//        dispatch_sync(queue, ^(void){
-//     
-//            pw =  [RequestService UseKPSWithLockId:_selectedKey.lockId keyboardPwdVersion:4 keyboardPwdType:[self getKeyboardPwd]  receiverUsername:@"" startDate:sdatetime endDate:edatetime];
-//        });
-//        dispatch_sync(dispatch_get_main_queue(), ^(void){
-//            [ProgressHUD dismiss];
-//            if ([pw isKindOfClass:[NSString class]]) {
-//                if (_selectedKey) {
-//                    UIPasteboard *pboard = [UIPasteboard generalPasteboard];
-//                    pboard.string =pw;
-//                    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示"
-//                                                                     message:[NSString stringWithFormat:@"密码%@已复制到剪贴板",pw]
-//                                                                    delegate:self
-//                                                           cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-//                  
-//                    [alert show];
-//                }
-//            }
-//            
-//            
-//            else{
-//                UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"温馨提示"
-//                                                                message:@"请求失败"
-//                                                               delegate:self
-//                                                      cancelButtonTitle:@"确定"
-//                                                      otherButtonTitles:nil];
-//                [alert show];
-//            }
-//        });
-//    });
 }
 - (UILabel*)createLabelWithFont:(float)font text:(NSString*)text{
     UILabel *label = [[UILabel alloc]init];

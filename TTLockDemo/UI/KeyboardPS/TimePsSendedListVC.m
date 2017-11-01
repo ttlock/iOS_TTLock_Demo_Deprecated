@@ -183,11 +183,11 @@ typedef void(^TableViewPullRefrshBlock)();
     if (editingStyle == UITableViewCellEditingStyleDelete){
         [NetworkHelper deleteKeyboardPwd:pwd.keyboardPwdId lockId:pwd.lockId deleteType:2  completion:^(id info, NSError *error) {
             if (!error) {
-                [SVProgressHUD showSuccessWithStatus:@"删除密码成功"];
+                [self showToast:@"删除密码成功"];
                 [keyboardPwds removeObject:pwd];
                 [customTableView reloadData];
             }else {
-                [SVProgressHUD showErrorWithStatus:@"删除密码失败"];
+                [self showToast:@"删除密码失败"];
                 return ;
             }
         }];

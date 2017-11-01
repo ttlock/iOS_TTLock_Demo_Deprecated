@@ -54,12 +54,13 @@
 @property (nonatomic, retain) NSString *noKeyPwd;
 @property (nonatomic, retain) NSString *deletePwd;
 
-@property (nonatomic, retain) NSString *deletePwdTmp;
-@property (nonatomic, retain) NSString *noKeyPwdTmp;
-
 @property(nonatomic, strong) NSString *username;
 
 @property(nonatomic,assign) int32_t timezoneRawOffset;
+@property (nonatomic,assign) ino64_t specialValue;
+@property (nonatomic, retain) NSString *pwdInfo;
+@property (nonatomic, retain) NSString *timestamp;
+
 - (BOOL)isAdmin;
 @end
 
@@ -89,8 +90,9 @@
 @property(nonatomic, strong) NSString *username;
 
 @property(nonatomic,assign) long timezoneRawOffset;
-
-
+@property (nonatomic,assign) ino64_t specialValue;
+@property (nonatomic, retain) NSString *pwdInfo;
+@property (nonatomic, retain) NSString *timestamp;
 - (BOOL)isAdmin;
 
 

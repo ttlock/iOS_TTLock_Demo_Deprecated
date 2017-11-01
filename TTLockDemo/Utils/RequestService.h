@@ -32,7 +32,7 @@
  @param org_id 应用子id
  @result int
  */
-+(int)bindLock:(LockModel*)LockModel
++(int)bindLock:(KeyModel*)LockModel
  protocol_type:(NSString*)protocol_type
 protocol_version:(NSString*)protocol_version
          scene:(NSString*)scene
@@ -80,19 +80,6 @@ protocol_version:(NSString*)protocol_version
  @result NSMutableArray
  */
 +(NSMutableArray*)requestEkeys;
-
-
-
-/*!
- @method
- @abstract 下载电子钥匙
- @discussion 收到电子钥匙后, 下载
- @param key 密钥
- @param clientid 客户端id
- @param accessToken 访问令牌
- @result int
- */
-//+(int)downloadEkey_key:(LockModel*)key;
 
 /*!
  @method
@@ -230,22 +217,6 @@ protocol_version:(NSString*)protocol_version
  @result int
  */
 +(int)backUpkeyWithLockId:(int)lockId keyId:(int)keyId adminPs:(NSString *)adminPs nokeyPs:(NSString *)nokeyPs deletePs:(NSString *)deletePs backupPs:(NSString *)backupPs;
-
-
-/*!
- @method
- @abstract  下载备份钥匙
- @discussion
- @param clientId 客户端id
- @param accessToken 访问令牌
- @param lockId 锁id
- @param keyId   钥匙id
- @param backupPs 备份密码
- @result id
- */
-+(id)downloadBackup_keyWithLockId:(int)lockId keyId:(int)keyId backupPs:(NSString *)backupPs;
-
-
 
 
 /*!
