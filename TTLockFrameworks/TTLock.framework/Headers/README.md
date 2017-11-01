@@ -12,10 +12,10 @@
  <br> {@link onAddAdministrator_addAdminInfoDic:};
  <br>3.断开连接里，去掉 m_password = nil; m_key = nil; m_aesKey = nil;
 #### 新增属性
- <br>1.@property(nonatomic, assign, readonly) TTManagerState state;
+1.@property(nonatomic, assign, readonly) TTManagerState state;
  <br>2.@property(nonatomic, assign, readonly) BOOL isScanning NS_AVAILABLE(NA, 9_0);
 #### 修改方法
-  <br>1.{@link onFoundDevice_peripheralWithInfoDic:}方法里增加锁的开关状态lockSwitchState
+1.{@link onFoundDevice_peripheralWithInfoDic:}方法里增加锁的开关状态lockSwitchState
   <br>2.{@link onGetLockSwitchState:}返回state的类型改为枚举TTLockSwitchState
 #### 新增方法
 1.- (void)TTManagerDidUpdateState:(TTManagerState)state;
@@ -120,11 +120,11 @@
   1.增加对三代锁IC卡的支持
 
 ### SDK2.0.1
-  1. 调用的蓝牙接口中的管理员密码、约定数和aeskey的数据类型由NSData改成NSString!!!!!!!!(方便上传和请求）
+  1.调用的蓝牙接口中的管理员密码、约定数和aeskey的数据类型由NSData改成NSString!!!!!!!!(方便上传和请求）
   <br>2. 原管理员密码 password 改为adminPS  原约定数 key 改为lockkey
 
 ### SDK2.0
-  1. 调用的接口名称全部更新（如果之前使用过sdk,请对照 TTLockDemo中  表iOS  SDK接口列表）
+  1.调用的接口名称全部更新（如果之前使用过sdk,请对照 TTLockDemo中  表iOS  SDK接口列表）
   <br>2. 重置(生成)键盘密码的回调，不返回进度，成功后会把生成的数据返回，如需使用需上传到服务端。
   <br>3. 增加了对三代锁的支持
   <br>4. 修复了之前sdk一些已知的bug，同时对其进行了优化。
