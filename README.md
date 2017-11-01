@@ -94,7 +94,11 @@ if (central.state == CBCentralManagerStatePoweredOn) {
 
 5.You can connect the given Bluetooth by the way of scanning peripheral above.
 ```objective-c
-[TTObject connect:peripheral];
+[TTObject connect:peripheral]; 
+```
+you  can also use the following method in anywhere not only in the way of scanning peripheral above 
+```objective-c
+[TTObject connectPeripheralWithLockMac:(NSString *)lockMac];
 ```
 6.It will execute the delegate method {@link onBTConnectSuccess_peripheral:lockName:} after connecting successfully.
   
@@ -149,8 +153,6 @@ In addition to the three generation lock administrators
 
 3.Receive successful callback {@link onSetLockTime}.
 
-
-
 ## Notes
 
 ### TTLock Notes
@@ -198,6 +200,9 @@ Such as,you want to unlock ,and  calibrate time.  
 TTObject.uid = openid; 
  ```
 
+5.{@link connectPeripheralWithLockMac:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link cancelConnectPeripheralWithLockMac:}.
+
+{@link connect:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect:}.
 
 
 
