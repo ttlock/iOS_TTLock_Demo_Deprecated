@@ -5,19 +5,19 @@
 <br>3.指纹采集返回参数AddFingerprintState修改
 
 ### SDK2.7.2
-#### bug修改
+##### bug修改
 1.时间转换，兼容佛教日历、日本日历，12小时制
 <br>2.Characteristic类型由int改为long long
  <br> {@link onGetDeviceCharacteristic:};
  <br> {@link onAddAdministrator_addAdminInfoDic:};
  <br>3.断开连接里，去掉 m_password = nil; m_key = nil; m_aesKey = nil;
-#### 新增属性
+##### 新增属性
 1.@property(nonatomic, assign, readonly) TTManagerState state;
  <br>2.@property(nonatomic, assign, readonly) BOOL isScanning NS_AVAILABLE(NA, 9_0);
-#### 修改方法
+##### 修改方法
 1.{@link onFoundDevice_peripheralWithInfoDic:}方法里增加锁的开关状态lockSwitchState
   <br>2.{@link onGetLockSwitchState:}返回state的类型改为枚举TTLockSwitchState
-#### 新增方法
+##### 新增方法
 1.- (void)TTManagerDidUpdateState:(TTManagerState)state;
  <br>// @param isScanDuplicates every time the peripheral is seen, which may be many times per second. This can be useful in specific situations.Recommend this value to be NO.
   <br>2.-(void)startBTDeviceScan:(BOOL)isScanDuplicates;
@@ -26,7 +26,7 @@
   <br>5.-(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
   <br>6. 指纹采集（添加）
    <br>- (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber currentCount:(int)currentCount totalCount:(int)totalCount ;
-### 废弃方法
+##### 废弃方法
    1.- (void)TTLockManagerDidUpdateState:(CBCentralManager *)central;
    <br>2.-(void)cancelConnectPeripheral:(CBPeripheral *)peripheral;
    <br>3.-(void)startBTDeviceScan;
