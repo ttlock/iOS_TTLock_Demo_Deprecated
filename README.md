@@ -262,6 +262,6 @@ done
 The script will look through your built application’s Frameworks folder and make sure only the architectures you’re building for are present in each Framework.
 
 Reference：
-[]http://ikennd.ac/blog/2015/02/stripping-unwanted-architectures-from-dynamic-libraries-in-xcode/
+http://ikennd.ac/blog/2015/02/stripping-unwanted-architectures-from-dynamic-libraries-in-xcode/
 
 
