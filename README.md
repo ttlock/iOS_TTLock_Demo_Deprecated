@@ -15,7 +15,10 @@
 
 First, add the following line to your Podfile:
 
-pod 'TTLock'
+use_frameworks!
+target 'YourAppTargetName' do
+  pod 'TTLock'
+end
 
 Second, install TTLock into your project:
 
@@ -32,7 +35,11 @@ Manually
 
 First, add the following line to your Podfile:
 
-pod 'TTLockDFU'
+use_frameworks!
+target 'YourAppTargetName' do
+  pod 'TTLockDFU' 
+end
+
 
 Second, install TTLock into your project:
 
@@ -45,9 +52,58 @@ Manually
 <br>4.Find Target->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
 <br>5.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
+### Dynamic librarys are uploaded to AppStore
+[![](http://ikennd.ac/pictures/iTC-Unsupported-Archs.png])
+Add a Run Script step to your build steps, put it after your step to embed frameworks, set it to use /bin/sh and enter the following script:
+```js
+APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
 
+# This script loops through the frameworks embedded in the application and
 
+# removes unused architectures.
 
+find "$APP_PATH" -name '*.framework' -type d | while read -r FRAMEWORK
+
+do
+
+FRAMEWORK_EXECUTABLE_NAME=$(defaults read "$FRAMEWORK/Info.plist" CFBundleExecutable)
+
+FRAMEWORK_EXECUTABLE_PATH="$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME"
+
+echo "Executable is $FRAMEWORK_EXECUTABLE_PATH"
+
+EXTRACTED_ARCHS=()
+
+for ARCH in $ARCHS
+
+do
+
+echo "Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME"
+
+lipo -extract "$ARCH" "$FRAMEWORK_EXECUTABLE_PATH" -o "$FRAMEWORK_EXECUTABLE_PATH-$ARCH"
+
+EXTRACTED_ARCHS+=("$FRAMEWORK_EXECUTABLE_PATH-$ARCH")
+
+done
+
+echo "Merging extracted architectures: ${ARCHS}"
+
+lipo -o "$FRAMEWORK_EXECUTABLE_PATH-merged" -create "${EXTRACTED_ARCHS[@]}"
+
+rm "${EXTRACTED_ARCHS[@]}"
+
+echo "Replacing original executable with thinned version"
+
+rm "$FRAMEWORK_EXECUTABLE_PATH"
+
+mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
+
+done
+```
+The script will look through your built application’s Frameworks folder and make sure only the architectures you’re building for are present in each Framework.
+
+Reference：
+<hr>http://ikennd.ac/blog/2015/02/stripping-unwanted-architectures-from-dynamic-libraries-in-xcode/
 
 ## Introduction
 
