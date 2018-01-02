@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name         = "DFUDependence"
-s.version      = "2.7.2"
+s.version      = "2.7.4"
 s.summary      = "DFUDependence SDK for iOS."
 s.homepage     = "https://github.com/ttlock/iOS_TTLock_Demo"
 s.license      = { :type => "MIT", :file => "LICENSE" }
@@ -11,7 +11,7 @@ s.vendored_frameworks = "TTLockFrameworks/DFUDependence.framework"
 s.preserve_paths      = "TTLockFrameworks/DFUDependence.framework"
 s.library   = "z"
 s.requires_arc = true
-s.xcconfig = { "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES" => "YES" }
+s.xcconfig = { "ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES" => "YES","ENABLE BITCODE" => "NO" }
 end
 
 

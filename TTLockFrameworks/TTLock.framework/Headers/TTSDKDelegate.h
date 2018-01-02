@@ -27,7 +27,7 @@
 -(void)onStopBTDeviceScan;
 
 /**
- *  相关回调 错误码
+ *  错误回调 
  *
  *  @param error     错误码
  *  @param command   错误的指令值
@@ -41,12 +41,12 @@
  *  peripheral     搜索到的蓝牙对象
  *  rssi           信号值
  *  lockName       锁名
- *  mac            锁的mac地址
+ *  lockMac            锁的mac地址
  *  advertisementData   锁的广播
  *  isContainAdmin      锁是否存在管理员（即是否处于设置模式）  例：YES存在（非设置模式）  NO不存在（设置模式）
  *  isAllowUnlock  三代锁中广播的一个信号值 YES为有人摸锁， 二代锁一直为YES 车位锁一直为NO
  *  oneMeterRSSI   三代锁中广播的一个信号值 这个数值是离锁一米左右的rssi  二代锁为固定的值
- *  protocolCategory    协议类别   例：5 是门锁  10 是车位锁  0x3412 是手环
+ *  protocolType    协议类别   例：5 是门锁  10 是车位锁  0x3412 是手环
  *  protocolVersion     协议版本   返回的值 1是LOCK  4是二代锁 3是三代锁
  *  scene      类型：DoorSceneType   应用场景
  *  lockSwitchState   类型：TTLockSwitchState  车位锁（scene == 7）的开关状态 ,不支持此功能的锁返回的值为TTLockSwitchStateUnknown
@@ -77,10 +77,10 @@
 /**
  *  添加管理员成功  以字典形式返回参数
  *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
+ *  lockKey 约定数开门使用
  *  aesKey  开门使用
  *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  mac     mac地址 唯一标识
+ *  lockMac     mac地址 唯一标识
  *  timestamp 时间戳
  *  pwdInfo  生成的加密密码数据
  *  electricQuantity 如果为-1 则表示没有获取到电量
@@ -88,7 +88,7 @@
  *  deletePassword  管理员删除密码
  *  Characteristic(LongLong) 锁的特征值 使用类 TTSpecialValueUtil 来判断支持什么功能
  *  unlockFlag   标记位 添加成功的时候为0  注：如果这里没有返回这个参数 需要写成0即可
- *  DeviceInfoType 读取设备的信息 1 2 3 4 5 6 参考枚举   包括 1-产品型号 2-硬件版本号 3-固件版本号 4-生产日期 5-蓝牙地址 6-时钟
+ *  DeviceInfoType 类型：NSDictionary 读取设备的信息 1 2 3 4 5 6 参考枚举   包括 1-产品型号 2-硬件版本号 3-固件版本号 4-生产日期 5-蓝牙地址 6-时钟
  *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)
  */
 -(void)onAddAdministrator_addAdminInfoDic:(NSDictionary*)addAdminInfoDic;
@@ -193,8 +193,8 @@
  
  @param state AddFingerprintState
  @param fingerprintNumber 状态AddFingerprintCollectSuccess包含指纹编号，其他状态无此状态
- @param currentCount 当前录入指纹的次数（-1表示次数未知）,第一次返回当前采集次数为0，最后一次直接返回状态1及指纹编号 状态AddFingerprintCollectProgress时返回
- @param totalCount   需要录入指纹的次数（-1表示次数未知） 状态AddFingerprintCollectProgress时返回
+ @param currentCount 当前录入指纹的次数（-1表示次数未知）,第一次返回当前采集次数为0，最后一次直接返回状态1及指纹编号 状态AddFingerprintCollectSuccess时不返回
+ @param totalCount   需要录入指纹的次数（-1表示次数未知） 状态AddFingerprintCollectSuccess时不返回
  */
 - (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber currentCount:(int)currentCount totalCount:(int)totalCount ;
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name          = "TTLockDFU"
-s.version       = "2.7.2"
+s.version       = "2.7.4"
 s.summary       = "TTLock SDK for iOS."
 s.homepage      = "https://github.com/ttlock/iOS_TTLock_Demo"
 s.license       = { :type => "MIT", :file => "LICENSE" }
@@ -14,4 +14,5 @@ s.library       = "z"
 s.requires_arc  = true
 s.dependency "DFUDependence"
 s.dependency "TTLock"
+s.xcconfig = { "ENABLE BITCODE" => "NO" }
 end

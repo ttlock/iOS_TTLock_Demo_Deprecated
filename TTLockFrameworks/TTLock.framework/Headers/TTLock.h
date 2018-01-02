@@ -1,5 +1,4 @@
-//
-//  r2.7.2
+
 //
 //  Created by TTLock on 2017/8/11.
 //  Copyright © 2017年 TTLock. All rights reserved.
@@ -109,18 +108,19 @@
 /** 获取锁版本
  */
 -(void)getProtocolVersion;
-
 /**
- *  添加管理员
- *
- *  @param advertisementData  蓝牙广播的数据advertisementData
- *  @param adminPassward      管理员密码（车位锁没有这个功能）  若传nil 则随机生成7位数密码
- *  @param deletePassward     清空码（车位锁与三代锁没有这个功能） 若传nil 则随机生成7位数密码
+ *  添加管理员 (也适用于车位锁)
+ * param addDic参数为字典  下面对应键及其值的意义
+ * lockMac               锁的mac
+ * protocolType          协议类别
+ * protocolVersion       协议版本
+ * adminPassward         可以不传  管理员密码（车位锁没有这个功能）  若传nil 则随机生成7位数密码
+ * deletePassward        可以不传  清空码（车位锁与三代锁没有这个功能） 若传nil 则随机生成7位数密码
  *                            密码范围:二代锁7-9位数字 三代锁 4-9位数字
  */
--(void)addAdministrator_advertisementData:(NSDictionary *)advertisementData adminPassword:(NSString*)adminPassward deletePassword:(NSString*)deletePassward;
+-(void)addAdministrator_addDic:(NSDictionary *)addDic;
 
-/** 管理员开锁
+/** 管理员开锁 (也适用于车位锁)
  *  adminPS 管理员密码 管理员开门时校验管理员身份的
  *  lockkey 约定数开门使用
  *  aesKey  开门使用
@@ -131,7 +131,7 @@
  */
 -(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
 
-/** eKey开锁
+/** eKey开锁 (也适用于车位锁)
  *  lockkey 约定数开门使用
  *  aesKey  开门使用
  *  startDate  开始时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或 2000-1-1 0:0
@@ -157,7 +157,7 @@
 -(void)calibationTimeAndUnlock_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey startDate:(NSDate *)sdate endDate:(NSDate *)edate version:(NSString*)version unlockFlag:(int)flag referenceTime:(NSDate *)time uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
 
 /**
- 关（闭）锁 （适用车位锁以及支持此功能的门锁）
+ 关（闭）锁 （也适用于车位锁以及支持此功能的门锁）
  @param lockkey  约定数
  @param aesKey  aesKey
  @param  flag  标记位
@@ -296,7 +296,6 @@
  *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
  */
 - (void)getOperateLog_aesKey:(NSString*)aesKey version:(NSString *)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
-
 /**
  *  获取锁时间 （只有三代锁有）
  *  aesKey  开门使用
@@ -353,9 +352,9 @@
  */
 - (void)setWristbandKey:(NSString*)wristbandKey isOpen:(BOOL)isOpen;
 /**
- * 设置闭锁时间
- * OprationType 只有查询和修改
- * time 是设置的闭锁时间 查询可传任意值
+ *  设置闭锁时间
+ *  OprationType 只有查询和修改
+ *  time 是设置的闭锁时间 修改：传0是不闭锁  查询：可传任意值
  *  adminPS 管理员密码 管理员开门时校验管理员身份的
  *  lockkey 约定数开门使用
  *  aesKey  开门使用
@@ -399,18 +398,6 @@
  @param unlockFlag 标记位
  */
 - (void)operateScreen_type:(int)type isShow:(BOOL)isShow adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
-
-/**
- 设置蓝牙名字
- 
- @param lockName 名字  注：名字不能超过15个字节 可以使用类TTUtils里方法convertToByte来获取名字所占字符
- @param adminPS 管理员密码
- @param lockkey 约定数
- @param aesKey aesKey
- @param unlockFlag 标记位
- */
-- (void)setLockName:(NSString *)lockName adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
-
 /**
  *  读取开锁密码 （只有三代管理员才能读取开锁密码）成功的回调是 onGetOperateLog_LockOpenRecordStr
  *  adminPS 管理员密码
@@ -456,6 +443,15 @@
 - (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray*)servicesArray __attribute__((deprecated("SDK2.7.1")));
 /** 管理员开锁*/
 -(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid __attribute__((deprecated("SDK2.7.1")));
+/**
+ *  添加管理员 (也适用于车位锁)
+ *
+ *  @param advertisementData  蓝牙广播的数据advertisementData
+ *  @param adminPassward      管理员密码（车位锁没有这个功能）  若传nil 则随机生成7位数密码
+ *  @param deletePassward     清空码（车位锁与三代锁没有这个功能） 若传nil 则随机生成7位数密码
+ *                            密码范围:二代锁7-9位数字 三代锁 4-9位数字
+ */
+-(void)addAdministrator_advertisementData:(NSDictionary *)advertisementData adminPassword:(NSString*)adminPassward deletePassword:(NSString*)deletePassward __attribute__((deprecated("SDK2.7.4")));
 @end
 
 

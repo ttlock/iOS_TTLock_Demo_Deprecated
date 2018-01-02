@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name          = "TTLock"
-s.version       = "2.7.3"
+s.version       = "2.7.4"
 s.summary       = "TTLock SDK for iOS."
 s.homepage      = "https://github.com/ttlock/iOS_TTLock_Demo"
 s.license       = { :type => "MIT", :file => "LICENSE" }
@@ -12,5 +12,5 @@ s.preserve_paths      = "TTLockFrameworks/TTLock.framework"
 s.framework     = "CoreBluetooth"
 s.library       = "z"
 s.requires_arc  = true
-  
+.xcconfig = { "ENABLE BITCODE" => "NO" } 
 end
