@@ -14,5 +14,5 @@ s.library       = "z"
 s.requires_arc  = true
 s.dependency "DFUDependence"
 s.dependency "TTLock"
-s.xcconfig = { "ENABLE BITCODE" => "NO" }
+s.xcconfig = { "ENABLE_BITCODE" => "NO" }
 end
