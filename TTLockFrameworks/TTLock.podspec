@@ -12,5 +12,5 @@ s.preserve_paths      = "TTLockFrameworks/TTLock.framework"
 s.framework     = "CoreBluetooth"
 s.library       = "z"
 s.requires_arc  = true
-.xcconfig = { "ENABLE BITCODE" => "NO" } 
+.xcconfig = { "ENABLE_BITCODE" => "NO" } 
 end
