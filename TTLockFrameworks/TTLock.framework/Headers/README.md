@@ -4,7 +4,7 @@
 2.添加管理员成功回调{@link onAddAdministrator_addAdminInfoDic:}里的备注"lockkey"改成”lockKey“，第二个”k"改成大写
 3.新增添加管理员接口{@link addAdministrator_addDic:}，废弃{@link  addAdministrator_advertisementData: adminPassword: deletePassward:}。
 5.当打印打开时，错误回调那里也会打印相应的错误信息
-相应方法相应回调 写在方法注释里
+
 
 ### SDK2.7.3
 1.读取开锁密码，读取新密码方案参数返回参数里的部分key修改

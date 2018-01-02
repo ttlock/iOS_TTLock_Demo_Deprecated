@@ -12,8 +12,6 @@
 		2299A8F91A075D8100291A38 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299A8F81A075D8100291A38 /* UIKit.framework */; };
 		2299A8FB1A075DC700291A38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299A8FA1A075DC700291A38 /* Foundation.framework */; };
 		7694D27F5F00DB4D9E44233B /* Pods_TTLockDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A6AACAA202C6C61F874F83 /* Pods_TTLockDemo.framework */; };
-		FC61C2EF1F43EB4E009D9B25 /* DFUDependence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */; };
-		FC61C2F01F43EB4E009D9B25 /* TTLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; };
 		FC61C2F11F43EB6B009D9B25 /* DFUDependence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */; };
 		FC61C2F21F43EB6B009D9B25 /* DFUDependence.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC61C2F31F43EB6E009D9B25 /* TTLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; };
@@ -120,7 +118,6 @@
 		FC72C3E61FA815270009F835 /* AddLockViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC72C3E51FA815270009F835 /* AddLockViewController.m */; };
 		FC72C3E91FA8158D0009F835 /* DiscoverDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FC72C3E81FA8158D0009F835 /* DiscoverDeviceCell.m */; };
 		FC83484C1F53C3F400728817 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
-		FC83484D1F53C3F600728817 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
 		FC83484E1F53C3F600728817 /* TTLockDFU.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC872A121FA708BA00DE2A4B /* TTLockHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A0F1FA708B900DE2A4B /* TTLockHelper.m */; };
 		FC872A131FA708BA00DE2A4B /* BlueToothHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A101FA708B900DE2A4B /* BlueToothHelper.m */; };
@@ -360,14 +357,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC61C2EF1F43EB4E009D9B25 /* DFUDependence.framework in Frameworks */,
-				FC61C2F01F43EB4E009D9B25 /* TTLock.framework in Frameworks */,
 				2299A8FB1A075DC700291A38 /* Foundation.framework in Frameworks */,
 				2299A8F91A075D8100291A38 /* UIKit.framework in Frameworks */,
 				FC61C2F11F43EB6B009D9B25 /* DFUDependence.framework in Frameworks */,
 				FC83484C1F53C3F400728817 /* TTLockDFU.framework in Frameworks */,
 				FC61C2F31F43EB6E009D9B25 /* TTLock.framework in Frameworks */,
-				FC83484D1F53C3F600728817 /* TTLockDFU.framework in Frameworks */,
 				228B8BB71A0085FF0060244F /* CoreBluetooth.framework in Frameworks */,
 				7694D27F5F00DB4D9E44233B /* Pods_TTLockDemo.framework in Frameworks */,
 			);
@@ -1198,6 +1192,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2WZV3BZ6ZK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1240,6 +1235,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2WZV3BZ6ZK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

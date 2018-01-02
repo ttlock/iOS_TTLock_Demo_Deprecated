@@ -41,7 +41,7 @@
  *  peripheral     搜索到的蓝牙对象
  *  rssi           信号值
  *  lockName       锁名
- *  lockMac            锁的mac地址
+ *  mac            锁的mac地址
  *  advertisementData   锁的广播
  *  isContainAdmin      锁是否存在管理员（即是否处于设置模式）  例：YES存在（非设置模式）  NO不存在（设置模式）
  *  isAllowUnlock  三代锁中广播的一个信号值 YES为有人摸锁， 二代锁一直为YES 车位锁一直为NO
@@ -80,7 +80,7 @@
  *  lockKey 约定数开门使用
  *  aesKey  开门使用
  *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  lockMac     mac地址 唯一标识
+ *  mac     mac地址 唯一标识
  *  timestamp 时间戳
  *  pwdInfo  生成的加密密码数据
  *  electricQuantity 如果为-1 则表示没有获取到电量
