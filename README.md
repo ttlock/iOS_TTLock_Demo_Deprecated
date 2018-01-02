@@ -23,8 +23,9 @@ pod install
 
 Manually
 <br>1.Drag the TTLock.framework into your project.
-<br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the framework above.
-<br>3.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
+<br>2.Find Target -> 'General' -> 'Embedded Binaries', add the framework above.
+<br>3.Find Target->Build Settings ->Enable Bitcode ,then set 'NO'.
+<br>4.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
 
 ### If you need to upgrade devices into your application
@@ -38,10 +39,11 @@ Second, install TTLock into your project:
 pod install
 
 Manually
-<br>1.Drag the TTLock.framework and DFUDependence.framework into your project.
-<br>2.Find the target settings in this application, then find 'General' -> 'Embedded Binaries', add the two frameworks above.
-<br>3.Find Targets->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
-<br>4.Find Targets->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
+<br>1.Drag the TTLock.framework,TTLock.framework and DFUDependence.framework into your project.
+<br>2.Find Target -> 'General' -> 'Embedded Binaries', add the three frameworks above.
+<br>3.Find Target->Build Settings ->Enable Bitcode ,then set 'NO'.
+<br>4.Find Target->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
+<br>5.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
 
 
