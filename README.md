@@ -14,11 +14,10 @@
 ### If you do not need to upgrade devices into your application
 
 First, add the following line to your Podfile:
-
-use_frameworks!
-target 'YourAppTargetName' do
-  pod 'TTLock'
-end
+<br>use_frameworks!
+<br>target 'YourAppTargetName' do
+  <br>pod 'TTLock'
+<br>end
 
 Second, install TTLock into your project:
 
@@ -34,11 +33,10 @@ Manually
 ### If you need to upgrade devices into your application
 
 First, add the following line to your Podfile:
-
-use_frameworks!
-target 'YourAppTargetName' do
-  pod 'TTLockDFU' 
-end
+<br>use_frameworks!
+<br>target 'YourAppTargetName' do
+  <br>pod 'TTLockDFU' 
+<br>end
 
 
 Second, install TTLock into your project:
@@ -87,15 +85,15 @@ TTLock *TTObject = [[TTLock alloc]initWithDelegate:self];
   ```objective-c
 [TTLock setDebug:YES]; 
  ```   
-3.Executing the following code in the callback {@link TTLockManagerDidUpdateState:} what is Bluetooth state changing:
+3.Executing the following code in the callback {@link TTManagerDidUpdateState:} what is Bluetooth state changing:
 ```objective-c
-if (central.state == CBCentralManagerStatePoweredOn) {
-  [TTObject startBTDeviceScan]; //start scanning
-}else if (central.state == CBCentralManagerStatePoweredOff){ 
-  [TTObject stopBTDeviceScan];  // stop scanning
-}else if(central.state == CBCentralManagerStateUnsupported){    
-  NSLog(@"Your device does not support ble4.0, unable to use our app.");   
-}
+ if (state == TTManagerStatePoweredOn) {
+         [_TTObject startBTDeviceScan:YES];
+    }else if (state == TTManagerStatePoweredOff){
+          [_TTObject stopBTDeviceScan];
+    }else if (state == TTManagerStateUnsupported){
+        NSLog(@"Your device does not support ble4.0, unable to use our app.");   
+    }
 ```
 4.It will execute the delegate method {@link onFoundDevice_peripheralWithInfoDic:} after scanning the device, you can get the basic information about the peripherals, such as, Bluetooth name, MAC address, broadcast data and so on.
 
