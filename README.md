@@ -53,7 +53,7 @@ Manually
 <br>5.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
 
 ### Dynamic librarys are uploaded to AppStore
-[![](http://ikennd.ac/pictures/iTC-Unsupported-Archs.png])
+![](http://ikennd.ac/pictures/iTC-Unsupported-Archs.png)
 Add a Run Script step to your build steps, put it after your step to embed frameworks, set it to use /bin/sh and enter the following script:
 ```js
 APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
@@ -103,7 +103,7 @@ done
 The script will look through your built application’s Frameworks folder and make sure only the architectures you’re building for are present in each Framework.
 
 Reference：
-<hr>http://ikennd.ac/blog/2015/02/stripping-unwanted-architectures-from-dynamic-libraries-in-xcode/
+[]http://ikennd.ac/blog/2015/02/stripping-unwanted-architectures-from-dynamic-libraries-in-xcode/
 
 ## Introduction
 
