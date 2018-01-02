@@ -134,7 +134,7 @@ TTObject.uid = openid;
 ```objective-c
 [TTObject connect:peripheral];(This parameter 'peripheral' is in the callback 'onFoundDevice_peripheralWithInfoDic')
 ```
-3.After the connection is successful, you can call bluetooth interface {@link addAdministrator_advertisementData: adminPassword:deletePassword:}.
+3.After the connection is successful, you can call bluetooth interface {@link addAdministrator_addDic:}.
 
 4.Use the network interface(v3/lock/init) to upload data after receiving the callback {@link onAddAdministrator_addAdminInfoDic:}. 
 
