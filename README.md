@@ -211,7 +211,7 @@ TTObject.uid = openid;
 
 ### Dynamic librarys are uploaded to AppStore
 ![](http://ikennd.ac/pictures/iTC-Unsupported-Archs.png)
-Add a Run Script step to your build steps, put it after your step to embed frameworks, set it to use /bin/sh and enter the following script:
+First step:Add a Run Script step to your build steps, put it after your step to embed frameworks, set it to use /bin/sh and enter the following script:
 ```js
 APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
 
@@ -258,7 +258,7 @@ mv "$FRAMEWORK_EXECUTABLE_PATH-merged" "$FRAMEWORK_EXECUTABLE_PATH"
 done
 ```
 The script will look through your built application’s Frameworks folder and make sure only the architectures you’re building for are present in each Framework.
-
+<br>Second step:Add the path of the imported dynamic Frameworks to Input Files
 ![](https://github.com/ttlock/iOS_TTLock_Demo/blob/master/TTLockDemo/images/0F50B0D2-30E0-44AD-9112-F18A6CB8BE47.png)
 
 Reference：
