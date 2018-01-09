@@ -209,7 +209,7 @@ TTObject.uid = openid;
 
 {@link connect:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect:}.
 
-### Dynamic librarys are uploaded to AppStore
+### Dynamic frameworks are uploaded to AppStore
 ![](http://ikennd.ac/pictures/iTC-Unsupported-Archs.png)
 First step:Add a Run Script step to your build steps, put it after your step to embed frameworks, set it to use /bin/sh and enter the following script:
 ```js
