@@ -46,6 +46,20 @@
     return [self.userType isEqualToString:@"110301"];
 }
 
+- (id)mj_newValueFromOldValue:(id)oldValue property:(MJProperty *)property{
+  
+    if ([property.name isEqualToString:@"startDate"]) {
+        if ([oldValue isKindOfClass:[NSNumber class]]) {
+            return  [NSNumber numberWithInteger:[oldValue integerValue] / 1000];
+        }
+    }
+    if ([property.name isEqualToString:@"endDate"]) {
+        if ([oldValue isKindOfClass:[NSNumber class]]) {
+            return  [NSNumber numberWithInteger:[oldValue integerValue] / 1000] ;
+        }
+    }
+    return oldValue;
+}
 
 @end
 
