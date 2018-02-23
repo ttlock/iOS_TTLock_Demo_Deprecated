@@ -679,60 +679,7 @@ protocol_version:(NSString*)protocol_version
     }
     
     return [NSString stringWithFormat:@"%d", errcode.intValue];
-    
-    
 }
-
-
-+(int)backUpkeyWithLockId:(int)lockId keyId:(int)keyId adminPs:(NSString *)adminPs nokeyPs:(NSString *)nokeyPs deletePs:(NSString *)deletePs backupPs:(NSString *)backupPs
-{
-    if (nokeyPs == NULL) {
-        nokeyPs = @"";
-    }
-    if (deletePs == NULL) {
-        deletePs = @"";
-    }
-    NSString *nokeypsStr = @"";
-    NSString * deletePsStr = @"";
-    if (![nokeyPs isEqualToString:@""]) {
-        nokeypsStr = [SecurityUtil encodeBase64String:[TTUtils EncodeSharedKeyValue:nokeyPs]];
-    }
-    if (![deletePs isEqualToString:@""]) {
-        deletePsStr = [SecurityUtil encodeBase64String:[TTUtils EncodeSharedKeyValue:deletePs]];
-    }
-    
-    NSString *url = [NSString stringWithFormat:@"%@/v3/key/backup", URL];
-    NSString * body = [NSString stringWithFormat:@"clientId=%@&accessToken=%@&lockId=%d&keyId=%i&adminPs=%@&nokeyPs=%@&deletePs=%@&md5BackupPs=%@&date=%@", TTAppkey,[SettingHelper getAccessToken],lockId,keyId,adminPs,nokeypsStr,deletePsStr,backupPs, [XYCUtils GetCurrentTimeInMillisecond]];
-    NSMutableURLRequest *urlRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: [url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    [urlRequest setTimeoutInterval:30.0f];
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setHTTPBody:[[NSMutableData alloc]initWithData:[body dataUsingEncoding:NSUTF8StringEncoding]]];
-    NSLog(@"备份钥匙的body = %@", body);
-    
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:&error];
-    if (data == nil) {
-        NSLog(@"send request failed: %@", error);
-        return NET_REQUEST_ERROR_NO_DATA;
-    }
-    
-    NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSData* jsonData = [response dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSDictionary* resultsDictionary =[NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-    
-    NSString * errcode = [resultsDictionary objectForKey:@"errcode"];
-    NSLog(@"备份钥匙的response = %@", response);
-    if (!errcode || errcode.intValue == 0) {
-        return 0;
-    }
-    
-    return errcode.intValue;
-    
-    
-}
-
 +(int)changeKeyNameWithLockId:(int)lockId lockAlias:(NSString *)lockAlias {
     NSString *url = [NSString stringWithFormat:@"%@/v3/lock/modifyLockInfo", URL];
     NSString * body = [NSString stringWithFormat:@"clientId=%@&accessToken=%@&lockId=%d&lockAlias=%@&date=%@", TTAppkey,[SettingHelper getAccessToken],lockId, lockAlias,[XYCUtils GetCurrentTimeInMillisecond]];

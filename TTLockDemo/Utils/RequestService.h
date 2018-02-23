@@ -201,24 +201,6 @@ protocol_version:(NSString*)protocol_version
  */
 +(id)RequestKpsUsageWithLockId:(int)lockId pageNo:(int)pageNo pageSize:(int)pageSize;
 
-
-/*!
- @method
- @abstract  备份钥匙
- @discussion
- @param clientId 客户端id
- @param accessToken 访问令牌
- @param lockId 锁id
- @param keyId   钥匙id
- @param adminPs 管理员密码
- @param nokeyPs 无钥匙密码
- @param deletePs 删除密码
- @param backupPs 备份密码
- @result int
- */
-+(int)backUpkeyWithLockId:(int)lockId keyId:(int)keyId adminPs:(NSString *)adminPs nokeyPs:(NSString *)nokeyPs deletePs:(NSString *)deletePs backupPs:(NSString *)backupPs;
-
-
 /*!
  @method
  @abstract  修改锁名称(别名)

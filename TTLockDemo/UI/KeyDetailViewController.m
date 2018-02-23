@@ -196,13 +196,13 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
     switch (indexPath.section) {
         case 0:
         {
-            if (indexPath.row ==2 ){
+            if (indexPath.row ==3 ){
                 if (selectedKey.isAdmin) {
                     [cell.label_right setHidden:NO];
                     cell.label_right.text = selectedKey.noKeyPwd;
                 }
                     
-            }else if (indexPath.row == 3){
+            }else if (indexPath.row == 4){
                 if (selectedKey.isAdmin&&![selectedKey.lockVersion hasPrefix:@"5.3"]){
                     [cell.label_right setHidden:NO];
                     cell.label_right.text = selectedKey.deletePwd;
@@ -289,33 +289,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                     break;
                 }break;
                 case 2:{
-                    //设置键盘密码
-                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"请输入键盘密码(4到8位数字)":@"请输入键盘密码(7到10位数字)"
-                                                                    message:nil
-                                                                   delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
-                                                          otherButtonTitles:NSLocalizedString(@"words_sure_ok", nil),nil];
-                    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                    [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
-                    alert.tag = TAG_SET_KEYBOARD_PS;
-                    [alert show];
- 
-                }break;
-                case 3:{
-                    //管理员删除密码
-                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"请输入管理员删除密码(4到8位数字)":@"请输入管理员删除密码(7到10位数字)"
-                                                                        message:nil
-                                                                       delegate:self
-                                                              cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
-                                                              otherButtonTitles:NSLocalizedString(@"words_sure_ok", nil),nil];
-                        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                        [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
-                        alert.tag = TAG_SET_KEYBOARD_PS_DELETE;
-                        [alert show];
-  
-                }break;
-                case 4:{
-                 [self showHUDToWindow:nil];
+                    [self showHUDToWindow:nil];
                     [TTLockHelper connectKey:self.selectedKey connectBlock:^(CBPeripheral *peripheral, KKBLE_CONNECT_STATUS connectStatus) {
                         if (connectStatus != KKBLE_CONNECT_SUCCESS) {
                             [self showLockNotNearToast];
@@ -327,9 +301,37 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                             }
                             [self showLockOperateFailed];
                         }];
-
+                        
                     }];
 
+                   
+ 
+                }break;
+                case 3:{
+                    //设置键盘密码
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"请输入键盘密码(4到9位数字)":@"请输入键盘密码(7到9位数字)"
+                                                                    message:nil
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
+                                                          otherButtonTitles:NSLocalizedString(@"words_sure_ok", nil),nil];
+                    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                    [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
+                    alert.tag = TAG_SET_KEYBOARD_PS;
+                    [alert show];
+                   
+  
+                }break;
+                case 4:{
+                    //管理员删除密码
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"请输入管理员删除密码(4到9位数字)":@"请输入管理员删除密码(7到9位数字)"
+                                                                    message:nil
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
+                                                          otherButtonTitles:NSLocalizedString(@"words_sure_ok", nil),nil];
+                    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+                    [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeNumberPad;
+                    alert.tag = TAG_SET_KEYBOARD_PS_DELETE;
+                    [alert show];
 
                 }break;
                 default:
