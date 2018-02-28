@@ -11,7 +11,7 @@
 
 ## Installation
 
-### If you do not need to upgrade devices into your application
+### By Cocoapods
 
 First, add the following line to your Podfile:
 <br>use_frameworks!
@@ -23,15 +23,16 @@ Second, install TTLock into your project:
 
 pod install
 
-Manually
+### Manually
 <br>1.Drag the TTLock.framework into your project.
 <br>2.Find Target -> 'General' -> 'Embedded Binaries', add the framework above.
 <br>3.Find Target->Build Settings ->Enable Bitcode ,then set 'NO'.
-<br>4.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
+<br>4.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth.framework to your project .
+<br>5.Please refer to the last item of this document,if you need to upload to App Store.
 
+### If you need to upgrade devices into your application,you should in addition to add TTLockDFU.framework and DFUDependence.framework
 
-### If you need to upgrade devices into your application
-
+By Cocoapods
 First, add the following line to your Podfile:
 <br>use_frameworks!
 <br>target 'YourAppTargetName' do
@@ -48,8 +49,8 @@ Manually
 <br>2.Find Target -> 'General' -> 'Embedded Binaries', add the three frameworks above.
 <br>3.Find Target->Build Settings ->Enable Bitcode ,then set 'NO'.
 <br>4.Find Target->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
-<br>5.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth framework to your project .
-
+<br>5.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth.framework to your project .
+<br>6.Please refer to the last item of this document,if you need to upload to App Store.
 
 
 ## Introduction
@@ -77,15 +78,15 @@ TTLockDFU has been designed to make it easy to upgrade devices into your applica
 
 TTLock *TTObject = [[TTLock alloc]initWithDelegate:self];   
 ```
-  Create a Bluetooth central object and starts Bluetooth
+3. Start bluetooth
 ```objective-c  
 [TTObject setupBlueTooth];  
-```    
-  Do you want to open the SDK log? YES print, NO does not print, and defaults to No
+```    
+4. Do you want to open the SDK log? YES print, NO does not print, and defaults to No
   ```objective-c
 [TTLock setDebug:YES]; 
- ```   
-3.Executing the following code in the callback {@link TTManagerDidUpdateState:} what is Bluetooth state changing:
+ ```   
+5.Executing the following code in the callback {@link TTManagerDidUpdateState:} what is Bluetooth state changing:
 ```objective-c
  if (state == TTManagerStatePoweredOn) {
          [_TTObject startBTDeviceScan:YES];
@@ -95,13 +96,10 @@ TTLock *TTObject = [[TTLock alloc]initWithDelegate:self];
         NSLog(@"Your device does not support ble4.0, unable to use our app.");   
     }
 ```
-4.It will execute the delegate method {@link onFoundDevice_peripheralWithInfoDic:} after scanning the device, you can get the basic information about the peripherals, such as, Bluetooth name, MAC address, broadcast data and so on.
+6.It will execute the delegate method {@link onFoundDevice_peripheralWithInfoDic:} after scanning the device, you can get the basic information about the peripherals, such as, Bluetooth name, MAC address, isAllowUnlock, isContainAdmin and so on.
 
-5.You can connect the given Bluetooth by the way of scanning peripheral above.
-```objective-c
-[TTObject connect:peripheral]; 
-```
-you  can also use the following method in anywhere not only in the way of scanning peripheral above 
+7.Connect lock by lockMac
+
 ```objective-c
 [TTObject connectPeripheralWithLockMac:(NSString *)lockMac];
 ```
@@ -116,7 +114,7 @@ you  can also use the following method in anywhere not only in the way of scanni
 secondly,you should Executing the following code:  
 
 ``` objective-c
-TTObject.uid = openid;
+TTObject.uid = openid;//In order to record who operates the lock
 ```
   lastly, you can call interface such as, add administrator, open the door, etc…
 
