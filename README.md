@@ -33,7 +33,7 @@ pod install
 ### If you need to upgrade devices into your application,you should in addition to add TTLockDFU.framework and DFUDependence.framework
 
 By Cocoapods
-First, add the following line to your Podfile:
+<br>First, add the following line to your Podfile:
 <br>use_frameworks!
 <br>target 'YourAppTargetName' do
   <br>pod 'TTLockDFU' 
