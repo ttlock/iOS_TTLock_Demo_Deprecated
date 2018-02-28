@@ -24,7 +24,7 @@ Second, install TTLock into your project:
 pod install
 
 ### Manually
-<br>1.Drag the TTLock.framework into your project.
+1.Drag the TTLock.framework into your project.
 <br>2.Find Target -> 'General' -> 'Embedded Binaries', add the framework above.
 <br>3.Find Target->Build Settings ->Enable Bitcode ,then set 'NO'.
 <br>4.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth.framework to your project .
