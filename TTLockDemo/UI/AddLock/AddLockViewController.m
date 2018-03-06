@@ -28,7 +28,7 @@
     //添加的门锁
     KeyModel *_keyAdded;
     CBPeripheral * currentPeripheral;
-
+     AddLockModel *_selectModel;
     //判断断开蓝牙时 判断是否把hud取消
     BOOL isAddSuccess;
     BOOL isError;
@@ -131,7 +131,7 @@
     //如果本地的锁不存在 并且没有管理员才能添加
     if (!dbKey && model.isContainAdmin == NO) {
         //进行连接
-   
+        _selectModel = model;
         [TTObjectTTLockHelper connect:model.peripheral];
         [self performSelector:@selector(connectTimeOut) withObject:nil afterDelay:DEFAULT_CONNECT_TIMEOUT];
         _currentAdvData = model.advertisementData;
@@ -144,81 +144,76 @@
 - (void)onFoundDevice_peripheralWithInfoDic:(NSDictionary *)infoDic{
     OnFoundDeviceModel *onFoundModel = [[OnFoundDeviceModel alloc]initOnFoundDeviceModelWithDic:infoDic];
     
-    NSString *advName = [onFoundModel.advertisementData objectForKey:@"kCBAdvDataLocalName"];
-    if (!(advName && advName.length>0)) {
+    if (onFoundModel.lockName.length == 0) {
         return;
     }
-    //以lock开头的老一代锁 没有mac地址
-    if ([onFoundModel.mac isEqualToString: @""]) {
-        onFoundModel.protocolCategory = 5;
+    
+    int count = 0;
+    for (AddLockModel *model in _peripherals) {
+        if (model.isContainAdmin == NO) {
+            count++;
+        }
     }
-    //通过版本号 判断是什么类型的锁 如果是carLock车位锁 分二代车位锁和三代车位锁
-
-        if (onFoundModel.peripheral.name && onFoundModel.peripheral.name.length>0) {
-            
-            int count = 0;
-            for (AddLockModel *model in _peripherals) {
-                if (model.isContainAdmin == NO) {
-                    count++;
-                }
-            }
-            BOOL contain = NO;
-            BOOL isExchangePosition = YES;
-            int i = 0;
-            for (AddLockModel *model in _peripherals) {
-                if ([model.peripheral.name isEqual:onFoundModel.peripheral.name]) {
-                    if (model.isContainAdmin == onFoundModel.isContainAdmin) {
-                        isExchangePosition = NO;
-                    }else{
-                        isExchangePosition = YES;
-                        if (onFoundModel.isContainAdmin == NO) {
-                            if (_peripherals.count > count) {
-                                [_peripherals exchangeObjectAtIndex:i withObjectAtIndex:count];
-                            }
-                            
-                        }else{
-                            [_peripherals exchangeObjectAtIndex:i withObjectAtIndex:count-1];
-                        }
-                        
+    BOOL contain = NO;
+    BOOL isExchangePosition = YES;
+    int i = 0;
+    for (AddLockModel *model in _peripherals) {
+        if ([model.peripheral.name isEqual:onFoundModel.peripheral.name]) {
+            if (model.isContainAdmin == onFoundModel.isContainAdmin) {
+                isExchangePosition = NO;
+            }else{
+                isExchangePosition = YES;
+                if (onFoundModel.isContainAdmin == NO) {
+                    if (_peripherals.count > count) {
+                        [_peripherals exchangeObjectAtIndex:i withObjectAtIndex:count];
                     }
-                    contain = YES;
-                    model.isContainAdmin = onFoundModel.isContainAdmin;
-                    model.searchTime = [NSDate date];
-                    break;
+                    
+                }else{
+                    [_peripherals exchangeObjectAtIndex:i withObjectAtIndex:count-1];
                 }
                 
-                i++;
             }
-            if (!contain) {
-                AddLockModel *model = [[AddLockModel alloc]init];
-                model.peripheral = onFoundModel.peripheral;
-                model.isContainAdmin = onFoundModel.isContainAdmin;
-                model.advertisementData = onFoundModel.advertisementData;
-                model.lockMac = onFoundModel.mac;
-                model.searchTime = [NSDate date];
-                if (onFoundModel.isContainAdmin == NO) {
-                    isExchangePosition = YES;
-                    [_peripherals insertObject:model atIndex:0];
-                }else{
-                    isExchangePosition = YES;
-                    [_peripherals insertObject:model atIndex:_peripherals.count];
-                }
+            contain = YES;
+            model.isContainAdmin = onFoundModel.isContainAdmin;
+            model.searchTime = [NSDate date];
+            break;
+        }
+        
+        i++;
+    }
+    if (!contain) {
+        AddLockModel *model = [[AddLockModel alloc]init];
+        model.peripheral = onFoundModel.peripheral;
+        model.isContainAdmin = onFoundModel.isContainAdmin;
+        model.advertisementData = onFoundModel.advertisementData;
+        model.lockMac = onFoundModel.mac;
+        model.searchTime = [NSDate date];
+        model.protocolType = onFoundModel.protocolType;
+        model.protocolVersion = onFoundModel.protocolVersion;
+        
+        if (onFoundModel.isContainAdmin == NO) {
+            isExchangePosition = YES;
+            [_peripherals insertObject:model atIndex:0];
+        }else{
+            isExchangePosition = YES;
+            [_peripherals insertObject:model atIndex:_peripherals.count];
+        }
+    }
+     //超过5秒钟没有被搜索到 状态就要改变
+    for (AddLockModel *model in _peripherals) {
+        if (model.searchTime.timeIntervalSinceNow < - 5) {
+            if (model.isContainAdmin == NO) {
+                model.isContainAdmin  = YES;
+                isExchangePosition = YES;
             }
-             //超过5秒钟没有被搜索到 状态就要改变
-            for (AddLockModel *model in _peripherals) {
-                if (model.searchTime.timeIntervalSinceNow < - 5) {
-                    if (model.isContainAdmin == NO) {
-                        model.isContainAdmin  = YES;
-                        isExchangePosition = YES;
-                    }
-                }
-            }
-            if (isExchangePosition == YES) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [_tableView reloadData];
-                });
-            }
-       }
+        }
+    }
+    if (isExchangePosition == YES) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_tableView reloadData];
+        });
+    }
+
 }
 
 
@@ -236,7 +231,9 @@
     _keyAdded.lockAlias = lockName;
     _keyAdded.peripheralUUIDStr = peripheral.identifier.UUIDString;
     currentPeripheral = peripheral;
-    [TTObjectTTLockHelper addAdministrator_advertisementData:_currentAdvData adminPassword:nil deletePassword:nil];
+
+    [TTObjectTTLockHelper addAdministrator_addDic:@{@"lockMac":_selectModel.lockMac,@"protocolType":@(_selectModel.protocolType),@"protocolVersion":@(_selectModel.protocolVersion)}];
+   
 }
 - (void)onAddAdministrator_addAdminInfoDic:(NSDictionary *)addAdminInfoDic{
     

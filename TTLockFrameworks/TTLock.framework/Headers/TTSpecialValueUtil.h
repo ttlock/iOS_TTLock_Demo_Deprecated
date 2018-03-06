@@ -66,4 +66,12 @@
  是否支持循环密码
  */
 + (BOOL)isSupportCyclePassword:(long long)specialValue;
+/**
+ 是否支持门磁
+ */
++ (BOOL)isSupportDoorSensor:(long long)specialValue;
+/**
+ 是否支持远程开锁开关控制
+ */
++ (BOOL)isSupportRemoteUnlockSwicth:(long long)specialValue;
 @end

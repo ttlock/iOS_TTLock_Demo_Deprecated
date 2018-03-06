@@ -568,24 +568,34 @@ static  TTLockHelper *instace;
 }
 
 //开锁成功
--(void)onUnlockWithLockTime:(NSTimeInterval)lockTime{
+-(void)onUnlockWithLockTime:(NSTimeInterval)lockTime electricQuantity:(int)electricQuantity {
     
     BLEBlock unlockBlock = _bleBlockDict[KKBLE_UNLOCK];
     if (unlockBlock) {
         async_main(^{
             [_bleBlockDict removeObjectForKey:KKBLE_UNLOCK];
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            info[@"lockTime"] = @(lockTime);
+            info[@"electricQuantity"] = @(electricQuantity);
+            unlockBlock(info,YES);
+        
         });
     }
     
     [SSToastHelper showToastWithStatus:@"开门成功"];
 }
 //上锁成功
-- (void)onLockingWithLockTime:(NSTimeInterval)lockTime{
+- (void)onLockingWithLockTime:(NSTimeInterval)lockTime electricQuantity:(int)electricQuantity{
     
     BLEBlock lockBlock = _bleBlockDict[KKBLE_LOCK];
     if (lockBlock) {
         async_main(^{
-            [_bleBlockDict removeObjectForKey:KKBLE_LOCK];
+             [_bleBlockDict removeObjectForKey:KKBLE_LOCK];
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            info[@"lockTime"] = @(lockTime);
+            info[@"electricQuantity"] = @(electricQuantity);
+            lockBlock(info,YES);
+           
         });
     }
     
@@ -660,7 +670,10 @@ static  TTLockHelper *instace;
     BLEBlock resetPswBlock = _bleBlockDict[KKBLE_RESET_KEYBOARDPWD];
     if (resetPswBlock){
         async_main(^{
-            resetPswBlock(nil,YES);
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            info[@"timestamp"] = timestamp;
+            info[@"pwdInfo"] = pwdInfo;
+            resetPswBlock(pwdInfo,YES);
             [_bleBlockDict removeObjectForKey:KKBLE_RESET_KEYBOARDPWD];
         });
     }
@@ -849,7 +862,9 @@ static  TTLockHelper *instace;
     if (setupDevBlock){
         async_main(^{
             NSMutableDictionary *info = [NSMutableDictionary dictionary];
-            info[@"state"] = [NSString stringWithFormat:@"%d.%d.%d",currentTime,minTime,maxTime];
+            info[@"currentTime"] = @(currentTime);
+            info[@"minTime"] = @(minTime);
+            info[@"maxTime"] = @(maxTime);
             setupDevBlock(info,YES);
             [_bleBlockDict removeObjectForKey:KKBLE_QUERY_DEVICE];
         });
@@ -863,6 +878,7 @@ static  TTLockHelper *instace;
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_MODIF_DEVICE];
     if (setupDevBlock){
         async_main(^{
+            
             setupDevBlock(nil,YES);
             [_bleBlockDict removeObjectForKey:KKBLE_MODIF_DEVICE];
         });
@@ -880,7 +896,9 @@ static  TTLockHelper *instace;
     BLEBlock recordBlock = _bleBlockDict[KKBLE_UNLOCK_RECORD];
     if (recordBlock){
         async_main(^{
-            recordBlock(nil,YES);
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            info[@"LockOpenRecordStr"] = LockOpenRecordStr;
+            recordBlock(info,YES);
             [_bleBlockDict removeObjectForKey:KKBLE_UNLOCK_RECORD];
         });
     }
@@ -892,7 +910,9 @@ static  TTLockHelper *instace;
      BLEBlock getBlock = _bleBlockDict[KKBLE_GET_LOCK_TIME];
     if (getBlock){
         async_main(^{
-            getBlock(nil,YES);
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            info[@"lockTime"] = @(lockTime);
+            getBlock(info,YES);
             [_bleBlockDict removeObjectForKey:KKBLE_GET_LOCK_TIME];
         });
     }

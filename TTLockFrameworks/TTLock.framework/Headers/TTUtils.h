@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger,OprationType)
 };
 
 /*!
- *  @enum LockState
+ *  @enum TTLockSwitchState
  *
  *  @discussion 锁的开关状态
  *
@@ -118,6 +118,20 @@ typedef NS_ENUM(NSInteger,TTLockSwitchState)
     TTLockSwitchStateUnlock = 1,
     TTLockSwitchStateUnknown = 2,
     TTLockSwitchStateUnlockHasCar = 3,
+};
+/*!
+ *  @enum TTDoorSensorState
+ *
+ *  @discussion 门磁状态
+ *
+ *  @constant TTDoorSensorStateOff    没有检测到门磁
+ *  @constant TTDoorSensorStateOn     检测到门磁
+ *
+ */
+typedef NS_ENUM(NSInteger,TTDoorSensorState)
+{
+    TTDoorSensorStateOff = 0,
+    TTDoorSensorStateOn = 1,
 };
 
 /** 添加 IC 卡返回的状态类型

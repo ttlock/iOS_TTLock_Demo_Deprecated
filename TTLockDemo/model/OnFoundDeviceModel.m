@@ -19,7 +19,8 @@
         _isAllowUnlock = [dic[@"isAllowUnlock"] boolValue];
         _oneMeterRSSI = [dic[@"oneMeterRSSI"] intValue];
         _advertisementData = dic[@"advertisementData"];
-        _protocolCategory = [dic[@"protocolCategory"] intValue];
+        _protocolType = [dic[@"protocolType"] intValue];
+        _protocolVersion = [dic[@"protocolVersion"] intValue];
         _isContainAdmin = [dic[@"isContainAdmin"] boolValue];
 
     }

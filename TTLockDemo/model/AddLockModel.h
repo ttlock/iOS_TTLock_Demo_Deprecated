@@ -20,6 +20,7 @@
 /**搜索到这个蓝牙的时间*/
 @property (nonatomic,strong)NSDate *searchTime;
 
-@property (nonatomic,assign)int protocolCategory;
+@property (nonatomic,assign)int protocolType;
 
+@property (nonatomic,assign)int protocolVersion;
 @end

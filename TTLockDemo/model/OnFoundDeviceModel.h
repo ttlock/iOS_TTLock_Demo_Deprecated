@@ -16,7 +16,8 @@
 @property (nonatomic,strong) NSString *mac;
 @property (nonatomic,strong) NSDictionary * advertisementData;
 @property (nonatomic,assign) BOOL isContainAdmin;
-@property (nonatomic,assign) int protocolCategory;
+@property (nonatomic,assign) int protocolType;
+@property (nonatomic,assign) int protocolVersion;
 @property (nonatomic,assign) BOOL  isAllowUnlock;
 @property (nonatomic,assign) int oneMeterRSSI;
 

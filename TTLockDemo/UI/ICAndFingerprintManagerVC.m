@@ -86,17 +86,10 @@
             break;
     }
     [TTObjectTTLockHelper connectPeripheralWithLockMac:_selectedKey.lockMac.length ? _selectedKey.lockMac : _selectedKey.lockName];
-    async_main(^{
-        [self performSelector:@selector(connectTimeOut) withObject:nil afterDelay:DEFAULT_CONNECT_TIMEOUT];
-    });
+
 }
 
-- (void)connectTimeOut{
-    [self showToast:LS(@"make_sure_the_lock_nearby")];
-    [TTLockHelper disconnectKey:_selectedKey disConnectBlock:nil];
-    
-    
-}
+
 #pragma mark ---- ttsdk
 -(void)onFoundDevice_peripheralWithInfoDic:(NSDictionary*)infoDic{
     OnFoundDeviceModel *deviceModel = [[OnFoundDeviceModel alloc] initOnFoundDeviceModelWithDic:infoDic];
@@ -114,7 +107,7 @@
 
 
 - (void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString *)lockName{
-   //先停止扫描
+
     [[TTLock sharedInstance] stopBTDeviceScan];
     if (_type == 0) {
          [[TTLock sharedInstance] operate_type:fingerprintOprationType adminPS:_selectedKey.adminPwd lockKey:_selectedKey.lockKey aesKey:_selectedKey.aesKeyStr ICNumber:_Number  startDate:[NSDate dateWithTimeIntervalSinceNow:1000] endDate:[NSDate dateWithTimeIntervalSinceNow:10000] unlockFlag:_selectedKey.lockFlagPos timezoneRawOffset:_selectedKey.timezoneRawOffset];

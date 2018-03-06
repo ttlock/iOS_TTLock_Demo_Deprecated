@@ -167,9 +167,6 @@
             //连接锁
             [TTObjectTTLockHelper connectPeripheralWithLockMac:_selectedKey.lockMac.length ? _selectedKey.lockMac : _selectedKey.lockAlias];
             
-            async_main(^{
-                [self performSelector:@selector(connectTimeOut) withObject:nil afterDelay:DEFAULT_CONNECT_TIMEOUT];
-            });
         }
         
     }
@@ -180,12 +177,7 @@
         [[TTLockDFU shareInstance] retry];
     }
 }
-- (void)connectTimeOut{
-    [self showToast:LS(@"make_sure_the_lock_nearby")];
-    [TTLockHelper disconnectKey:_selectedKey disConnectBlock:nil];
-    
-    
-}
+
 - (void)passcodeUpgrade{
     NSString *decodePwd = _selectedKey.noKeyPwd;
     NSString *pwd = [NSString stringWithFormat:@"*7539#%@#",decodePwd];

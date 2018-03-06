@@ -1,10 +1,20 @@
 # TTLock
+### SDK2.7.5
+1.添加门磁闭锁操作{@link operateDoorSensorLocking_type:isOn:adminPS:lockKey:aesKey:unlockFlag: }
+  对应回调{@link onQueryDoorSensorLocking:}，{@link onModifyDoorSensorLocking}。
+2.添加查询门磁状态{@link getDoorSensorState_aesKey:}，
+  对应回调{@link onGetDoorSensorState:}
+3.广播回调{@link onFoundDevice_peripheralWithInfoDic:}里增加参数（doorSensorState）和锁电量（electricQuantity）
+4.增加远程开锁开关控制功能{@link operateRemoteUnlockSwicth_type: isOn: adminPS: lockKey: aesKey: unlockFlag:}，对应的回调{@link onOperateRemoteUnlockSwicth_type: stateInfo:}。
+5.新增三代锁获取电量的方法{@link getElectricQuantity_lockKey: aesKey:},对应回调{@link onGetElectricQuantity:}
+6.开锁和闭锁成功的回调里增加返回锁电量（参数‘electricQuantity’）
+  
 ### SDK2.7.4
 1.修复添加指纹，状态2，返回的当前次数和总次数错误的bug
 2.添加管理员成功回调{@link onAddAdministrator_addAdminInfoDic:}里的备注"lockkey"改成”lockKey“，第二个”k"改成大写
 3.新增添加管理员接口{@link addAdministrator_addDic:}，废弃{@link  addAdministrator_advertisementData: adminPassword: deletePassward:}。
 5.当打印打开时，错误回调那里也会打印相应的错误信息
-
+相应方法相应回调 写在方法注释里
 
 ### SDK2.7.3
 1.读取开锁密码，读取新密码方案参数返回参数里的部分key修改
