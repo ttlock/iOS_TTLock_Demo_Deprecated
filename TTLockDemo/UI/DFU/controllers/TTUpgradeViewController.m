@@ -30,7 +30,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
-    
     [TTLock sharedInstance].delegate = self;
     [[TTLock sharedInstance] startBTDeviceScan:NO];
     
