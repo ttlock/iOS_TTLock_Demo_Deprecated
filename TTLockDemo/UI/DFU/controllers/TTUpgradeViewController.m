@@ -19,8 +19,7 @@
     FirmwareUpdateModel *_tempUpdateModel;
     UILabel *_versionTitleLabel;
     UILabel *_versionDetailLabel;
-    //是否要连接蓝牙
-    NSString *_v3AllowMac;
+
     CBPeripheral * _peripheral;
     
     BOOL isGetDeviceInfo;
@@ -199,22 +198,9 @@
 }
 #pragma mark - TTSDKDelegate
 
-- (void)onFoundDevice_peripheral:(CBPeripheral *)peripheral RSSI:(NSNumber *)rssi lockName:(NSString *)lockName mac:(NSString *)mac advertisementData:(NSDictionary *)advertisementData isContainAdmin:(BOOL)isContainAdmin protocolCategory:(int)protocolCategory{
-    
-    if ( [_v3AllowMac isEqualToString:mac] && _v3AllowMac != nil) {
-        
-        if (_selectedKey.peripheralUUIDStr.length == 0) {
-            _selectedKey.peripheralUUIDStr = peripheral.identifier.UUIDString;
-            [[DBHelper sharedInstance] update];
-        }
-        [[TTLock sharedInstance] connect:peripheral];
-        
-    }
-}
-
 - (void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString *)lockName{
     
-    _v3AllowMac = nil;
+
     _peripheral = peripheral;
     [[TTLock sharedInstance] stopBTDeviceScan];
     if (isgetChara) {
