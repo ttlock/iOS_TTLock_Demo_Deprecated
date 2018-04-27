@@ -523,10 +523,8 @@ SWIFT_PROTOCOL("_TtP13DFUDependence18DFUServiceDelegate_")
 /// A <code>delegate</code>, <code>progressDelegate</code> and <code>logger</code> may be specified in order to receive status information.
 SWIFT_CLASS("_TtC13DFUDependence19DFUServiceInitiator")
 @interface DFUServiceInitiator : NSObject
-@property (nonatomic, readonly, strong) CBCentralManager * _Nonnull centralManager;
-@property (nonatomic, readonly, strong) CBPeripheral * _Nonnull target;
-@property (nonatomic, strong) DFUFirmware * _Nullable file;
-/// The service delegate is an object that will be
+/// The service delegate is an object that will be notified about state changes of the DFU Service.
+/// Setting it is optional but recommended.
 @property (nonatomic, weak) id <DFUServiceDelegate> _Nullable delegate;
 /// An optional progress delegate will be called only during upload. It notifies about current upload
 /// percentage and speed.
