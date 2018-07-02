@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-/*!
- @class
- @abstract 开锁记录界面
- */
+
 @interface UnlockRecordsViewController : UIViewController
 {
     IBOutlet UIActivityIndicatorView* aiv;

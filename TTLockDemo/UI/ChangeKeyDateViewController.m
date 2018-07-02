@@ -2,7 +2,7 @@
 //  ChangeKeyDateViewController.m
 //  TTLockDemo
 //
-//  Created by 刘潇翔 on 17/2/15.
+//  Created by LXX on 17/2/15.
 //  Copyright © 2017年 wjj. All rights reserved.
 //
 
@@ -23,8 +23,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"修改有效期限";
-    
     [self layoutUI];
 }
 
@@ -32,7 +30,7 @@
 - (void)layoutUI {
     CGRect rect = [[UIScreen mainScreen] bounds];
     rect = CGRectMake(0.0, 0.0, rect.size.width, 216.0);
-    //年月日时分
+
     KMDatePicker *datePicker = [[KMDatePicker alloc]
                                 initWithFrame:rect
                                      delegate:self

@@ -13,7 +13,6 @@
 #define kWinH [[UIScreen mainScreen] bounds].size.height
 #define kWinW [[UIScreen mainScreen] bounds].size.width
 
-// pickerView高度
 #define kPVH (kWinH*0.35>230?230:(kWinH*0.35<200?200:kWinH*0.35))
 @interface MMChoiceOneView()
 

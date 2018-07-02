@@ -35,44 +35,6 @@ bool DEBUG_DBHelper = true;
 	return dbHelper;
     
 }
-- (NSMutableArray*) fetchAdminKeys
-{
-    @synchronized(self){
-        __block NSMutableArray *keys;
-        [self.managedObjectContext performBlockAndWait:^(){
-            
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            [fetchRequest setEntity:[NSEntityDescription entityForName:@"Key" inManagedObjectContext:self.managedObjectContext]];
-            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"isAdmin = %i",1]];
-            
-            //初始化排序对象
-            NSSortDescriptor *sort_doorName = [[NSSortDescriptor alloc] initWithKey:@"lockId" ascending:YES];
-            //定义排序数据
-            NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort_doorName, nil];
-            [fetchRequest setSortDescriptors:sortDescriptors];
-            
-            // Init the fetched results controller
-            NSError *error;
-            fetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                          managedObjectContext:self.managedObjectContext
-                                                            sectionNameKeyPath:nil
-                                                                     cacheName:nil];
-            fetcher.delegate = self;
-            if (![fetcher performFetch:&error])
-                NSLog(@"ERROR:FETCH KEYS...Error: %@", [error localizedDescription]);
-            
-            
-            keys = [NSMutableArray arrayWithArray:fetcher.fetchedObjects];
-           
-            fetcher = nil;
-            fetchRequest = nil;
-        }];
-        
-        
-        return keys;
-    }
-   
-}
 
 - (NSMutableArray*) fetchKeys
 {
@@ -84,9 +46,9 @@ bool DEBUG_DBHelper = true;
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"username = %@",[SettingHelper getOpenID]]];
             
             [fetchRequest setEntity:[NSEntityDescription entityForName:@"Key" inManagedObjectContext:self.managedObjectContext]];
-            //初始化排序对象
+
             NSSortDescriptor *sort_doorName = [[NSSortDescriptor alloc] initWithKey:@"lockAlias" ascending:YES];
-            //定义排序数据
+          
             NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort_doorName, nil];
             [fetchRequest setSortDescriptors:sortDescriptors];
             // Init the fetched results controller
@@ -108,87 +70,8 @@ bool DEBUG_DBHelper = true;
         
         return keys;
     }
-    
 }
 
-- (NSMutableArray*) fetchAllKeysWithAccount:(NSString*)userName
-{
-    @synchronized(self){
-        __block NSMutableArray *keys;
-        [self.managedObjectContext performBlockAndWait:^(){
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            [fetchRequest setEntity:[NSEntityDescription entityForName:@"Key" inManagedObjectContext:self.managedObjectContext]];
-            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"username= %@",userName]];
-            
-            //初始化排序对象                                              
-            NSSortDescriptor *sort_doorName = [[NSSortDescriptor alloc] initWithKey:@"lockId" ascending:YES];
-            //定义排序数据
-            NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort_doorName, nil];
-            [fetchRequest setSortDescriptors:sortDescriptors];
-            // Init the fetched results controller
-            NSError *error;
-            fetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                          managedObjectContext:self.managedObjectContext
-                                                            sectionNameKeyPath:nil
-                                                                     cacheName:nil];
-            fetcher.delegate = self;
-            
-            
-            if (![fetcher performFetch:&error])
-                NSLog(@"ERROR:FETCH KEYS...Error: %@", [error localizedDescription]);
-            
-            keys = [NSMutableArray arrayWithArray:fetcher.fetchedObjects];
-            
-            
-            fetcher = nil;
-            fetchRequest = nil;
-        }];
-        
-        
-        return keys;
-    }
-    
-}
-
-- (NSMutableArray*) fetchAllKeysWithLockName:(NSString*)lockmacname
-{
-    
-    @synchronized(self){
-        
-        __block NSMutableArray *keys;
-        
-        [self.managedObjectContext performBlockAndWait:^(){
-            
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            [fetchRequest setEntity:[NSEntityDescription entityForName:@"Key" inManagedObjectContext:self.managedObjectContext]];
-            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"lockName = %@ ",lockmacname]];
-            
-            //初始化排序对象
-            NSSortDescriptor *sort_doorName = [[NSSortDescriptor alloc] initWithKey:@"lockId" ascending:YES];
-            //定义排序数据
-            NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort_doorName, nil];
-            [fetchRequest setSortDescriptors:sortDescriptors];
-            // Init the fetched results controller
-            NSError *error;
-            fetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                          managedObjectContext:self.managedObjectContext
-                                                            sectionNameKeyPath:nil
-                                                                     cacheName:nil];
-            fetcher.delegate = self;
-            
-            
-            if (![fetcher performFetch:&error])
-                NSLog(@"ERROR:FETCH KEYS...Error: %@", [error localizedDescription]);
-            keys = [NSMutableArray arrayWithArray:fetcher.fetchedObjects];
-            fetcher = nil;
-            fetchRequest = nil;
-        }];
-       
-        
-        return keys;
-    }
-    
-}
 -(Key*) fetchKeyWithDoorName:(NSString*)doorName{
     @synchronized(self){
         
@@ -204,12 +87,10 @@ bool DEBUG_DBHelper = true;
             
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"lockName = %@ and username = %@",doorName,[SettingHelper getOpenID]]];
             
-            
-            //初始化排序对象
             NSSortDescriptor *sort_doorName = [[NSSortDescriptor alloc] initWithKey:@"lockName" ascending:YES];
-            //初始化第二个排序对象
+   
             //    NSSortDescriptor *sort_isAdmin = [[NSSortDescriptor alloc] initWithKey:@"isAdmin" ascending:NO];
-            //定义排序数据
+
             NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort_doorName, nil];
             //    fetchRequest.sortDescriptors = sortDescriptors;//设置查询请求的排序条件
             [fetchRequest setSortDescriptors:sortDescriptors];
@@ -243,54 +124,6 @@ bool DEBUG_DBHelper = true;
     }
     
 }
-- (Key*) fetchKeyWithLockName:(NSString*)lockname
-{
-    
-    @synchronized(self){
-        
-        __block NSMutableArray *keys=nil;
-        
-        [self.managedObjectContext performBlockAndWait:^(){
-
-            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-            [fetchRequest setEntity:[NSEntityDescription entityForName:@"Key" inManagedObjectContext:self.managedObjectContext]];
-            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"lockName = %@ and username = %@",lockname,[SettingHelper getOpenID]]];
-            
-            //初始化排序对象
-            NSSortDescriptor *sort_doorName = [[NSSortDescriptor alloc] initWithKey:@"lockId" ascending:YES];
-            //定义排序数据
-            NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort_doorName, nil];
-            [fetchRequest setSortDescriptors:sortDescriptors];
-            
-            // Init the fetched results controller
-            NSError *error;
-            fetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                          managedObjectContext:self.managedObjectContext
-                                                            sectionNameKeyPath:nil
-                                                                     cacheName:nil];
-            fetcher.delegate = self;
-            
-            
-            if (![fetcher performFetch:&error])
-                NSLog(@"ERROR:FETCH KEYS...Error: %@", [error localizedDescription]);
-            
-            keys = [NSMutableArray arrayWithArray:fetcher.fetchedObjects];
-            
-            fetcher = nil;
-            fetchRequest = nil;
-        }];
-       
-        
-        if ([keys count]>0) {
-            
-            return [keys objectAtIndex:0];
-        }else{
-            
-            return nil;
-        }
-    }
-}
-
 - (Key*) fetchKeyWithLockMac:(NSString*)lockmac
 {
     
@@ -304,9 +137,9 @@ bool DEBUG_DBHelper = true;
             [fetchRequest setEntity:[NSEntityDescription entityForName:@"Key" inManagedObjectContext:self.managedObjectContext]];
            
             [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"lockMac = %@ and username = %@",lockmac,[SettingHelper getOpenID]]];
-            //初始化排序对象
+           
             NSSortDescriptor *sort_doorName = [[NSSortDescriptor alloc] initWithKey:@"lockId" ascending:YES];
-            //定义排序数据
+            
             NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sort_doorName, nil];
             [fetchRequest setSortDescriptors:sortDescriptors];
             // Init the fetched results controller
@@ -418,15 +251,6 @@ bool DEBUG_DBHelper = true;
     }];
 }
 
-//-(void)clearKeys
-//{
-//    
-//    [context deletedObjects];
-//    NSError* error;
-//    if (![context save:&error])
-//        NSLog(@"ERROR:CLEAR KEYS FAIL...Error LOG: %@", [error localizedDescription]);
-//    
-//}
 
 
 
@@ -467,12 +291,10 @@ bool DEBUG_DBHelper = true;
     NSPersistentStoreCoordinator *persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel: model];
     
     NSError *error;
-    //TODO 数据库升级用这个，这个NSMigratePersistentStoresAutomaticallyOption和NSInferMappingModelAutomaticallyOption都为yes，就是自动升级，也就是轻量级的数据库迁移。为no的话，就是手动升级，另外一种数据库迁移方法，针对复杂的数据库升级
-    
-    //自动升级
+
     NSDictionary *options = @{NSMigratePersistentStoresAutomaticallyOption: @YES, NSInferMappingModelAutomaticallyOption: @YES};
     
-    //手动升级
+
 //    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],
 //                                       NSMigratePersistentStoresAutomaticallyOption,
 //                                       [NSNumber numberWithBool:NO],
@@ -504,7 +326,6 @@ bool DEBUG_DBHelper = true;
     NSString *folderPath = [NSString stringWithFormat:@"%@/TTLockDemo",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]];
     
     if(![fileManager fileExistsAtPath:folderPath]){
-        //如果不存在,则说明是第一次运行这个程序，那么建立这个文件夹
         
         [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:YES attributes:nil error:nil];
         

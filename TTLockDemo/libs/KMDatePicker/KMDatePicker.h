@@ -22,10 +22,10 @@ typedef NS_ENUM(NSUInteger, KMDatePickerStyle) {
 @interface KMDatePicker : UIView <UIPickerViewDataSource, UIPickerViewDelegate>
 @property (nonatomic, weak) id<KMDatePickerDelegate> delegate;
 @property (nonatomic, assign) KMDatePickerStyle datePickerStyle;
-@property (nonatomic, strong) NSDate *minLimitedDate; ///< 最小限制时间；默认值为1970-01-01 00:00
-@property (nonatomic, strong) NSDate *maxLimitedDate; ///< 最大限制时间；默认值为2060-12-31 23:59
-@property (nonatomic, strong) NSDate *defaultLimitedDate; ///< 默认限制时间；默认值为最小限制时间，当选择时间不在指定范围，就滚动到此默认限制时间
-@property (nonatomic, strong) NSDate *scrollToDate; ///< 滚动到指定时间；默认值为当前时间
+@property (nonatomic, strong) NSDate *minLimitedDate; ///< Minimum limit time; default value:1970-01-01 00:00
+@property (nonatomic, strong) NSDate *maxLimitedDate; ///< Maximum limit time; default value:2060-12-31 23:59
+@property (nonatomic, strong) NSDate *defaultLimitedDate; ///< Default limit time; the default value is the minimum time limit; when the selection time is not within the specified range, scroll to this default time limit.
+@property (nonatomic, strong) NSDate *scrollToDate; ///< Scroll to the specified time; the default value is the current time
 
 - (instancetype)initWithFrame:(CGRect)frame delegate:(id<KMDatePickerDelegate>)delegate datePickerStyle:(KMDatePickerStyle)datePickerStyle;
 

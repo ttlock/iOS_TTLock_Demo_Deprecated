@@ -19,12 +19,9 @@
     FirmwareUpdateModel *_tempUpdateModel;
     UILabel *_versionTitleLabel;
     UILabel *_versionDetailLabel;
-
     CBPeripheral * _peripheral;
-    
     BOOL isGetDeviceInfo;
     BOOL isgetChara;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -39,7 +36,7 @@
     [super viewDidDisappear:animated];
     [NSRunLoop cancelPreviousPerformRequestsWithTarget:self];
     
-    //如果正在升级 必须先pauseUpgrade 再stopUpgrade 才能退出升级模式
+ //Exit and upgrade
     [[TTLockDFU shareInstance] pauseUpgrade];
     [[TTLockDFU shareInstance]stopUpgrade];
     
@@ -66,7 +63,7 @@
             [self hideHUD];
             
             _updateModel =  [[FirmwareUpdateModel alloc]initWithDictionary:info error:nil];
-            //是否需要升级：0-否，1-是，2-未知
+            // Is upgrading available: 0-No, 1-Yes, 2-Unknown
             if (_updateModel.needUpgrade.intValue == 0) {
                 _versionTitleLabel.text = LS(@"Words_No_updates");
                 _versionDetailLabel.text = [NSString stringWithFormat:@"%@%@",LS(@"Words_Version"),_updateModel.firmwareRevision];
@@ -116,7 +113,7 @@
     
 }
 
-#pragma mark ----- 点击底部按钮  不管是哪种情况 都是先读取锁内信息
+#pragma mark ----- Click the bottom button to read the information in the lock
 - (void)bottomBtnClick{
     
     
@@ -133,7 +130,7 @@
                 [TTLock sharedInstance].delegate = weakSelf;
                 
                 weakSelf.bottomBtn.tag = 101;
-                [weakSelf showToast:@"升级成功"];
+                [weakSelf showToast:LS(@"Alter_Upgrade_succeeded")];
                  [weakSelf.bottomBtn setTitle:LS(@"Words_Check_for_updates") forState:UIControlStateNormal];
                 
                 return ;
@@ -148,21 +145,20 @@
                 return ;
             }
             if (code == UpgradeErrorCodeOutOfMemory) {
-                NSLog(@"内存已满，继续升级");
+                NSLog(@"UpgradeErrorCodeOutOfMemory");
                 return;
             }
             weakSelf.bottomBtn.tag = 105;
-            [weakSelf.bottomBtn setTitle:@"重试" forState:UIControlStateNormal];
+            [weakSelf.bottomBtn setTitle:LS(@"Tint_Retry") forState:UIControlStateNormal];
             [weakSelf showToast:[NSString stringWithFormat:@"failBlock UpgradeOpration%ld UpgradeErrorCode%ld ",(long)type,(long)code]];
         }];
     }
     if (self.bottomBtn.tag == 101) {
-//        //如果是未知 那就去获取锁里的相关的数据
+
         if ([BlueToothHelper getBlueState]) {
             [self showHUDToWindow:nil];
             isGetDeviceInfo = YES;
-            
-            //连接锁
+  
             [TTObjectTTLockHelper connectPeripheralWithLockMac:_selectedKey.lockMac.length ? _selectedKey.lockMac : _selectedKey.lockAlias];
             
         }
@@ -171,7 +167,6 @@
     
     if (self.bottomBtn.tag == 105) {
          [self showHUD:nil];
-        //重试
         [[TTLockDFU shareInstance] retry];
     }
 }
@@ -214,7 +209,6 @@
     
     
 }
-#pragma mark ---- 获取锁基本信息成功
 - (void)onGetDeviceInfo:(NSDictionary *)infoDic{
     
     NSString *modelNum = infoDic[@"1"];
@@ -229,7 +223,6 @@
 }
 
 - (void)onBTDisconnect_peripheral:(CBPeripheral *)periphera{
-    NSLog(@"断开连接");
     [[TTLock sharedInstance] startBTDeviceScan:NO];
     
 }
@@ -258,7 +251,7 @@
             [self hideHUD];
             
             _updateModel =  [[FirmwareUpdateModel alloc]initWithDictionary:info error:nil];
-            //是否需要升级：0-否，1-是，2-未知
+
         if (_updateModel.needUpgrade.intValue == 0) {
             _versionTitleLabel.text = LS(@"Words_No_updates");
             _versionDetailLabel.text = [NSString stringWithFormat:@"%@%@",LS(@"Words_Version"),_updateModel.firmwareRevision];

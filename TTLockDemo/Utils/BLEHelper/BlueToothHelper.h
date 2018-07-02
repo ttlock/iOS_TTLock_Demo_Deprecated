@@ -11,9 +11,8 @@
 
 @interface BlueToothHelper : NSObject
 
-/**yes 是开 no是其他*/
 + (BOOL)getBlueState;
-/**获取电量*/
+
 + (float)getDianliang;
 
 

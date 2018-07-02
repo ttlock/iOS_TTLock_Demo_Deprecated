@@ -16,7 +16,6 @@
 #import "Define.h"
 #import "ParkKeyDetailVC.h"
 #import "LoginViewController.h"
-#import "XYCUtils.h"
 #import "AccountInfoViewController.h"
 #import <MJExtension/MJExtension.h>
 #import "KeyTableViewController.h"
@@ -53,13 +52,13 @@ bool DEBUG_TAB0 = true;
         
         self.title = NSLocalizedString(@"tab0_title", @"sciener");
         
-        //左边按钮
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"通通锁登录" style:UIBarButtonItemStylePlain target:self action:@selector(gotoLogin:)];
+
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:LS(@"words_login") style:UIBarButtonItemStylePlain target:self action:@selector(gotoLogin:)];
         
-        //右边按钮
+
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(rightAction:)];
         
-        //防止在ios7上出现，tableview被nav遮住的情况
+
         NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"7.0" options: NSNumericSearch];
         if (order == NSOrderedSame || order == NSOrderedDescending)
         {
@@ -77,7 +76,7 @@ bool DEBUG_TAB0 = true;
 {
    
     if (![SettingHelper getAccessToken]) {
-        UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"请先点击左侧‘登录’按钮，获取accesstoken" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"请先点击左侧‘登录’按钮，获取accesstoken" message:nil delegate:self cancelButtonTitle:LS(@"words_sure_ok") otherButtonTitles:nil];
         [alertView show];
         return;
     }
@@ -91,7 +90,7 @@ bool DEBUG_TAB0 = true;
     
     NSLog(@"viewDidload");
 
-    _datas = @[@"帐号信息",@"已添加锁",@"已添加钥匙",@"网关"];
+    _datas = @[LS(@"words_Account_information"),LS(@"words_the_lock_list_of_account") ,LS(@"words_Sync_ekey_data"),LS(@"words_WiFi_gateway")];
     
     [self setExtraCellLineHidden:customTableView];
 }

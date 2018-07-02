@@ -23,7 +23,7 @@ typedef void(^TableViewPullRefrshBlock)();
 @implementation PlugListViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = LS(@"网关");
+    self.title = LS(@"words_WiFi_gateway");
     [self createTableview];
     WS(weakSelf);
     [self setTopRefreshBlock:^{
@@ -43,7 +43,6 @@ typedef void(^TableViewPullRefrshBlock)();
 }
 - (void)rightNavigationItemClicked{
     
-    //WiFi是否打开
     if ([self isWiFiNetReachability]) {
         AddWifiViewController *addvc = [[AddWifiViewController alloc]init];
         [self.navigationController pushViewController:addvc animated:YES];
@@ -88,7 +87,6 @@ typedef void(^TableViewPullRefrshBlock)();
 #pragma mark ----- UITableViewDelegate,UITableViewDataSource
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 判断表格是否需要删除数据
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         PlugListModel* plugModel = self.dataArray[indexPath.row];
        [NetworkHelper deleteGatewayWithGatewayId:plugModel.gatewayId completion:^(id info, NSError *error) {
@@ -102,12 +100,12 @@ typedef void(^TableViewPullRefrshBlock)();
     }
 }
 
-//开启编辑按钮效果
+
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
-    //先开启父类的
+
     [super setEditing:editing animated:animated];
-    //开启 tableview 的编辑效果
+
     [self.baseWifiTableview setEditing:editing animated:YES];
     
 }
@@ -126,7 +124,7 @@ typedef void(^TableViewPullRefrshBlock)();
     }
     PlugListModel *model = self.dataArray[indexPath.row];
     cell.textLabel.text = model.gatewayMac;
-    cell.detailTextLabel.text  = [NSString stringWithFormat:@"锁数量:%@",model.lockNum];
+    cell.detailTextLabel.text  = [NSString stringWithFormat:@"Number:%@",model.lockNum];
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -162,7 +160,7 @@ typedef void(^TableViewPullRefrshBlock)();
 
 - (BOOL)isWiFiNetReachability{
     Reachability *reach = [Reachability reachabilityWithHostName:@"www.baidu.com"];
-    //判断当前网络是否是 WiFi
+
     if ([reach currentReachabilityStatus] == ReachableViaWiFi) {
         return YES;
     }

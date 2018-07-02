@@ -21,7 +21,6 @@
     self.title =LS(@"words_Lock_Clock");
     self.view.backgroundColor = [UIColor whiteColor];
     [self createView];
-    //获取锁时间成功后 才能做其他操作
     [self getLockDate];
     // Do any additional setup after loading the view.
 }

@@ -23,13 +23,10 @@
     NSMutableArray * _peripherals;
     NSMutableArray *_tempPeripheralsArray;
     UITableView *_tableView;
-    //选中蓝牙的广播数据
     NSDictionary* _currentAdvData;
-    //添加的门锁
     KeyModel *_keyAdded;
     CBPeripheral * currentPeripheral;
      AddLockModel *_selectModel;
-    //判断断开蓝牙时 判断是否把hud取消
     BOOL isAddSuccess;
     BOOL isError;
     NSDate *_bindDate;
@@ -40,7 +37,7 @@
     
     _delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     TTObjectTTLockHelper.delegate = self;
-    //为了兼容二代锁 才设为YES
+    //In order to be compatible with the two generation lock, it is set to YES
     [TTObjectTTLockHelper startBTDeviceScan:YES];
     [self createTableView];
     
@@ -52,8 +49,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //连接设备
-    self.title = LS(@"附近的锁"); ;
+    self.title = LS(@"words_lock_nearby"); ;
     self.view.backgroundColor = [UIColor whiteColor];
 
     UIActivityIndicatorView * indicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -128,19 +124,17 @@
     }else{
         dbKey = [[DBHelper sharedInstance]fetchKeyWithDoorName:model.peripheral.name];
     }
-    //如果本地的锁不存在 并且没有管理员才能添加
+    // This lock does not exist locally and there is no administrator in the lock
     if (!dbKey && model.isContainAdmin == NO) {
-        //进行连接
         _selectModel = model;
         [TTObjectTTLockHelper connect:model.peripheral];
         [self performSelector:@selector(connectTimeOut) withObject:nil afterDelay:DEFAULT_CONNECT_TIMEOUT];
         _currentAdvData = model.advertisementData;
-        //    覆盖全局 可以防止误点
         [SSToastHelper showHUDToWindow:nil];
         
     }
 }
-#pragma mark ---- 蓝牙搜索，连接相关回调
+#pragma mark ---- TTSDKDelegate
 - (void)onFoundDevice_peripheralWithInfoDic:(NSDictionary *)infoDic{
     OnFoundDeviceModel *onFoundModel = [[OnFoundDeviceModel alloc]initOnFoundDeviceModelWithDic:infoDic];
     
@@ -199,7 +193,7 @@
             [_peripherals insertObject:model atIndex:_peripherals.count];
         }
     }
-     //超过5秒钟没有被搜索到 状态就要改变
+     //It's going to change for more than 5 seconds without being searched
     for (AddLockModel *model in _peripherals) {
         if (model.searchTime.timeIntervalSinceNow < - 5) {
             if (model.isContainAdmin == NO) {
@@ -224,10 +218,9 @@
          [NSObject cancelPreviousPerformRequestsWithTarget:self];
     });
     
-    NSLog(@"连接上lock:%@ , lockname:%@ ",peripheral.name,lockName);
+    NSLog(@"Connect lock:%@ , lockname:%@ ",peripheral.name,lockName);
     _keyAdded = [[KeyModel alloc]init];
     _keyAdded.lockName = lockName;
-    //添加的时候别名
     _keyAdded.lockAlias = lockName;
     _keyAdded.peripheralUUIDStr = peripheral.identifier.UUIDString;
     currentPeripheral = peripheral;
@@ -254,9 +247,7 @@
     _keyAdded.adminPwd = addAdminInfoDic[@"adminPS"];
     _keyAdded.lockKey = addAdminInfoDic[@"lockKey"];
     _keyAdded.aesKeyStr = addAdminInfoDic[@"aesKey"];
-    //第一次时 标志位默认为0
     _keyAdded.lockFlagPos = 0;
-    //永久的时间 都设为0
     _keyAdded.noKeyPwd = addAdminInfoDic[@"adminPassword"];
     _keyAdded.deletePwd = addAdminInfoDic[@"deletePassword"];
     _keyAdded.timezoneRawOffset = timeValue * 1000;
@@ -274,12 +265,11 @@
         if (!error) {
             [self.navigationController popViewControllerAnimated:YES];
             [self hideHUD];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"门锁添加成功" message:nil  delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"words_sure_ok") message:nil  delegate:self cancelButtonTitle:nil otherButtonTitles:LS(@"words_sure_ok"), nil];
             [alert show];
             
             return ;
         }
-        NSLog(@"绑定失败");
     }];
 
 }
@@ -325,11 +315,8 @@
     NSLog(@"onSetLockTime");
     isAddSuccess = YES;
     if (currentPeripheral) {
-        //绑定成功后 就断开蓝牙
         [TTObjectTTLockHelper disconnect:currentPeripheral];
-        
     }
-
     [self addAdminSuccess];
 }
 

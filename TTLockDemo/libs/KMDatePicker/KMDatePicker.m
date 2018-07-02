@@ -1,6 +1,6 @@
 //
 //  KMDatePicker.m
-//  KMDatePicker:（自定义支持多种格式可控范围的时间选择器控件）
+//  KMDatePicker
 //
 //  Created by KenmuHuang on 15/10/6.
 //  Copyright © 2015年 Kenmu. All rights reserved.
@@ -24,19 +24,17 @@
 @interface KMDatePicker () {
     UIPickerView *_pikV;
     
-    // 最小和最大限制时间、滚动到指定时间实体对象实例
+
     KMDatePickerDateModel *_datePickerDateMinLimited;
     KMDatePickerDateModel *_datePickerDateMaxLimited;
     KMDatePickerDateModel *_datePickerDateScrollTo;
-    
-    // 存储时间数据源的数组
+
     NSMutableArray *_mArrYear;
     NSMutableArray *_mArrMonth;
     NSMutableArray *_mArrDay;
     NSMutableArray *_mArrHour;
     NSMutableArray *_mArrMinute;
     
-    // 时间数据源的数组中，选中元素的索引
     NSInteger _yearIndex;
     NSInteger _monthIndex;
     NSInteger _dayIndex;
@@ -69,7 +67,7 @@
     return [self initWithFrame:frame];
 }
 
-#pragma mark - 重写属性
+#pragma mark - Overridden properties
 - (void)setMinLimitedDate:(NSDate *)minLimitedDate {
     _minLimitedDate = minLimitedDate;
    
@@ -79,7 +77,7 @@
     }
 }
 
-#pragma mark - 自定义方法
+#pragma mark - Custom method
 - (void)addUnitLabel:(NSString *)text withPointX:(CGFloat)pointX {
     CGFloat pointY = _pikV.frame.size.height/2 - 10.0 + kHeightOfButtonContentView;
     UILabel *lblUnit = [[UILabel alloc] initWithFrame:CGRectMake(pointX, pointY, 20.0, 20.0)];
@@ -107,7 +105,7 @@
 }
 
 - (void)loadData {
-    // 初始化最小和最大限制时间、滚动到指定时间实体对象实例
+    // Initialize the minimum and maximum restriction time and scroll to the specified time entity object instance.
     if (!_minLimitedDate) {
         _minLimitedDate = [DateHelper dateFromString:kDefaultMinLimitedDate withFormat:nil];
     }
@@ -118,7 +116,7 @@
     }
     _datePickerDateMaxLimited = [[KMDatePickerDateModel alloc] initWithDate:_maxLimitedDate];
     
-    // 滚动到指定时间；默认值为当前时间。如果是使用自定义时间小于最小限制时间，这时就以最小限制时间为准；如果是使用自定义时间大于最大限制时间，这时就以最大限制时间为准
+    // Scroll to the specified time; the default value is the current time. If the use of custom time is less than the minimum limit time, then the minimum limit time is correct; if the use of custom time is greater than the maximum limit time, then the maximum limit time is accurate.
     if (!_scrollToDate) {
         _scrollToDate = [DateHelper localeDate];
     }
@@ -129,33 +127,33 @@
     }
     _datePickerDateScrollTo = [[KMDatePickerDateModel alloc] initWithDate:_scrollToDate];
     
-    // 初始化存储时间数据源的数组
-    // 年
+    // An array of initializes the storage time data source
+    // year
     _mArrYear = [NSMutableArray new];
     for (NSInteger beginVal=[_datePickerDateMinLimited.year integerValue], endVal=[_datePickerDateMaxLimited.year integerValue]; beginVal<=endVal; beginVal++) {
         [_mArrYear addObject:[NSString stringWithFormat:@"%ld", (long)beginVal]];
     }
     _yearIndex = [_datePickerDateScrollTo.year integerValue] - [_datePickerDateMinLimited.year integerValue];
     
-    // 月
+    // month
     _mArrMonth = [[NSMutableArray alloc] initWithCapacity:kMonthCountOfEveryYear];
     for (NSInteger i=1; i<=kMonthCountOfEveryYear; i++) {
         [_mArrMonth addObject:[NSString stringWithFormat:@"%02ld", (long)i]];
     }
     _monthIndex = [_datePickerDateScrollTo.month integerValue] - 1;
     
-    // 日
+    // day
     [self reloadDayArray];
     _dayIndex = [_datePickerDateScrollTo.day integerValue] - 1;
     
-    // 时
+    // Hour
     _mArrHour = [[NSMutableArray alloc] initWithCapacity:kHourCountOfEveryDay];
     for (NSInteger i=0; i<kHourCountOfEveryDay; i++) {
         [_mArrHour addObject:[NSString stringWithFormat:@"%02ld", (long)i]];
     }
     _hourIndex = [_datePickerDateScrollTo.hour integerValue];//[_datePickerDateScrollTo.hour integerValue];
     
-    // 分
+    // Minute
     _mArrMinute = [[NSMutableArray alloc] initWithCapacity:kMinuteCountOfEveryHour];
     for (NSInteger i=0; i<kMinuteCountOfEveryHour; i++) {
         [_mArrMinute addObject:[NSString stringWithFormat:@"%02ld", (long)i]];
@@ -249,7 +247,7 @@
 }
 
 - (void)scrollToDateIndexPositionWithDate:(NSDate *)date {
-    // 为了区别最大最小限制范围外行的标签颜色，这里需要重新加载所有组件列
+    // To distinguish the tag color of the maximum and minimum limits, the reloading of all component columns is needed here.
     [_pikV reloadAllComponents];
     
     _scrollToDate = date;
@@ -365,12 +363,12 @@
     return color;
 }
 
-#pragma mark - 绘制内容
+#pragma mark - draw Rect
 - (void)drawRect:(CGRect)rect {
-    // 加载数据
+
     [self loadData];
     
-    // 初始化头部按钮（取消、现在时间、确定）
+
     UIView *buttonContentView = [[UIView alloc] initWithFrame:CGRectMake(-2.0, 0.0, kWidthOfTotal + 4.0, kHeightOfButtonContentView)];
     buttonContentView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     buttonContentView.layer.borderWidth = 0.5;
@@ -379,36 +377,36 @@
     UIButton *btnCancel = [UIButton buttonWithType:UIButtonTypeCustom];
     btnCancel.frame = CGRectMake(2.0, 2.5, 60.0, kHeightOfButtonContentView - 5.0);
     btnCancel.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
+    [btnCancel setTitle:LS(@"words_cancel") forState:UIControlStateNormal];
     [btnCancel setTitleColor:kButtonNormalStatusColor forState:UIControlStateNormal];
     [btnCancel addTarget:self
                   action:@selector(cancel:)
         forControlEvents:UIControlEventTouchUpInside];
     [buttonContentView addSubview:btnCancel];
     
-    if ([self canShowScrollToNowButton]) {
-        UIButton *btnScrollToNow = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnScrollToNow.frame = CGRectMake(buttonContentView.frame.size.width/2 - 50.0, 2.5, 100.0, kHeightOfButtonContentView - 5.0);
-        btnScrollToNow.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [btnScrollToNow setTitle:@"现在时间" forState:UIControlStateNormal];
-        [btnScrollToNow setTitleColor:kButtonNormalStatusColor forState:UIControlStateNormal];
-        [btnScrollToNow addTarget:self
-                           action:@selector(scrollToNowDateIndexPosition:)
-                 forControlEvents:UIControlEventTouchUpInside];
-        [buttonContentView addSubview:btnScrollToNow];
-    }
+//    if ([self canShowScrollToNowButton]) {
+//        UIButton *btnScrollToNow = [UIButton buttonWithType:UIButtonTypeCustom];
+//        btnScrollToNow.frame = CGRectMake(buttonContentView.frame.size.width/2 - 50.0, 2.5, 100.0, kHeightOfButtonContentView - 5.0);
+//        btnScrollToNow.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//        [btnScrollToNow setTitle:@"现在时间" forState:UIControlStateNormal];
+//        [btnScrollToNow setTitleColor:kButtonNormalStatusColor forState:UIControlStateNormal];
+//        [btnScrollToNow addTarget:self
+//                           action:@selector(scrollToNowDateIndexPosition:)
+//                 forControlEvents:UIControlEventTouchUpInside];
+//        [buttonContentView addSubview:btnScrollToNow];
+//    }
     
     UIButton *btnConfirm = [UIButton buttonWithType:UIButtonTypeCustom];
     btnConfirm.frame = CGRectMake(kWidthOfTotal - 58.0, 2.5, 60.0, kHeightOfButtonContentView - 5.0);
     btnConfirm.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [btnConfirm setTitle:@"确定" forState:UIControlStateNormal];
+    [btnConfirm setTitle:LS(@"words_sure_ok") forState:UIControlStateNormal];
     [btnConfirm setTitleColor:kButtonNormalStatusColor forState:UIControlStateNormal];
     [btnConfirm addTarget:self
                    action:@selector(confirm:)
          forControlEvents:UIControlEventTouchUpInside];
     [buttonContentView addSubview:btnConfirm];
     
-    // 初始化选择器视图控件
+
     if (!_pikV) {
         _pikV = [[UIPickerView alloc]initWithFrame:CGRectMake(0.0, kHeightOfButtonContentView, kWidthOfTotal, self.frame.size.height - kHeightOfButtonContentView)];
         _pikV.showsSelectionIndicator = YES;
@@ -418,11 +416,10 @@
     _pikV.dataSource = self;
     _pikV.delegate = self;
     
-    // 初始化滚动到指定时间位置
     [self scrollToDateIndexPosition];
 }
 
-#pragma mark - 执行 KMDatePickerDelegate 委托代理协议方法，用于回调传递参数
+#pragma mark -  KMDatePickerDelegate
 - (void)playDelegateAfterSelectedRow {
     if ([self.delegate respondsToSelector:@selector(datePicker:didSelectDate:)]) {
         [self.delegate datePicker:self
@@ -565,29 +562,29 @@
     
     switch (_datePickerStyle) {
         case KMDatePickerStyleYearMonthDayHourMinute: {
-            // 规则一：平均宽度 = （总共宽度 - 年份相比多两个数字的宽度 - 分钟会是右对齐导致需偏移宽度来显示「分」这个文字） / 5等份
+            // Rule one: average width = width - the width of the total - the width of two numbers compared to the year - the right alignment leads to the offset width to display the "sub" text) / 5 equal parts
             widthOfAverage = (kWidthOfTotal - 20.0 - 25.0) / 5;
             switch (component) {
                 case 0:
                     width = widthOfAverage + 20.0;
-                    // 规则二：单位标签的 X 坐标位置 = 列的水平居中 X 坐标 ＋ 偏移量
-                    [self addUnitLabel:@"年" withPointX:width/2 + 24.0];
+                    // Rule two: the X coordinate position of the unit label = the horizontal middle X coordinate + offset of the column.
+                    [self addUnitLabel:LS(@"words_year") withPointX:width/2 + 24.0];
                     break;
                 case 1:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"月" withPointX:(widthOfAverage + 20.0) + width/2 + 16.0];
+                    [self addUnitLabel:LS(@"words_month") withPointX:(widthOfAverage + 20.0) + width/2 + 16.0];
                     break;
                 case 2:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"日" withPointX:(2*widthOfAverage + 20.0) + width/2 + 22.0];
+                    [self addUnitLabel:LS(@"words_day") withPointX:(2*widthOfAverage + 20.0) + width/2 + 22.0];
                     break;
                 case 3:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"时" withPointX:(3*widthOfAverage + 20.0) + width/2 + 28.0];
+                    [self addUnitLabel:LS(@"words_hour") withPointX:(3*widthOfAverage + 20.0) + width/2 + 28.0];
                     break;
                 case 4:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"分" withPointX:(4*widthOfAverage + 20.0) + width/2 + 32.0];
+                    [self addUnitLabel:LS(@"words_minute") withPointX:(4*widthOfAverage + 20.0) + width/2 + 32.0];
                     break;
             }
             break;
@@ -597,20 +594,20 @@
             switch (component) {
                 case 0:
                     width = widthOfAverage + 20.0;
-                    // 规则二：单位标签的 X 坐标位置 = 列的水平居中 X 坐标 ＋ 偏移量
-                    [self addUnitLabel:@"年" withPointX:width/2 + 24.0];
+                    // Rule two: the X coordinate position of the unit label = the horizontal middle X coordinate + offset of the column.
+                    [self addUnitLabel:LS(@"words_year") withPointX:width/2 + 24.0];
                     break;
                 case 1:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"月" withPointX:(widthOfAverage + 20.0) + width/2 + 16.0];
+                    [self addUnitLabel:LS(@"words_month") withPointX:(widthOfAverage + 20.0) + width/2 + 16.0];
                     break;
                 case 2:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"日" withPointX:(2*widthOfAverage + 20.0) + width/2 + 22.0];
+                    [self addUnitLabel:LS(@"words_day") withPointX:(2*widthOfAverage + 20.0) + width/2 + 22.0];
                     break;
                 case 3:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"时" withPointX:(3*widthOfAverage + 20.0) + width/2 + 28.0];
+                    [self addUnitLabel:LS(@"words_hour") withPointX:(3*widthOfAverage + 20.0) + width/2 + 28.0];
                     break;
               
             }
@@ -622,15 +619,15 @@
             switch (component) {
                 case 0:
                     width = widthOfAverage + 20.0;
-                    [self addUnitLabel:@"年" withPointX:width/2 + 24.0];
+                    [self addUnitLabel:LS(@"words_year") withPointX:width/2 + 24.0];
                     break;
                 case 1:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"月" withPointX:(widthOfAverage + 20.0) + width/2 + 16.0];
+                    [self addUnitLabel:LS(@"words_month") withPointX:(widthOfAverage + 20.0) + width/2 + 16.0];
                     break;
                 case 2:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"日" withPointX:(2*widthOfAverage + 20.0) + width/2 + 22.0];
+                    [self addUnitLabel:LS(@"words_day") withPointX:(2*widthOfAverage + 20.0) + width/2 + 22.0];
                     break;
             }
             break;
@@ -640,19 +637,19 @@
             switch (component) {
                 case 0:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"月" withPointX:width/2 + 11.0];
+                    [self addUnitLabel:LS(@"words_month") withPointX:width/2 + 11.0];
                     break;
                 case 1:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"日" withPointX:widthOfAverage + width/2 + 17.0];
+                    [self addUnitLabel:LS(@"words_day") withPointX:widthOfAverage + width/2 + 17.0];
                     break;
                 case 2:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"时" withPointX:2*widthOfAverage + width/2 + 23.0];
+                    [self addUnitLabel:LS(@"words_hour") withPointX:2*widthOfAverage + width/2 + 23.0];
                     break;
                 case 3:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"分" withPointX:3*widthOfAverage + width/2 + 27.0];
+                    [self addUnitLabel:LS(@"words_minute") withPointX:3*widthOfAverage + width/2 + 27.0];
                     break;
             }
             break;
@@ -662,11 +659,11 @@
             switch (component) {
                 case 0:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"时" withPointX:width/2 + 12.0];
+                    [self addUnitLabel:LS(@"words_hour") withPointX:width/2 + 12.0];
                     break;
                 case 1:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"分" withPointX:widthOfAverage + width/2 + 18.0];
+                    [self addUnitLabel:LS(@"words_minute") withPointX:widthOfAverage + width/2 + 18.0];
                     break;
             }
             break;
@@ -676,7 +673,7 @@
             switch (component) {
                 case 0:
                     width = widthOfAverage;
-                    [self addUnitLabel:@"时" withPointX:width/2 + 16.0];
+                    [self addUnitLabel:LS(@"words_hour") withPointX:width/2 + 16.0];
                     break;
             }
             break;
@@ -940,10 +937,10 @@
     _scrollToDate = [DateHelper dateFromString:dateStr withFormat:nil];
     _datePickerDateScrollTo = [[KMDatePickerDateModel alloc] initWithDate:_scrollToDate];
     
-    // 为了区别最大最小限制范围外行的标签颜色，这里需要重新加载所有组件列
+    // To distinguish the tag color of the maximum and minimum limits, the reloading of all component columns is needed here.
     [pickerView reloadAllComponents];
     
-    // 如果选择时间不在最小和最大限制时间范围内就滚动到有效的默认范围内
+    // If the selection time is not within the minimum and maximum time limit, scroll to the valid default range.
     if (![self validatedDate:_scrollToDate]) {
         [self scrollToDateIndexPositionWithDate:_defaultLimitedDate];
     }

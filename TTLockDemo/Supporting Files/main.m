@@ -1,8 +1,8 @@
 //
 //  main.m
 //
-//  Created by 谢元潮 on 14-10-29.
-//  Copyright (c) 2014年 谢元潮. All rights reserved.
+//  Created by TTLock on 14-10-29.
+//  Copyright (c) 2014年 TTLock. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

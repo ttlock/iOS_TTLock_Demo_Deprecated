@@ -10,9 +10,7 @@
 #import "CopyableLabel.h"
 #import "RequestService.h"
 @interface SendKpsViewController ()<UIPickerViewDelegate, UITextFieldDelegate,UIPickerViewDataSource>
-//键盘密码的版本
 @property (nonatomic, assign) int keyboardPwdVersion;
-//键盘密码类型
 @property (nonatomic, assign) int keyboardPwdType;
 @property (nonatomic, assign) int lastKeyboardPwdType;
 @property (nonatomic, assign) int flag;
@@ -24,10 +22,8 @@
 @implementation SendKpsViewController{
     UIPickerView * mPickerViewNumber;
     UIPickerView * mPickerView;
-    //每一次滑动pickview获取的
     NSInteger mPickerViewRow;
     NSInteger mPickerViewNumberRow;
-    //放生成密码的label
     CopyableLabel *_generatePwdLabel;
     UILabel *_desLabel;
 }
@@ -41,7 +37,7 @@
     // Do any additional setup after loading the view.
 }
 - (void)createView{
-    //左 右离8 两个中间离10 宽度为剩下的一半
+ 
     mPickerViewNumber = [[UIPickerView alloc]initWithFrame:CGRectMake(8, -40 + 60, (SCREEN_WIDTH - 8*2 - 10 )/2, 160)];
     mPickerViewNumber.delegate = self;
     mPickerViewNumber.dataSource = self;
@@ -101,7 +97,7 @@
     _desLabel.numberOfLines = 0;
     _desLabel.textColor = COMMON_FONT_GRAY_COLOR;
     _desLabel.font = [UIFont systemFontOfSize:15];
-    _desLabel.text = [NSString stringWithFormat:@"%@:\n%@",LS(@"words_Notes"), LS(@"words_Lock_first_tips")];
+    _desLabel.text = LS(@"words_Lock_first_tips");
     [self.view addSubview:_desLabel];
     [_desLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(10);
@@ -111,7 +107,7 @@
 }
 - (void)createPickerArray{
     /**
-     *  2+ 场景一和场景二的键盘密码不同
+     *  2+ Scene one is different from the keyboard code of scene two
      */
     if ([_selectedKey.lockVersion hasPrefix:@"5.4.1"]) {
         self.mPickerArray = [NSMutableArray arrayWithObjects: NSLocalizedString(@"single_password", nil),NSLocalizedString(@"min_password", nil),NSLocalizedString(@"hour_password", nil),NSLocalizedString(@"day_password", nil),NSLocalizedString(@"month_password_one", nil), nil];
@@ -152,7 +148,7 @@
     if ([pickerView isEqual:mPickerView]) {
         if (mPickerViewRow != row) {
             mPickerViewRow = row;
-            //当pickview滑动时 另一个归0
+ 
             [mPickerViewNumber selectRow:0 inComponent:component animated:NO];
             mPickerViewNumberRow = 0 ;
             
@@ -160,14 +156,14 @@
         switch (row) {
                 
             case 0:
-                //单次密码
+           
                 self.flag=0;
                 self.keyboardPwdType = 0;
                 self.mPickerNumberArray = [NSMutableArray arrayWithObjects:@"1", nil];
                 [mPickerViewNumber reloadAllComponents];
                 break;
             case 1:
-                //10分钟
+              
                 self.flag=1;
                 self.mPickerNumberArray = [NSMutableArray arrayWithObjects:@"10",@"20",@"30",@"40",@"50", nil];
                 //重新加载所有组件
@@ -175,14 +171,14 @@
                 self.keyboardPwdType =   [[self.mPickerNumberArray objectAtIndex:[mPickerViewNumber selectedRowInComponent:0]] intValue]/10;
                 break;
             case 2:
-                //1小时
+           
                 self.flag=2;
                 self.mPickerNumberArray = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23", nil];
                 [mPickerViewNumber reloadAllComponents];
                 self.keyboardPwdType =   [[self.mPickerNumberArray objectAtIndex:[mPickerViewNumber selectedRowInComponent:0]] intValue] + 5;
                 break;
             case 3:
-                //1天
+               
                 self.flag=3;
                 if ([_selectedKey.lockVersion hasPrefix:@"5.4.1"]) {
                     
@@ -227,7 +223,7 @@
                 break;
                 
             case 4:
-                //月
+               
                 self.flag=4;
                 if ([_selectedKey.lockVersion hasPrefix:@"5.4.1"]) {
                     self.mPickerNumberArray = [NSMutableArray arrayWithObjects:
@@ -309,10 +305,9 @@
 }
 
 
-//生成密码 sendType 0 是只生成 1 是短信发送  2 是微信发送
 - (void)generateButtonClick{
     [self showHUD:nil];
-    //连接的不是同一个lock
+
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     dispatch_async(queue, ^(void){
         __block id pw;
@@ -329,12 +324,7 @@
                 board.string = _generatePwdLabel.text;
             }
             else{
-                UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"温馨提示"
-                                                                message:@"请求失败"
-                                                               delegate:self
-                                                      cancelButtonTitle:@"确定"
-                                                      otherButtonTitles:nil];
-                [alert show];
+                [SSToastHelper showHUDToWindow:LS(@"alert_request_error")];
             }
         });
     });

@@ -8,269 +8,291 @@
 
 #import <Foundation/Foundation.h>
 
-/**回调 TTSDK代理*/
 @protocol TTSDKDelegate <NSObject>
 
 @optional
 
 /**
- *  蓝牙的状态改变时 The central manager whose state has changed.
+   Invoked whenever the central manager's state has been updated. Commands should only be issued when the state is
+   <code>TTManagerStatePoweredOn</code>. A state below <code>TTManagerStatePoweredOn</code>
+   implies that scanning has stopped and any connected peripherals have been disconnected. If the state moves below
+   <code>TTManagerStatePoweredOff</code>, all <code>CBPeripheral</code> objects obtained from this central
+   manager become invalid and must be retrieved or discovered again.
  */
 - (void)TTManagerDidUpdateState:(TTManagerState)state;
 
 /**
- *  错误回调 
+ *  This method is invoked when the lock returns an error
  *
- *  @param error     错误码
- *  @param command   错误的指令值
- *  @param errorMsg  错误信息
+ *  @param error     error code
+ *  @param command   command value
+ *  @param errorMsg  Error description
  */
 -(void)TTError:(TTError)error command:(int)command errorMsg:(NSString*)errorMsg;
 
 /**
- *  蓝牙搜索到设备的回调
- *  infoDic 返回参数为字典  下面对应键及其值的意义
- *  peripheral     搜索到的蓝牙对象
- *  rssi           信号值
- *  lockName       锁名
- *  lockMac            锁的mac地址
- *  isContainAdmin      锁是否存在管理员（即是否处于设置模式）  例：YES存在（非设置模式）  NO不存在（设置模式）
- *  isAllowUnlock  三代锁中广播的一个信号值 YES为有人摸锁， 二代锁一直为YES 车位锁一直为NO
- *  oneMeterRSSI   三代锁中广播的一个信号值 这个数值是离锁一米左右的rssi  二代锁为固定的值
- *  protocolType    协议类别   例：5 是门锁  10 是车位锁  0x3412 是手环
- *  protocolVersion     协议版本   返回的值 1是LOCK  4是二代锁 3是三代锁
- *  scene      类型：DoorSceneType   应用场景
- *  lockSwitchState   类型：TTLockSwitchState  车位锁（scene == 7）的开关状态 ,不支持此功能的锁返回的值为TTLockSwitchStateUnknown
- *  doorSensorState   类型：TTDoorSensorState  门磁状态
- *  electricQuantity  类型:int 锁电量（获取不到电量的锁，electricQuantity==-1）
+ *  This method is invoked while scanning, upon the discovery of <i>peripheral</i> by <i>central</i>.
+ *  A dictionary containing scan response data.
+ *  peripheral
+ *  rssi
+ *  lockName
+ *  lockMac
+ *  isContainAdmin      Whether there is an administrator in the lock (that is, whether it is in setting mode)
+ *  isAllowUnlock       YES for someone to touch the lock, v2 lock has been YES, parking lock has been NO
+ *  oneMeterRSSI        RSSI about one meter away from the lock
+ *  protocolType        Protocol type ,  5 is door lock ,  10 is parking lock,  0x3412 is wristband
+ *  protocolVersion     Protocol version , 1 is v2 'LOCK' , 4 is v2 lock ,  3 is v3 lock
+ *  scene               Scene
+ *  lockSwitchState     The switch state of the parking lock (scene = = 7). The value of the lock which does not support this function is TTLockSwitchStateUnknown.
+ *  doorSensorState
+ *  electricQuantity    Lock battery (a lock that does not get battery, electricQuantity==-1)
+ *  isDfuMode           Is it in the upgrade mode
  */
 -(void)onFoundDevice_peripheralWithInfoDic:(NSDictionary*)infoDic;
 
 /**
- *  已经连接上蓝牙的回调
+ *  This method is invoked when a connection initiated by {@link connect:} or {@link connectPeripheralWithLockMac:} has succeeded.
  *
- *  @param peripheral     搜索到的蓝牙对象
- *  @param lockName       锁名
+ *  @param peripheral     The <code>CBPeripheral</code> that has connected.
+ *  @param lockName       lock Name
  */
 
 -(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName;
 
 /**
- *  断开与蓝牙的连接
+ *  This method is invoked upon the disconnection of a peripheral
  *
- *  @param periphera   搜索到的蓝牙对象
+ *  @param periphera   The <code>CBPeripheral</code> that has disconnected.
  */
 -(void)onBTDisconnect_peripheral:(CBPeripheral*)periphera;
 
 /**
- *  获取锁的版本号成功
- *  @param versionStr  由（protocolType.protocolVersion.scene.groupId.orgId组成）中间以点(.）连接
+ *  Get Protocol Version
+ *  @param versionStr  Consist of protocolType.protocolVersion.scene.groupId.orgId, Connect with a point (.) , Such as: 5.3.2.1.1
  */
 -(void)onGetProtocolVersion:(NSString*)versionStr;
 
 /**
- *  添加管理员成功  以字典形式返回参数
- *  adminPS 管理员密码，管理员开门时校验管理员身份的
- *  lockKey 约定数开门使用
- *  aesKey  Aes加解密key
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  lockMac     mac地址 唯一标识
- *  timestamp 时间戳
- *  pwdInfo  加密密码数据
- *  electricQuantity 如果为-1 则表示没有获取到电量
- *  adminPassword   管理员开门密码
- *  deletePassword  管理员删除密码
- *  Characteristic(LongLong) 锁的特征值 使用类 TTSpecialValueUtil 来判断支持什么功能
- *  unlockFlag   标记位 添加成功的时候为0  注：如果这里没有返回这个参数，写成0即可
- *  DeviceInfoType 类型：NSDictionary 读取设备的信息 1 2 3 4 5 6 参考枚举DeviceInfoType   包括 1-产品型号 2-硬件版本号 3-固件版本号 4-生产日期 5-蓝牙地址 6-时钟
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)
+ *  This method is invoked when {@link addAdministrator_addDic:} has succeeded.
+ *  adminPS     admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockKey     The key data which will be used to unlock
+ *  aesKey      AES encryption key
+ *  version     Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  lockMac     lock Mac
+ *  timestamp   The timestamp which is generated by SDK during lock initializing time
+ *  pwdInfo     Initial data of passcode, which is generated by SDK, is used to create passcode
+ *  electricQuantity    -1 means can't get battery
+ *  adminPassword    Admin Passcode
+ *  deletePassword   Erase Passcode
+ *  Characteristic(LongLong) characteristic value. it is used to indicate what kinds of feature do a lock support.  Reference class: TTSpecialValueUtil.h
+ *  unlockFlag    The flag which will be used to check the validity of the ekey
+ *  DeviceInfoType Type：NSDictionary  Reference enum:DeviceInfoType ,1-Product model 2-Hardware version 3-Firmware version 4-Date of manufacture 5-MAC 6-Clock
+ *  timezoneRawOffset   The offset between your time zone and UTC, in millisecond
  */
 -(void)onAddAdministrator_addAdminInfoDic:(NSDictionary*)addAdminInfoDic;
 
 /**
- *  校准时间成功
+ *   This method is invoked when {@link setLockTime_lockKey:aesKey:version:unlockFlag: referenceTime:timezoneRawOffset:} has succeeded.
  */
 -(void)onSetLockTime;
+
 /**
- *  开锁成功   参数lockTime是锁里的时间（只有三代锁有这个时间，其他为0）
+ This method is invoked when {@link unlockByAdministrator_adminPS: lockKey: aesKey: version:unlockFlag: uniqueid: timezoneRawOffset:}
+                          or {@link unlockByUser_lockKey: aesKey: startDate: endDate: version: unlockFlag:  uniqueid: timezoneRawOffset:}
+                          or {@link calibationTimeAndUnlock_lockKey: aesKey:startDate: endDate: version: unlockFlag:referenceTime: uniqueid: timezoneRawOffset:} has succeeded.
+
+ @param lockTime   The time in the lock, "0" means can't get the time
+ @param electricQuantity lock battery
  */
 -(void)onUnlockWithLockTime:(NSTimeInterval)lockTime electricQuantity:(int)electricQuantity;
 
 /**
- *  开(闭、上)锁成功   参数lockTime是锁里的时间（只有三代锁有这个时间，其他为0）
+ This method is invoked when {@link locking_lockKey: aesKey: unlockFlag: uniqueid: isAdmin: startDate: endDate: timezoneRawOffset:} has succeeded.
+ 
+ @param lockTime           The time in the lock, "0" means can't get the time
+ @param electricQuantity   lock battery
  */
 - (void)onLockingWithLockTime:(NSTimeInterval)lockTime electricQuantity:(int)electricQuantity;
 
 /**
- *  设置管理员开门密码成功
+ *  This method is invoked when {@link setAdminKeyBoardPassword: adminPS: lockKey: aesKey:version: unlockFlag:} has succeeded.
  */
 -(void)onSetAdminKeyboardPassword;
 /**
- *  设置管理员删除密码成功
+ *  This method is invoked when {@link setAdminDeleteKeyBoardPassword: adminPS: lockKey: aesKey: version: unlockFlag:} has succeeded.
  */
 -(void)onSetAdminDeleteKeyboardPassword;
 /**
- *  重置键盘密码成功
+ *  This method is invoked when {@link resetKeyboardPassword_adminPS: lockKey: aesKey: version: unlockFlag:} has succeeded.
  */
 -(void)onResetKeyboardPassword_timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo;
 /**
- *  重置电子钥匙成功
+ *  Reset Ekey Successfully
  */
 -(void)onResetEkey;
 
 /**
- *  获取锁的电量成功
+ *  Get Lock Battery Successfully
  *  @param electricQuantity
  */
 -(void)onGetElectricQuantity:(int)electricQuantity;
 
 /**
- *  恢复出厂设置 (只有三代锁有)
+ *  Reset Lock Successfully
  */
 -(void)onResetLock;
+
 /**
- *  读取开锁记录 或IC卡记录 或指纹记录 或开门密码 成功的回调 (只有三代锁有)
- *  LockOpenRecordStr 有数据返回json格式的字符串  无数据返回nil
+ *  This method is invoked when {@link getOperateLog_aesKey: version: unlockFlag: timezoneRawOffset:}
+                             or {@link getKeyboardPasswordList_adminPS:}
+                             or {@link operateFingerprint_type}
+                             or {@link operate_type: adminPS: lockKey: aesKey: ICNumber: startDate: endDate: unlockFlag: timezoneRawOffset:} has succeeded.
  */
 - (void)onGetOperateLog_LockOpenRecordStr:(NSString *)LockOpenRecordStr;
 /**
- *  删除单个键盘密码 (只有三代锁有)
+ *  Delete User KeyBoard Password Successfully
  */
 - (void)OnDeleteUserKeyBoardPassword;
 /**
- 修改键盘密码 (只有三代锁有)
+    Modify User KeyBoard Password  Successfully
  */
 - (void)onModifyUserKeyBoardPassword;
 /**
- 添加键盘密码 (只有三代锁有)
+  Add User KeyBoard Password  Successfully
  */
 - (void)onAddUserKeyBoardPassword;
 /**
- *  获取特征值 (只有三代锁有)
- characteristic  锁的特征值 使用类 TTSpecialValueUtil 来判断支持什么功能
+ *  Get Device Characteristic Successfully
+    characteristic  Use "TTSpecialValueUtil.h" to judge
  */
 - (void)onGetDeviceCharacteristic:(long long)characteristic;
 /**
- *  获取锁时间 (只有三代锁有)
+ *  Get Lock Time Successfully
  */
 - (void)onGetLockTime:(NSTimeInterval)lockTime;
 /**
- *  设置锁里手环key成功 (只有三代锁有)
+ *  Set Lock WristbandKey Successfully
  */
 - (void)onSetLockWristbandKey;
 /**
- *  设置手环里key成功 (只有三代锁有)
+ *  Set WristbandKey Successfully
  */
 - (void)onSetWristbandKey;
 /**
- *  配置手环信号值成功 (只有三代锁有)
+ *  Set Wristband Rssi Successfully
  */
 - (void)onSetWristbandRssi;
 /**
- *  低电量报警 (只有LOCK锁有)
+ *  Low Power Callback (Only "LOCK" will be a callback)
  */
 - (void)onLowPower;
 /**
- *  添加IC卡
+ *  Add IC Card Successfully
  *
- *  @param state    1 识别到IC卡并成功添加  2成功启动添加IC卡模式
- *  @param ICNumber  状态1包含卡号，其他状态无卡号字段
+ *  @param state     1->Identify IC card and add successfully  2->Successfully start adding IC card mode
+ *  @param ICNumber  State "1" contains card number, other states have no card number.
  */
 - (void)onAddICWithState:(AddICState)state ICNumber:(NSString*)ICNumber;
 /**
- *   清空IC卡 (只有三代锁有)
+ *  Clear IC Successfully
  */
 - (void)onClearIC;
 /**
- *   删除IC卡 (只有三代锁有)
+ *   Delete IC Successfully
  */
 - (void)onDeleteIC;
 /**
- *   修改IC卡 (只有三代锁有)
+ *   Modify IC Successfully
  */
 - (void)onModifyIC;
 /**
- 指纹采集（添加）
+ Add Fingerprint Successfully
  
- @param state AddFingerprintState
- @param fingerprintNumber 状态AddFingerprintCollectSuccess包含指纹编号，其他状态无此状态
- @param currentCount 当前录入指纹的次数（-1表示次数未知）,第一次返回当前采集次数为0，最后一次直接返回状态1及指纹编号 状态AddFingerprintCollectSuccess时不返回
- @param totalCount   需要录入指纹的次数（-1表示次数未知） 状态AddFingerprintCollectSuccess时不返回
+ @param state                AddFingerprintState
+ @param fingerprintNumber    state"AddFingerprintCollectSuccess"Contains fingerprint number, other states do not have fingerprint number
+ @param currentCount         The number of fingerprints currently entered (the number of -1 representations is unknown), the first time to return the number of collection is 0, the last direct return to the state of 1 and the fingerprint number state AddFingerprintCollectSuccess do not return.
+ @param totalCount   The number of fingerprints required (-1 is unknown) . when the state is AddFingerprintCollectSuccess , it is not returned.
  */
 - (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber currentCount:(int)currentCount totalCount:(int)totalCount ;
-
+/**
+ *   Clear Fingerprint Successfully
+ */
 - (void)onClearFingerprint;
-
+/**
+ *   Delete Fingerprint Successfully
+ */
 - (void)onDeleteFingerprint;
-
+/**
+ *   Modify Fingerprint Successfully
+ */
 - (void)onModifyFingerprint;
 /**
- 查询闭锁时间
- currentTime  当前闭锁时间
- minTime  锁最小的闭锁时间
- maxTime  锁最大的闭锁时间
+ Query Locking Time Successfully
+ currentTime  Current locking time
+ minTime  Minimum locking time
+ maxTime  maximum locking time
  */
 - (void)onQueryLockingTimeWithCurrentTime:(int)currentTime minTime:(int)minTime maxTime:(int)maxTime;
 /**
-  修改闭锁时间成功
+  Modify Locking Time Successfully
  */
 - (void)onModifyLockingTime;
 /**
-  读取设备的信息
-  infoDic  字典里key参考枚举 TTUtils.h -> DeviceInfoType
+  Get Device Info Successfully
+  infoDic  Key reference enum: TTUtils.h -> DeviceInfoType
  */
 - (void)onGetDeviceInfo:(NSDictionary*)infoDic;
 /**
-  进入可固件升级状态
+  Enter Firmware Upgrade Mode Successfully
  */
 - (void)onEnterFirmwareUpgradeMode;
 /**
- 锁的开关状态
+ Get Lock Switch State Successfully
  
- @param state  参考 TTLockSwitchState
+ @param state  reference:TTLockSwitchState
  */
 - (void)onGetLockSwitchState:(TTLockSwitchState)state;
 /**
- 查询屏幕上显示状态成功
+ Query Screen State Successfully
  
- @param state  0-隐藏  1-显示
+ @param state  0-hide  1-show
  */
 - (void)onQueryScreenState:(BOOL)state;
 
 /**
- 修改屏幕上显示状态成功
+ Modify Screen Show State Successfully
  */
 - (void)onModifyScreenShowState;
 
 /**
- 恢复键盘密码
+ Recover User KeyBoard Password Successfully
  */
 - (void)onRecoverUserKeyBoardPassword;
 /**
- *  读取新密码方案参数（约定数、映射数、删除日期）键盘密码成功(只有三代锁有)
+ *  Reading new password data Successfully
  */
 -(void)onGetPasswordData_timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo;
 /**
- 查询门磁闭锁开关成功
- isOn  YES开 NO关
+ Query Door Sensor Locking Successfully
+ isOn  YES is open, NO is close
  */
 - (void)onQueryDoorSensorLocking:(BOOL)isOn;
 /**
- 修改门磁闭锁开关成功
+ Modify Door Sensor Locking Successfully
  */
 - (void)onModifyDoorSensorLocking;
 /**
- 获取门磁状态
+ Get Door Sensor State Successfully
  */
 - (void)onGetDoorSensorState:(TTDoorSensorState)state;
 
 /**
- 远程开锁开关控制
+ Operate Remote Unlock Swicth Successfully
 
- @param type 参考 枚举OprationType
+ @param type reference enum:OprationType
  @param stateInfo
-        对应的key:"state" 类型 bool  值:NO是关 YES是开   当类型为OprationTypeQuery时，此参数才有值
-        对应的key:"specialValue" 类型 long long 锁的特征值 (当修改过开关后，锁里的特征值会改变） 当类型为OprationTypeModify时，此参数才有值
+        key:"state" , type:BOOL , NO is close, YES is open, When the type is OprationTypeQuery, this parameter has value.
+        key:"specialValue" , type:long long ,When the switch is modified, the characteristic value in the lock will change. When the type is OprationTypeModify, this parameter has value.
  */
 - (void)onOperateRemoteUnlockSwicth_type:(OprationType)type stateInfo:(NSDictionary*)stateInfo;
 
@@ -278,24 +300,12 @@
 -(void)onFoundDevice_peripheral:(CBPeripheral *)peripheral RSSI:(NSNumber*)rssi lockName:(NSString*)lockName mac:(NSString*)mac advertisementData:(NSDictionary *)advertisementData isContainAdmin:(BOOL)isContainAdmin protocolCategory:(int)protocolCategory __attribute__((deprecated("SDK2.6 onFoundDevice_peripheralWithInfoDic" )));
 -(void)onAddAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)versionStr mac:(NSString*)mac timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo electricQuantity:(int)electricQuantity adminPassword:(NSString*)adminPassward deletePassword:(NSString*)deletePassward Characteristic:(int)characteristic  __attribute__((deprecated("onAddAdministrator_addAdminInfoDic")));
 -(void)onAddAdministrator_password:(NSString*)password key:(NSString*)key aesKey:(NSString*)aesKeyData version:(NSString*)versionStr mac:(NSString*)mac __attribute__((deprecated("onAddAdministrator_addAdminInfoDic")));
--(void)onLock __attribute__((deprecated("SDK2.6.3 onLockingWithLockTime")));
-/**
- *  蓝牙的状态改变时 The central manager whose state has changed.
- */
-- (void)TTLockManagerDidUpdateState:(CBCentralManager *)central __attribute__((deprecated("SDK2.6.3 onLockingWithLockTime")));
-- (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber __attribute__((deprecated("SDK2.6.3 onLockingWithLockTime")));
-/** 开始扫描*/
--(void)onStartBTDeviceScan __attribute__((deprecated("SDK2.7.5 onLockingWithLockTime")));
-/**  断开扫描 */
--(void)onStopBTDeviceScan __attribute__((deprecated("SDK2.7.5 onLockingWithLockTime")));
-/**
- *  开锁成功   参数lockTime是锁里的时间（只有三代锁有这个时间，其他为0）
- */
--(void)onUnlockWithLockTime:(NSTimeInterval)lockTime __attribute__((deprecated("SDK2.7.5 onLockingWithLockTime")));
-
-/**
- *  开(闭、上)锁成功   参数lockTime是锁里的时间（只有三代锁有这个时间，其他为0）
- */
-- (void)onLockingWithLockTime:(NSTimeInterval)lockTime __attribute__((deprecated("SDK2.7.5 onLockingWithLockTime")));
+-(void)onLock __attribute__((deprecated("SDK2.6.3")));
+- (void)TTLockManagerDidUpdateState:(CBCentralManager *)central __attribute__((deprecated("SDK2.6.3")));
+- (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString*)fingerprintNumber __attribute__((deprecated("SDK2.6.3")));
+-(void)onStartBTDeviceScan __attribute__((deprecated("SDK2.7.5")));
+-(void)onStopBTDeviceScan __attribute__((deprecated("SDK2.7.5")));
+-(void)onUnlockWithLockTime:(NSTimeInterval)lockTime __attribute__((deprecated("SDK2.7.5")));
+- (void)onLockingWithLockTime:(NSTimeInterval)lockTime __attribute__((deprecated("SDK2.7.5")));
 
 @end

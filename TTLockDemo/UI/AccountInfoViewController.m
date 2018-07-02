@@ -2,7 +2,7 @@
 //  AccountInfoViewController.m
 //  TTLockDemo
 //
-//  Created by 刘潇翔 on 17/2/9.
+//  Created by LXX on 17/2/9.
 //  Copyright © 2017年 wjj. All rights reserved.
 //
 
@@ -17,8 +17,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.title = @"帐号信息";
 }
 
 - (void)didReceiveMemoryWarning {

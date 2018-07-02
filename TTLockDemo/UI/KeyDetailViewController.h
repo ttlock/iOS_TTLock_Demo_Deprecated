@@ -8,11 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-
-/*!
- @class
- @abstract 钥匙详情页
- */
 @interface KeyDetailViewController : UIViewController<UIActionSheetDelegate,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
 {
     

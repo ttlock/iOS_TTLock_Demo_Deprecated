@@ -17,19 +17,13 @@
 		FC61C2F31F43EB6E009D9B25 /* TTLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; };
 		FC61C2F41F43EB6E009D9B25 /* TTLock.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC6A2BE51F418349001D6B2B /* bg0.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AF81F418349001D6B2B /* bg0.png */; };
-		FC6A2BE61F418349001D6B2B /* btn_blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AF91F418349001D6B2B /* btn_blue@2x.png */; };
-		FC6A2BE71F418349001D6B2B /* btn_blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AFA1F418349001D6B2B /* btn_blue@3x.png */; };
-		FC6A2BE81F418349001D6B2B /* btn_blue_pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AFB1F418349001D6B2B /* btn_blue_pressed@2x.png */; };
 		FC6A2BE91F418349001D6B2B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AFC1F418349001D6B2B /* Images.xcassets */; };
 		FC6A2BEA1F418349001D6B2B /* radio_btn_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AFD1F418349001D6B2B /* radio_btn_checked@2x.png */; };
 		FC6A2BEB1F418349001D6B2B /* radio_btn_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AFE1F418349001D6B2B /* radio_btn_normal@2x.png */; };
 		FC6A2BEC1F418349001D6B2B /* AddLockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B011F418349001D6B2B /* AddLockModel.m */; };
 		FC6A2BED1F418349001D6B2B /* Key.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B031F418349001D6B2B /* Key.m */; };
-		FC6A2BEE1F418349001D6B2B /* KeyboardPs.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B051F418349001D6B2B /* KeyboardPs.m */; };
 		FC6A2BEF1F418349001D6B2B /* LockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B071F418349001D6B2B /* LockModel.m */; };
 		FC6A2BF01F418349001D6B2B /* OnFoundDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B091F418349001D6B2B /* OnFoundDeviceModel.m */; };
-		FC6A2BF11F418349001D6B2B /* TimePsRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B0B1F418349001D6B2B /* TimePsRecord.m */; };
-		FC6A2BF21F418349001D6B2B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B0D1F418349001D6B2B /* UserInfo.m */; };
 		FC6A2BF31F418349001D6B2B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B0F1F418349001D6B2B /* LaunchScreen.xib */; };
 		FC6A2BF41F418349001D6B2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B111F418349001D6B2B /* Main.storyboard */; };
 		FC6A2BF51F418349001D6B2B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B131F418349001D6B2B /* Info.plist */; };
@@ -124,6 +118,7 @@
 		FC872A191FA7098000DE2A4B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A161FA7098000DE2A4B /* MBProgressHUD.m */; };
 		FC872A1A1FA7098000DE2A4B /* SSHUDHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A181FA7098000DE2A4B /* SSHUDHelper.m */; };
 		FC872A1D1FA70B1800DE2A4B /* SSToastHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = FC872A1C1FA70B1700DE2A4B /* SSToastHelper.m */; };
+		FCE251AD20E08F71006E2157 /* KeyboardPwd.m in Sources */ = {isa = PBXBuildFile; fileRef = FCE251AB20E08F71006E2157 /* KeyboardPwd.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -155,9 +150,6 @@
 		FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DFUDependence.framework; sourceTree = "<group>"; };
 		FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TTLock.framework; sourceTree = "<group>"; };
 		FC6A2AF81F418349001D6B2B /* bg0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg0.png; sourceTree = "<group>"; };
-		FC6A2AF91F418349001D6B2B /* btn_blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_blue@2x.png"; sourceTree = "<group>"; };
-		FC6A2AFA1F418349001D6B2B /* btn_blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_blue@3x.png"; sourceTree = "<group>"; };
-		FC6A2AFB1F418349001D6B2B /* btn_blue_pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_blue_pressed@2x.png"; sourceTree = "<group>"; };
 		FC6A2AFC1F418349001D6B2B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FC6A2AFD1F418349001D6B2B /* radio_btn_checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radio_btn_checked@2x.png"; sourceTree = "<group>"; };
 		FC6A2AFE1F418349001D6B2B /* radio_btn_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "radio_btn_normal@2x.png"; sourceTree = "<group>"; };
@@ -165,16 +157,10 @@
 		FC6A2B011F418349001D6B2B /* AddLockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLockModel.m; sourceTree = "<group>"; };
 		FC6A2B021F418349001D6B2B /* Key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Key.h; sourceTree = "<group>"; };
 		FC6A2B031F418349001D6B2B /* Key.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Key.m; sourceTree = "<group>"; };
-		FC6A2B041F418349001D6B2B /* KeyboardPs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardPs.h; sourceTree = "<group>"; };
-		FC6A2B051F418349001D6B2B /* KeyboardPs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardPs.m; sourceTree = "<group>"; };
 		FC6A2B061F418349001D6B2B /* LockModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockModel.h; sourceTree = "<group>"; };
 		FC6A2B071F418349001D6B2B /* LockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockModel.m; sourceTree = "<group>"; };
 		FC6A2B081F418349001D6B2B /* OnFoundDeviceModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnFoundDeviceModel.h; sourceTree = "<group>"; };
 		FC6A2B091F418349001D6B2B /* OnFoundDeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnFoundDeviceModel.m; sourceTree = "<group>"; };
-		FC6A2B0A1F418349001D6B2B /* TimePsRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimePsRecord.h; sourceTree = "<group>"; };
-		FC6A2B0B1F418349001D6B2B /* TimePsRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimePsRecord.m; sourceTree = "<group>"; };
-		FC6A2B0C1F418349001D6B2B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
-		FC6A2B0D1F418349001D6B2B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		FC6A2B101F418349001D6B2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		FC6A2B121F418349001D6B2B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FC6A2B131F418349001D6B2B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -350,6 +336,8 @@
 		FC872A181FA7098000DE2A4B /* SSHUDHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSHUDHelper.m; sourceTree = "<group>"; };
 		FC872A1B1FA70B1700DE2A4B /* SSToastHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSToastHelper.h; sourceTree = "<group>"; };
 		FC872A1C1FA70B1700DE2A4B /* SSToastHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSToastHelper.m; sourceTree = "<group>"; };
+		FCE251AB20E08F71006E2157 /* KeyboardPwd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardPwd.m; sourceTree = "<group>"; };
+		FCE251AC20E08F71006E2157 /* KeyboardPwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardPwd.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,9 +426,6 @@
 			isa = PBXGroup;
 			children = (
 				FC6A2AF81F418349001D6B2B /* bg0.png */,
-				FC6A2AF91F418349001D6B2B /* btn_blue@2x.png */,
-				FC6A2AFA1F418349001D6B2B /* btn_blue@3x.png */,
-				FC6A2AFB1F418349001D6B2B /* btn_blue_pressed@2x.png */,
 				FC6A2AFC1F418349001D6B2B /* Images.xcassets */,
 				FC6A2AFD1F418349001D6B2B /* radio_btn_checked@2x.png */,
 				FC6A2AFE1F418349001D6B2B /* radio_btn_normal@2x.png */,
@@ -455,16 +440,12 @@
 				FC6A2B011F418349001D6B2B /* AddLockModel.m */,
 				FC6A2B021F418349001D6B2B /* Key.h */,
 				FC6A2B031F418349001D6B2B /* Key.m */,
-				FC6A2B041F418349001D6B2B /* KeyboardPs.h */,
-				FC6A2B051F418349001D6B2B /* KeyboardPs.m */,
 				FC6A2B061F418349001D6B2B /* LockModel.h */,
 				FC6A2B071F418349001D6B2B /* LockModel.m */,
 				FC6A2B081F418349001D6B2B /* OnFoundDeviceModel.h */,
 				FC6A2B091F418349001D6B2B /* OnFoundDeviceModel.m */,
-				FC6A2B0A1F418349001D6B2B /* TimePsRecord.h */,
-				FC6A2B0B1F418349001D6B2B /* TimePsRecord.m */,
-				FC6A2B0C1F418349001D6B2B /* UserInfo.h */,
-				FC6A2B0D1F418349001D6B2B /* UserInfo.m */,
+				FCE251AC20E08F71006E2157 /* KeyboardPwd.h */,
+				FCE251AB20E08F71006E2157 /* KeyboardPwd.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -892,7 +873,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC6A2BE81F418349001D6B2B /* btn_blue_pressed@2x.png in Resources */,
 				FC6A2C271F418349001D6B2B /* UserManageCell.xib in Resources */,
 				FC6A2C4A1F41834A001D6B2B /* LICENSE in Resources */,
 				FC6A2C181F418349001D6B2B /* KeyDetailViewController.xib in Resources */,
@@ -912,10 +892,8 @@
 				FC6A2BEA1F418349001D6B2B /* radio_btn_checked@2x.png in Resources */,
 				FC6A2C0B1F418349001D6B2B /* ChangeKeyDateViewController.xib in Resources */,
 				FC6A2BF41F418349001D6B2B /* Main.storyboard in Resources */,
-				FC6A2BE61F418349001D6B2B /* btn_blue@2x.png in Resources */,
 				FC6A2C201F418349001D6B2B /* Tab0ViewController.xib in Resources */,
 				FC6A2BF51F418349001D6B2B /* Info.plist in Resources */,
-				FC6A2BE71F418349001D6B2B /* btn_blue@3x.png in Resources */,
 				FC6A2C251F418349001D6B2B /* UnlockRecordsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -989,7 +967,6 @@
 				FC6A2C0D1F418349001D6B2B /* FirmwareUpdateModel.m in Sources */,
 				FC6A2C151F418349001D6B2B /* KeyDetailCell.m in Sources */,
 				FC6A2C0E1F418349001D6B2B /* ICAndFingerprintManagerVC.m in Sources */,
-				FC6A2BF21F418349001D6B2B /* UserInfo.m in Sources */,
 				FC6A2BFB1F418349001D6B2B /* CopyableLabel.m in Sources */,
 				FC6A2BF71F418349001D6B2B /* TTLockDemo.xcdatamodeld in Sources */,
 				FC6A2C3D1F418349001D6B2B /* NSArray+MASAdditions.m in Sources */,
@@ -1012,7 +989,6 @@
 				FC6A2C1A1F418349001D6B2B /* LockViewController.m in Sources */,
 				FC6A2C241F418349001D6B2B /* UnlockRecordsViewController.m in Sources */,
 				FC6A2C491F41834A001D6B2B /* MMSheetView.m in Sources */,
-				FC6A2BF11F418349001D6B2B /* TimePsRecord.m in Sources */,
 				FC6A2C041F418349001D6B2B /* XYCUtils.m in Sources */,
 				FC872A191FA7098000DE2A4B /* MBProgressHUD.m in Sources */,
 				FC6A2C281F418349001D6B2B /* UserManageViewController.m in Sources */,
@@ -1030,12 +1006,12 @@
 				FC6A2BFC1F418349001D6B2B /* DBHelper.m in Sources */,
 				13A06A7E1D792A2D002E51C2 /* AppDelegate.m in Sources */,
 				FC6A2C001F418349001D6B2B /* Reachability.m in Sources */,
-				FC6A2BEE1F418349001D6B2B /* KeyboardPs.m in Sources */,
 				FC6A2C2F1F418349001D6B2B /* PlugListViewController.m in Sources */,
 				FC6A2C111F418349001D6B2B /* TimePsSendedCell.m in Sources */,
 				FC6A2C421F41834A001D6B2B /* MMChoiceOneView.m in Sources */,
 				FC6A2C371F418349001D6B2B /* MASCompositeConstraint.m in Sources */,
 				FC6A2BF61F418349001D6B2B /* main.m in Sources */,
+				FCE251AD20E08F71006E2157 /* KeyboardPwd.m in Sources */,
 				FC6A2C0A1F418349001D6B2B /* ChangeKeyDateViewController.m in Sources */,
 				FC6A2C171F418349001D6B2B /* KeyDetailViewController.m in Sources */,
 				FC6A2C2B1F418349001D6B2B /* V3SendPwdBaseVC.m in Sources */,

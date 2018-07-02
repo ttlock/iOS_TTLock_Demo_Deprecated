@@ -2,7 +2,7 @@
 //  TimePsSendedCell.h
 //  sciener
 //
-//  Created by 谢元潮 on 15/1/20.
+//  Created by TTLock on 15/1/20.
 //
 //
 

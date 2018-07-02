@@ -11,14 +11,12 @@
 #import "AppDelegate.h"
 #import "Define.h"
 #import "UserManageCell.h"
-#import "UserInfo.h"
-#import "XYCUtils.h"
 #import "MJRefresh.h"
 #import "Tab0ViewCell.h"
 #import "KMDatePicker.h"
 #import "KMDatePickerDateModel.h"
 #import "ChangeKeyDateViewController.h"
-
+#import "XYCUtils.h"
 typedef void(^TableViewPullRefrshBlock)();
 
 @interface UserManageViewController ()<KMDatePickerDelegate>
@@ -45,9 +43,6 @@ typedef void(^TableViewPullRefrshBlock)();
     if (self) {
         
         self.title = NSLocalizedString(@"keydetail_item_title_manage", nil);
-        
-        
-        //防止在ios7上出现，tableview被nav遮住的情况
         NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"7.0" options: NSNumericSearch];
         if (order == NSOrderedSame || order == NSOrderedDescending)
         {
@@ -97,9 +92,9 @@ typedef void(^TableViewPullRefrshBlock)();
     
     [super viewDidLoad];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"清空" style:UIBarButtonItemStylePlain target:self action:@selector(deleteAllKey)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:LS(@"btn_title_clear") style:UIBarButtonItemStylePlain target:self action:@selector(deleteAllKey)];
     
-    [label_no_user setText:NSLocalizedString(@"words_no_user", Nil)];
+    [label_no_user setText:LS(@"words_no_user")];
     [label_no_user setHidden:YES];
     
     
@@ -180,7 +175,7 @@ typedef void(^TableViewPullRefrshBlock)();
     
     KeyModel *keyModel = keys[indexPath.row];
     
-    cell.leftTopLabel.text = [NSString stringWithFormat:@"用户id:%@",keyModel.username];
+    cell.leftTopLabel.text = [NSString stringWithFormat:@"id:%@",keyModel.username];
     
     if (keyModel.startDate == keyModel.endDate) {
         
@@ -192,21 +187,21 @@ typedef void(^TableViewPullRefrshBlock)();
         NSDate *endDate = [[NSDate alloc] initWithTimeIntervalSince1970:keyModel.endDate/1000];
         
         cell.leftBottomLabel.numberOfLines = 0;
-        cell.leftBottomLabel.text = [NSString stringWithFormat:@"有效时间：%@--%@",[XYCUtils formateDate:startDate format:@"yyyy/MM/dd HH:mm"],[XYCUtils formateDate:endDate format:@"yyyy/MM/dd HH:mm"]];
+        cell.leftBottomLabel.text = [NSString stringWithFormat:@"%@--%@",[XYCUtils formateDate:startDate format:@"yyyy/MM/dd HH:mm"],[XYCUtils formateDate:endDate format:@"yyyy/MM/dd HH:mm"]];
         
     }
     if ([keyModel.keyStatus isEqualToString:@"110401"]) {
-        cell.rightLabel.text = @"用户状态:已接收";
+        cell.rightLabel.text = LS(@"words_key_state_type_Received");
     }else if ([keyModel.keyStatus isEqualToString:@"110402"]) {
-        cell.rightLabel.text = @"用户状态:待生效";
+        cell.rightLabel.text = LS(@"words_key_state_type_Receiving");
     }else if ([keyModel.keyStatus isEqualToString:@"110404"]) {
-        cell.rightLabel.text = @"用户状态:冻结中";
+        cell.rightLabel.text = LS(@"words_key_state_type_Blocking");
     }else if ([keyModel.keyStatus isEqualToString:@"110405"]) {
-        cell.rightLabel.text = @"用户状态:已冻结";
+        cell.rightLabel.text = LS(@"words_key_state_type_Blocked");
     }else if ([keyModel.keyStatus isEqualToString:@"110406"]) {
-        cell.rightLabel.text = @"用户状态:解冻中";
+        cell.rightLabel.text = LS(@"words_key_state_type_UnBlocking");
     }else if ([keyModel.keyStatus isEqualToString:@"110407"]) {
-        cell.rightLabel.text = @"用户状态:删除中";
+        cell.rightLabel.text = LS(@"words_key_state_type_deleteing");
     }
     
     return cell;
@@ -226,12 +221,12 @@ typedef void(^TableViewPullRefrshBlock)();
     selectedKey =[keys objectAtIndex:indexPath.row];
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                  initWithTitle:NSLocalizedString(@"words_operate", nil)
+                                  initWithTitle:LS(@"words_operate")
                                   delegate:self
-                                  cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
+                                  cancelButtonTitle:LS(@"words_cancel")
                                   destructiveButtonTitle:nil
-                                  otherButtonTitles:NSLocalizedString(@"words_delete", nil),NSLocalizedString(@"words_blocked", nil),NSLocalizedString(@"words_unblocked", nil),@"修改有效时间",nil];
-    //展示actionSheet
+                                  otherButtonTitles:LS(@"words_delete"),LS(@"words_blocked"),LS(@"words_unblocked"),LS(@"words_Change_Validity"),nil];
+
     actionSheet.tag = indexPath.row;
     [actionSheet showInView:self.view];
     
@@ -244,7 +239,7 @@ typedef void(^TableViewPullRefrshBlock)();
     if (alertView) {
         
         [alertView dismissWithClickedButtonIndex:0 animated:YES];
-        alertView = nil;//这句很重要，去掉的话，alertview不为null，即使已经dealloc
+        alertView = nil;
         
     }
     
@@ -260,7 +255,7 @@ typedef void(^TableViewPullRefrshBlock)();
         
     }
     
-    alertView = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"words_wait_please", "moment please...")
+    alertView = [[UIAlertView alloc]initWithTitle:LS(@"words_wait_please")
                                            message:nil
                                           delegate:self
                                  cancelButtonTitle:nil
@@ -274,10 +269,7 @@ typedef void(^TableViewPullRefrshBlock)();
     
     switch (buttonIndex) {
         case 4:
-            //取消按钮
-        
-            
-            
+    
             return;
             
             break;
@@ -301,7 +293,7 @@ typedef void(^TableViewPullRefrshBlock)();
         case 2:
             
         {
-            //解除冻结
+
             [NetworkHelper unFreezeKey:selectedKey.keyId completion:^(id info, NSError *error) {
                 if (!error) {
                     UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:NSLocalizedString(@"words_unblock_success", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
@@ -351,14 +343,14 @@ typedef void(^TableViewPullRefrshBlock)();
             
             [NetworkHelper deleteKey:selectedKey.keyId completion:^(id info, NSError *error) {
                 if (!error) {
-                    UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:@"删除成功" delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
+                    UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:LS(@"words_delete_success") delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
                     alertViewtmp.tag = 100;
                     [alertViewtmp show];
                     
                     [customTableView.mj_header beginRefreshing];
                     
                 }else {
-                    UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:NSLocalizedString(@"words_delete_fail", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
+                    UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:LS(@"alert_title_alert") message:LS(@"words_delete_fail") delegate:self cancelButtonTitle:LS(@"words_sure_ok") otherButtonTitles: nil];
                     alertViewtmp.tag = 100;
                     [alertViewtmp show];
                     
@@ -378,14 +370,14 @@ typedef void(^TableViewPullRefrshBlock)();
 {
     [NetworkHelper deleteAllKey:selectedKey.lockId completion:^(id info, NSError *error) {
         if (!error) {
-            UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:@"清空成功" delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
+            UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:LS(@"alert_request_success") delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
             alertViewtmp.tag = 100;
             [alertViewtmp show];
             
             [customTableView.mj_header beginRefreshing];
 
         }else {
-            UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:@"清空失败" delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
+            UIAlertView* alertViewtmp = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil) message:LS(@"alert_request_error") delegate:self cancelButtonTitle:NSLocalizedString(@"words_sure_ok", nil) otherButtonTitles: nil];
             alertViewtmp.tag = 100;
             [alertViewtmp show];
             

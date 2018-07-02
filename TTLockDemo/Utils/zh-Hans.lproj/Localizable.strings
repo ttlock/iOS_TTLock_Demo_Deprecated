@@ -8,19 +8,8 @@
 
 "posturl"="http://www.sciener.cn/servlet/lockservice";
 "posturl_headimg"="http://www.sciener.cn/upload/uploadHeadImage";
-
-//"posturl_headimg"="http://120.26.119.23:8082/upload/uploadHeadImage";//
-//"posturl"="http://120.26.119.23:8083/servlet/lockservice";
-//"posturl_headimg"="http://120.26.119.23:8083/upload/uploadHeadImage";
-
-//"posturl"="http://192.168.199.188:8081/lockservice/servlet/lockservice";
-//"posturl_headimg"="http://192.168.199.188:8081/scienerWeb/upload/uploadHeadImage";
-
 "url_clause"="http://www.sciener.cn/about/progress/";
-
 "url_reset_ps"="http://www.sciener.cn/user/toFindPassword";
-
-//"url_author_request_token"="http://192.168.31.188:8081/openAPI/oauth2/token";
 "url_author_request_token"="https://api.ttlock.com.cn/oauth2/token";
 
 "sound_for_lock_no_power"="sound_for_lock_no_power";
@@ -35,7 +24,6 @@
 "words_Lock_5days"="5天";
 "words_Lock_6days"="6天";
 "words_Lock_7days"="7天";
-"words_Notes"="提醒";
 "words_Lock_first_tips"="密码在首次使用后，开始计算有效期";
 "words_Lock_second_tips"="新生成的密码一旦使用，前面的密码就失效";
 
@@ -355,7 +343,7 @@
 "alert_msg_Delete"="删除会在用户APP连网后生效。";
 "alert_msg_group_delete"="该分组下的电子钥匙将被移到未分组。";
 "4_9_digits"="请输入4 - 9位数字";
-"7_9_digits"="请输入7 - 9位数字,不能与清空码相同";
+"7_9_digits"="请输入7 - 9位数字";
 "alert_msg_not_connected"="请先连接设备。";
 "alert_msg_not_connect_current_lock"="当前连接的锁不是%@。";
 "alert_msg_error_nokeypassword_len"="无钥匙密码只能由1，2，3，4，5，6，7，8，9组成，并且长度为6到10位。";
@@ -421,7 +409,7 @@
 "words_login_account_holdspace"="手机号/邮箱";
 "words_login_ps_holdspace"="请输入密码";
 "words_login_ps_confire_holdspace"="密码确认";
-//"words_password"="    密码:";
+
 "words_change_nokeyps"="修改无钥匙密码";
 "words_change_del_ps"="修改删除密码";
 "alert_title_change_name"="修改钥匙名称";
@@ -903,13 +891,13 @@
 "Modify_The_Management_Password_Authentication"="修改管理密码验证";
 "Authorize_Validation"="授权验证";
 "Message_authentication_code_has_been_sent"="短信验证码已发送，请填写验证码";
-//添加电动车锁
+
 "electrocar" = "电动车";
 "electrocar_description" = "通过手机控制电动车的各项功能";
 
 "words_good"="好";
 
-/*********************IC Fingerprint Wristband 和新增的用户管理的淄川***************************/
+
 "words_IC"="IC卡";
 "words_Fingerprint"="指纹";
 "words_bong"="手环";
@@ -952,7 +940,8 @@
 "Fingerprint_Code_not_exist"="此指纹卡不存在";
 "alter_clear_keys"="该锁的电子钥匙都将被删除";
 
-/********************* 网关模块  ***************************/
+
+"words_WiFi_gateway"="网关";
 "words_add_WiFiGateway"="添加网关";
 "words_wifi_name"="WiFi名称";
 "words_wifi_password"="WiFi密码";
@@ -981,7 +970,7 @@
 "words_offline"="离线";
 "words_Gateway_lock"="锁";
 "Tint_the_length_of_the_name_is_too_long"="网关名称太长";
-/********************* 固件升级  ***************************/
+
 "Words_Lock_Upgrade" = "锁升级";
 "Words_Check_for_updates" = "检查更新";
 "Words_Upgrade" = "升级";
@@ -1015,3 +1004,32 @@
 "words_exit"="退出";
 "Tint_Entering_the_upgrade_mode" = "正在进入升级模式";
 "Tint_Exiting_the_upgrade_mode"= "正在退出升级模式";
+
+
+"words_lock_nearby"="附近的锁";
+"alert_request_error"="请求失败";
+"words_Battery"="电量";
+"input_email_or_account"="请输入手机号或email";
+"words_login_ps_holdspace"="请输入密码";
+"Alter_Enter_your_App_account_password"="请输入您的App账号密码";
+"words_account_password"="账号密码";
+"words_Active_Time"="生效时间";
+"words_Expire_Time"="失效时间";
+
+"words_Account_information"="帐号信息";
+"words_the_lock_list_of_account"="名下锁列表";
+"words_Sync_ekey_data"="同步钥匙数据";
+"words_common_ekeys_of_lock"="锁的普通钥匙列表";
+"words_all_created_passcodes_of_a_lock"="锁的键盘密码列表";
+"words_Get_a_passcode"="获取键盘密码";
+"words_unlock_records"="开锁记录列表";
+"words_click_to_unlock"="点击开门";
+"words_Get_lock_time"="获取锁时间";
+"words_IC_card_operation"="IC卡操作";
+"words_Fingerprint_operation"="指纹操作";
+"alert_After_resetting_the_ekey_all_the_ekeys_sent_will_be_unable_to_open_the_door"="重置电子钥匙，重置电子钥匙之后，所有发送的电子钥匙都将无法开门。是否重置？";
+"alert_After_reset_the_password_that_was_sent_to_the_user_before_that_will_fail"="重置用户密码，选择重置之后，之前发送给用户的密码都将失效。是否重置？";
+"tint_please_enter_the_receiver's_account"="请输入接收者账号";
+"alert_click_on_the_left_Login_button_first_to_get_accesstoken"="请先点击左侧‘登录’按钮，获取accesstoken";
+
+

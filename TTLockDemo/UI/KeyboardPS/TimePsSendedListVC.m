@@ -2,19 +2,19 @@
 //  TimePsSendedListVC.m
 //  sciener
 //
-//  Created by 谢元潮 on 15/1/19.
+//  Created by TTLock on 15/1/19.
 //
 //
 
 #import "TimePsSendedListVC.h"
 #import "RequestService.h"
 #import "TimePsSendedCell.h"
-#import "TimePsRecord.h"
 #import "AppDelegate.h"
 #import "Define.h"
 #import "XYCUtils.h"
 #import "MJRefresh.h"
 #import "Tab0ViewCell.h"
+#import "KeyboardPwd.h"
 
 typedef void(^TableViewPullRefrshBlock)();
 
@@ -40,9 +40,8 @@ typedef void(^TableViewPullRefrshBlock)();
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.title = @"键盘密码列表";
-        
-        //防止在ios7上出现，tableview被nav遮住的情况
+        self.title = LS(@"password_manage");
+    
         NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"7.0" options: NSNumericSearch];
         if (order == NSOrderedSame || order == NSOrderedDescending)
         {
@@ -73,7 +72,7 @@ typedef void(^TableViewPullRefrshBlock)();
     [aiv startAnimating];
     
     [label_no_data setHidden:YES];
-    label_no_data.text = @"暂无记录";
+    label_no_data.text = LS(@"text_no_data");
     
     [self loadData];
     
@@ -183,11 +182,11 @@ typedef void(^TableViewPullRefrshBlock)();
     if (editingStyle == UITableViewCellEditingStyleDelete){
         [NetworkHelper deleteKeyboardPwd:pwd.keyboardPwdId lockId:pwd.lockId deleteType:2  completion:^(id info, NSError *error) {
             if (!error) {
-                [self showToast:@"删除密码成功"];
+                [self showToast:LS(@"alert_request_success")];
                 [keyboardPwds removeObject:pwd];
                 [customTableView reloadData];
             }else {
-                [self showToast:@"删除密码失败"];
+                [self showToast:LS(@"alert_request_error")];
                 return ;
             }
         }];

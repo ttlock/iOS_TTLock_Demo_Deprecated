@@ -19,7 +19,7 @@
     UITableView *_tableView;
     NSString *_Number;
     AppDelegate * delegate;
-    int  fingerprintOprationType; //操作类型
+    int  fingerprintOprationType;
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear: animated];
@@ -33,8 +33,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = _type == 0?@"IC卡操作":@"指纹操作";
-    _dataArray = _type == 0? @[@"清空IC卡",@"添加IC卡",@"删除IC卡",@"修改IC卡",@"查询IC卡"]:@[@"清空指纹",@"添加指纹",@"删除指纹",@"修改指纹",@"查询指纹"];
+    self.title = _type == 0?LS(@"words_IC_card_operation"):LS(@"words_Fingerprint_operation");
+    _dataArray = @[@"clear",@"add",@"delete",@"modify",@"query"];
     _Number = _type == 0? [SettingHelper getCurrentICNumber]:[SettingHelper getCurrentFingerprintNumber];
     [self createTableView];
     
@@ -117,7 +117,7 @@
     }
     fingerprintOprationType = -1;
 }
-#pragma mark----------- 指纹
+#pragma mark----------- Fingerprint
 - (void)onAddFingerprintWithState:(AddFingerprintState)state fingerprintNumber:(NSString *)fingerprintNumber{
     _Number = fingerprintNumber;
     [SettingHelper setCurrentFingerprintNumber:fingerprintNumber];
@@ -134,7 +134,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-   [self showToast:@"删除成功"];
+   [self showToast:LS(@"alter_Succeed")];
 
 }
 - (void)onClearFingerprint{
@@ -143,10 +143,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [self showToast:@"清空成功"];
+    [self showToast:LS(@"alter_Succeed")];
 }
 -(void)onModifyFingerprint{
-    [self showToast:@"修改成功"];
+    [self showToast:LS(@"alter_Succeed")];
 
 }
 #pragma mark----------- ic
@@ -156,7 +156,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [self showToast:[NSString stringWithFormat:@"添加 状态%ld 卡号%@",(long)state,ICNumber]];
+    [self showToast:[NSString stringWithFormat:@"state %ld ,ICNumber %@",(long)state,ICNumber]];
 
     NSLog(@"ICNumber  %@",ICNumber);
 }
@@ -167,10 +167,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [self showToast:@"删除成功"];
+    [self showToast:LS(@"alter_Succeed")];
 }
 - (void)onModifyIC{
-   [self showToast:@"修改成功"];
+   [self showToast:LS(@"alter_Succeed")];
 }
 - (void)onClearIC{
     _Number = @"";
@@ -178,15 +178,15 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [_tableView reloadData];
     });
-    [self showToast:@"清空成功"];
+    [self showToast:LS(@"alter_Succeed")];
 }
-#pragma mark ---- 公用
+
 - (void)onGetOperateLog_LockOpenRecordStr:(NSString *)LockOpenRecordStr{
     if (![_selectedKey.lockVersion hasPrefix:@"10.1"]) {
         if (LockOpenRecordStr.length > 0) {
             [self showToast:LockOpenRecordStr];
         }else{
-            [self showToast:@"读取成功 没有记录"];
+            [self showToast:LS(@"alter_Succeed")];
         }
     }
 }
@@ -195,7 +195,6 @@
 }
 - (void)onBTDisconnect_peripheral:(CBPeripheral *)periphera{
     [TTObjectTTLockHelper startBTDeviceScan:YES];
-    NSLog(@"断开蓝牙 disconnect");
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

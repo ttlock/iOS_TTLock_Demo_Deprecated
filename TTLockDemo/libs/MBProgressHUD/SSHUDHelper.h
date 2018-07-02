@@ -2,7 +2,7 @@
 //  HUDHelper.h
 //  Sciener
 //
-//  Created by 王娟娟 on 2017/8/6.
+//  Created by WJJ on 2017/8/6.
 //  Copyright © 2017年 sciener. All rights reserved.
 //
 
@@ -17,7 +17,7 @@
 @property (nonatomic,assign)MBProgressHUDMode mode;
 
 
-- (void)show:(NSString*_Nullable)status;  //调用之前 一定要设置 containerView
+- (void)show:(NSString*_Nullable)status; 
 
 - (void)dismiss;
 

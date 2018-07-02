@@ -32,7 +32,7 @@
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents *comps = [gregorian components:unitFlags fromDate:self];
-    [comps setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]]; // 使用UTC或GMT解决时区相差8小时的问题
+    [comps setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]]; 
     [comps setDay:1];
     
     return [gregorian dateFromComponents:comps];
@@ -42,7 +42,7 @@
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     NSDateComponents *comps = [gregorian components:unitFlags fromDate:self];
-    [comps setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]]; // 使用UTC或GMT解决时区相差8小时的问题
+    [comps setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     [comps setDay:[self daysOfMonth]];
     
     return [gregorian dateFromComponents:comps];
@@ -51,7 +51,7 @@
 - (NSDate *)addMonthAndDay:(NSUInteger)months days:(NSUInteger)days {
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *comps = [NSDateComponents new];
-    [comps setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]]; // 使用UTC或GMT解决时区相差8小时的问题
+    [comps setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     [comps setMonth:months];
     [comps setDay:days];
     
@@ -82,32 +82,7 @@
 }
 
 - (NSString *)weekdayNameCN:(BOOL)isShortName {
-    /*
-    // 方法一：
-    NSArray *arrWeekdayName =
-    isShortName
-    ? @[ @"周日",
-         @"周一",
-         @"周二",
-         @"周三",
-         @"周四",
-         @"周五",
-         @"周六" ]
-    : @[
-        @"星期日",
-        @"星期一",
-        @"星期二",
-        @"星期三",
-        @"星期四",
-        @"星期五",
-        @"星期六"
-        ];
-    
-    NSInteger weekday = [self weekday];
-    return arrWeekdayName[weekday - 1];
-     */
-    
-    // 方法二：
+
     return [self weekdayName:isShortName localeIdentifier:@"zh_CN"];
 }
 

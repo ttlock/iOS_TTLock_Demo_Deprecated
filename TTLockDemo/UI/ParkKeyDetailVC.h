@@ -2,7 +2,7 @@
 //  ParkKeyDetailVC.h
 //
 //  Created by wjjxx on 16/8/25.
-//  Copyright © 2016年 谢元潮. All rights reserved.
+//  Copyright © 2016年 TTLock. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

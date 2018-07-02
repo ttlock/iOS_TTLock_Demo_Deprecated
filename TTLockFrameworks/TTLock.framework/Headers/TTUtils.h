@@ -8,39 +8,37 @@
 
 #import <Foundation/Foundation.h>
 
-/** 错误码
- *
- */
+
 typedef NS_ENUM(NSInteger, TTError)
 {
-    TTErrorHadReseted = 0,                              /** 锁可能已被重置 */
-    TTErrorDataCRCError = 0x01,                         /** CRC校验出错 */
-    TTErrorNoPermisston = 0x02,                         /** 身份校验失败，无操作权限*/
-    TTErrorIsWrongPS = 0x03,                            /** 管理员密码不正确 */
-    TTErrorNoMemory = 0x04,                             /** 存储空间不足, 超出保存用户的最大数量 */
-    TTErrorInSettingMode = 0x05,                        /** 处于设置模式(开门必须处于非设置模式) */
-    TTErrorNoAdmin = 0x06,                              /** 不存在管理员 */
-    TTErrorIsNotSettingMode = 0x07,                     /** 处于非设置模式(添加管理员必须处于设置模式) */
-    TTErrorIsWrongDynamicPS = 0x08,                     /** 动态密码错误(约定数字于随机数之和错误) */
-    TTErrorIsNoPower = 0x0a,                            /** 电池没电, 无法开门 */
-    TTErrorResetKeyboardPs = 0x0b,                      /** 设置900密码失败 */
-    TTErrorUpdateKeyboardIndex = 0x0c,                  /** 更新键盘密码序列出错 */
-    TTErrorIsInvalidFlag = 0x0d,                        /** 失效flag */
-    TTErrorEkeyOutOfDate = 0x0e,                        /** ekey过期 */
-    TTErrorPasswordLengthInvalid = 0x0f,                 /** 密码长度无效 */
-    TTErrorSuperPasswordIsSameWithDeletePassword = 0x10,  /** 管理员密码与删除密码相等 */
-    TTErrorEkeyNotToDate = 0x11,                        /** 未到有效期 */
-    TTErrorAesKey = 0x12,                               /** 未登录 无操作权限 */
-    TTErrorFail = 0x13,                               /** 操作失败 */
-    TTErrorPsswordExist = 0x14,                          /** 添加的密码已经存在 */
-    TTErrorPasswordNotExist = 0x15,                     /** 删除或者修改的密码不存在 */
-    TTErrorNoFree_Memory = 0x16,						  /** 存储空间不足（比如添加密码时，超过存储容量）*/
-    TTErrorInvalidParaLength = 0x17,					  /** 参数长度无效 */
-    TTErrorCardNotExist =	0x18,					      /** IC卡不存在 */
-    TTErrorFingerprintDuplication =	0x19,			  /** 重复指纹 */
-    TTErrorFingerprintNotExist = 0x1A,                   /** 指纹不存在 */
-    TTErrorInvalidClientPara = 0x1D,                   /** 无效的特殊字符串 */
-    TTErrorNotSupportModifyPwd = 0x60                   /** 不支持修改密码 */
+    TTErrorHadReseted = 0,                               /** The lock may have been reset */
+    TTErrorDataCRCError = 0x01,                          /** Error of CRC check */
+    TTErrorNoPermisston = 0x02,                          /** Failure of identity verification and no operation permissions */
+    TTErrorIsWrongPS = 0x03,                             /** Admin code is incorrect */
+    TTErrorNoMemory = 0x04,                              /** Lack of storage space */
+    TTErrorInSettingMode = 0x05,                         /** In setting mode */
+    TTErrorNoAdmin = 0x06,                               /** No administrator */
+    TTErrorIsNotSettingMode = 0x07,                      /** Not in setting mode */
+    TTErrorIsWrongDynamicPS = 0x08,                      /** Dynamic password error */
+    TTErrorIsNoPower = 0x0a,                             /** Battery without electricity */
+    TTErrorResetKeyboardPs = 0x0b,                       /** Setting 900 passwords failed */
+    TTErrorUpdateKeyboardIndex = 0x0c,                   /** Update the keyboard password sequence error */
+    TTErrorIsInvalidFlag = 0x0d,                         /** Invalid flag */
+    TTErrorEkeyOutOfDate = 0x0e,                         /** ekey expired */
+    TTErrorPasswordLengthInvalid = 0x0f,                 /** Invalid password length */
+    TTErrorSuperPasswordIsSameWithDeletePassword = 0x10, /** Admin Passcode is the same as Erase Passcode */
+    TTErrorEkeyNotToDate = 0x11,                         /** Short of validity */
+    TTErrorAesKey = 0x12,                                /** No login, no operation permissions */
+    TTErrorFail = 0x13,                                  /** operation failed */
+    TTErrorPsswordExist = 0x14,                          /** The added password has already existed */
+    TTErrorPasswordNotExist = 0x15,                      /** The password that are deleted or modified does not exist */
+    TTErrorNoFree_Memory = 0x16,						 /** Lack of storage space (as when adding a password) */
+    TTErrorInvalidParaLength = 0x17,					 /** Invalid parameter length */
+    TTErrorCardNotExist =	0x18,					     /** IC card does not exist */
+    TTErrorFingerprintDuplication =	0x19,			     /** Duplication of fingerprints */
+    TTErrorFingerprintNotExist = 0x1A,                   /** Fingerprints do not exist */
+    TTErrorInvalidClientPara = 0x1D,                     /** Invalid special string */
+    TTErrorNotSupportModifyPwd = 0x60                    /** Do not support the modification of the password */
     
 };
 
@@ -66,50 +64,84 @@ typedef NS_ENUM(NSInteger, TTManagerState) {
     TTManagerStatePoweredOn,
 } ;
 
+/*!
+ *  @enum DoorSceneType
+ *
+ *  @discussion Different scenes, different locks
+ *
+ *  @constant CommonDoorLockSceneType       common v2 lock
+ *  @constant AdvancedDoorLockSceneType     v2 lock with permanent password function, v3 lock is also the default value.
+ *  @constant RYDoorLock
+ *  @constant GateLockSceneType             Gate lock
+ *  @constant SafeLockSceneType             Safe Lock
+ *  @constant BicycleLockSceneType          Bicycle Lock
+ *  @constant ParkSceneType                 Parking Lock
+ *  @constant PadLockSceneType              Pad Lock
+ *  @constant CylinderLockSceneType         Cylinder Lock
+ *
+ */
 typedef NS_ENUM(int, DoorSceneType)
 {
-    CommonDoorLockSceneType = 1,           /**普通二代门锁*/
-    AdvancedDoorLockSceneType = 2,             /**二代锁带永久密码功能的门锁、三代锁默认也是这个值*/
-    RYDoorLock = 3,                           /**荣域定制的门锁*/
-    GateLockSceneType = 4,                    /**门禁*/
-    SafeLockSceneType = 5,                     /**保险箱锁*/
-    BicycleLockSceneType = 6,                  /**自行车锁*/
-    ParkSceneType = 7                   /**三代车位锁*/
+    CommonDoorLockSceneType = 1,
+    AdvancedDoorLockSceneType = 2,
+    RYDoorLock = 3,
+    GateLockSceneType = 4,
+    SafeLockSceneType = 5,
+    BicycleLockSceneType = 6,
+    ParkSceneType = 7,
+    PadLockSceneType = 8,
+    CylinderLockSceneType = 9,
 };
-/** 键盘密码类型
+/*!
+ *  @enum KeyboardPsType
+ *
+ *  @discussion Keyboard password type
+ *
+ *  @constant KeyboardPsTypeOnce           One-time
+ *  @constant KeyboardPsTypePermanent      Permanent
+ *  @constant KeyboardPsTypePeriod         Timed
+ *  @constant KeyboardPsTypeCycle          Cyclic
  *
  */
 typedef NS_ENUM(NSInteger, KeyboardPsType)
 {
-    KeyboardPsTypeOnce = 1,          /** 单次密码 */
-    KeyboardPsTypePermanent = 2,     /** 永久密码 */
-    KeyboardPsTypePeriod = 3,        /** 时限密码 */
-    KeyboardPsTypeCycle = 4          /** 循环密码 **/
+    KeyboardPsTypeOnce = 1,
+    KeyboardPsTypePermanent = 2,
+    KeyboardPsTypePeriod = 3,
+    KeyboardPsTypeCycle = 4
 };
 
-/** 密码 IC卡等操作类型
+/*!
+ *  @enum Operation type
+ *
+ *  @constant OprationTypeClear           Clear
+ *  @constant OprationTypeAdd             Add
+ *  @constant OprationTypeDelete          Delete
+ *  @constant OprationTypeModify          Modify
+ *  @constant OprationTypeQuery           Query
+ *  @constant OprationTypeRecover         Recover
  *
  */
 typedef NS_ENUM(NSInteger,OprationType)
 {
-    OprationTypeClear = 1,     /** 清空 */
-    OprationTypeAdd = 2,       /** 添加 */
-    OprationTypeDelete = 3,    /** 删除 */
-    OprationTypeModify = 4,    /** 修改 */
-    OprationTypeQuery = 5,      /** 查询 */
-    OprationTypeRecover = 6     /** 恢复 */
+    OprationTypeClear = 1,
+    OprationTypeAdd = 2,
+    OprationTypeDelete = 3,
+    OprationTypeModify = 4,
+    OprationTypeQuery = 5,
+    OprationTypeRecover = 6
     
 };
 
 /*!
  *  @enum TTLockSwitchState
  *
- *  @discussion 锁的开关状态
+ *  @discussion Lock Switch State
  *
- *  @constant LockStateLock       已关锁
- *  @constant LockStateUnlock     已开锁
- *  @constant LockStateUnknown    状态未知
- *  @constant LockStateUnlockHasCar  已开锁，有车
+ *  @constant LockStateLock       Lock
+ *  @constant LockStateUnlock     Unlock
+ *  @constant LockStateUnknown    Unknown
+ *  @constant LockStateUnlockHasCar  Unlock，Has Car
  *
  */
 typedef NS_ENUM(NSInteger,TTLockSwitchState)
@@ -122,10 +154,10 @@ typedef NS_ENUM(NSInteger,TTLockSwitchState)
 /*!
  *  @enum TTDoorSensorState
  *
- *  @discussion 门磁状态
+ *  @discussion Door Sensor State
  *
- *  @constant TTDoorSensorStateOff    没有检测到门磁
- *  @constant TTDoorSensorStateOn     检测到门磁
+ *  @constant TTDoorSensorStateOff    No door sensor was detected
+ *  @constant TTDoorSensorStateOn     Detection of door sensor
  *
  */
 typedef NS_ENUM(NSInteger,TTDoorSensorState)
@@ -134,39 +166,62 @@ typedef NS_ENUM(NSInteger,TTDoorSensorState)
     TTDoorSensorStateOn = 1,
 };
 
-/** 添加 IC 卡返回的状态类型
+/*!
+ *  @enum AddICState
+ *
+ *  @discussion State type returned
+ *
+ *  @constant AddICStateHadAdd    Identify IC card and add successfully
+ *  @constant AddICStateCanAdd    Successfully start adding IC card mode
  *
  */
 typedef NS_ENUM(NSInteger,AddICState)
 {
-    AddICStateHadAdd = 1,   /** 识别到IC卡并成功添加 */
-    AddICStateCanAdd = 2,   /** 成功启动添加IC卡模式 */
+    AddICStateHadAdd = 1,
+    AddICStateCanAdd = 2,
     
 };
 
-/** 添加指纹返回的状态类型
+/*!
+ *  @enum AddFingerprintState
+ *
+ *  @discussion State type returned by adding a fingerprint
+ *
+ *  @constant AddFingerprintCollectSuccess     Add fingerprint successfully
+ *  @constant AddFingerprintCanCollect         Start adding fingerprint mode Successfully
+ *  @constant AddFingerprintCanCollectAgain    Start the second collection
  *
  */
 typedef NS_ENUM(NSInteger,AddFingerprintState)
 {
-    AddFingerprintCollectSuccess = 1,     /**  添加指纹成功 包含指纹编号,其他状态无此字段。*/
-    AddFingerprintCanCollect = 2,         /** 成功启动添加指纹模式，这时候App可以提示“请按手指” */
-    AddFingerprintCanCollectAgain = 3,    /** 第一次采集指纹成功，开始第二次采集，这时候App可以提示“请再次按手指” */
+    AddFingerprintCollectSuccess = 1,
+    AddFingerprintCanCollect = 2,
+    AddFingerprintCanCollectAgain = 3,
 };
 
-/** 读取设备信息的类型
+/*!
+ *  @enum DeviceInfoType
+ *
+ *  @discussion Read device information
+ *
+ *  @constant DeviceInfoTypeOfProductionModel     Product model
+ *  @constant DeviceInfoTypeOfHardwareVersion     Hardware version
+ *  @constant DeviceInfoTypeOfFirmwareVersion     Firmware version
+ *  @constant DeviceInfoTypeOfProductionDate      Production Date
+ *  @constant DeviceInfoTypeOfProductionMac       Mac
+  *  @constant DeviceInfoTypeOfProductionClock    Clock
  *
  */
 typedef NS_ENUM(NSInteger,DeviceInfoType) {
-    DeviceInfoTypeOfProductionModel = 1,    /**  1-	产品型号 */
-    DeviceInfoTypeOfHardwareVersion = 2,    /**  2-	硬件版本号 */
-    DeviceInfoTypeOfFirmwareVersion = 3,    /**  3-	固件版本号 */
-    DeviceInfoTypeOfProductionDate = 4,     /**  4-	生产日期 */
-    DeviceInfoTypeOfProductionMac = 5,      /**  5-	蓝牙地址 */
-    DeviceInfoTypeOfProductionClock = 6     /**  6-	时钟 */
+    DeviceInfoTypeOfProductionModel = 1,
+    DeviceInfoTypeOfHardwareVersion = 2,
+    DeviceInfoTypeOfFirmwareVersion = 3,
+    DeviceInfoTypeOfProductionDate = 4,
+    DeviceInfoTypeOfProductionMac = 5,
+    DeviceInfoTypeOfProductionClock = 6
     
 };
-//1 是搜索 2 是添加
+
 typedef NS_ENUM(NSInteger, AdvertisementDataType)
 {
     AdvertisementDataTypeSearch = 1,
@@ -178,15 +233,14 @@ typedef NS_ENUM(NSInteger, AdvertisementDataType)
 
 #define DEBUG_UTILS YES
 #define DateFormateStringDefault @"yyyy-MM-dd HH:mm:ss"
-#define RSSI_SETTING_1m -85    //对应开锁距离1m
-#define RSSI_SETTING_2m -150    //对应开锁距离2m
-#define RSSI_SETTING_3m -180    //对应开锁距离3m
-#define RSSI_SETTING_4m -210    //对应开锁距离4m
-#define RSSI_SETTING_5m -240    //对应开锁距离5m
+#define RSSI_SETTING_1m -85     //Corresponding unlocking distance :1m
+#define RSSI_SETTING_2m -150    //Corresponding unlocking distance :2m
+#define RSSI_SETTING_3m -180    //Corresponding unlocking distance :3m
+#define RSSI_SETTING_4m -210    //Corresponding unlocking distance :4m
+#define RSSI_SETTING_5m -240    //Corresponding unlocking distance :5m
 
-#define DISTANCE_DEFAULT_FOR_SAVE 2.5f               // 默认保存的开锁距离
-
-#define RSSI_SETTING_MAX -65    //对应最近距离0.5m
+#define DISTANCE_DEFAULT_FOR_SAVE 2.5f
+#define RSSI_SETTING_MAX -65    //Corresponding unlocking distance :0.5m
 #define RSSI_SETTING_MIN -140
 
 //#define RSSI_SETTING_CLOSE -60
@@ -195,19 +249,19 @@ typedef NS_ENUM(NSInteger, AdvertisementDataType)
 //#define RSSI_SETTING_FAR -120
 
 #pragma mark --- 时间转换
-/** 把NSDate类型 转化成字符串 并根据timezoneRawOffset转化锁里时区的时间 */
+/** According to timezoneRawOffset, convert NSDate type into NSString. */
 +(NSString*)formateDate:(NSDate*)date format:(NSString*)format timezoneRawOffset:(long)timezoneRawOffset;
 
 +(NSDate*)formateDateFromStringToDate:(NSString*)dateStr format:(NSString*)format timezoneRawOffset:(long)timezoneRawOffset;
-/**获取当前时间的年份 格式是 yyyy*/
+/** Get the current time of the year, the format is yyyy */
 + (NSString *)getCurrentYear;
 
 #pragma mark --- 数据类型转换
-//3字节及以下 用int
+//3bytes and below
 +(int)intFromHexBytes:(Byte*)bytes length:(int)dataLen;
-//4字节及以上 用long long
+//4 bytes and above
 +(long long)longFromHexBytes:(Byte*)bytes length:(int)dataLen;
-/**字节转字符串*/
+
 +(NSString*)stringFormBytes:(Byte*)bytes length:(int)dataLen;
 
 +(NSData*)DataFromHexStr:(NSString *)hexString;
@@ -218,7 +272,7 @@ typedef NS_ENUM(NSInteger, AdvertisementDataType)
 
 +(void) printByteByByte:(Byte *)packet withLength:(int)length;
 
-+(Byte)generateRandomByte;//随机数
++(Byte)generateRandomByte;
 
 +(void) arrayCopyWithSrc:(Byte*)src srcPos:(int)srcPos dst:(Byte*)dst dstPos:(NSUInteger)dstPos length:(NSUInteger)length;
 
@@ -237,17 +291,17 @@ typedef NS_ENUM(NSInteger, AdvertisementDataType)
 +(int)RandomNumber0To9_length:(int)length;
 
 +(int)RandomInt0To9;
-//随机生成7位数
+//Random generation of 7 digits
 + (NSString *)getRandom7Length;
 +(NSString *) md5: (NSString *) inPutText;
 +(NSString*)EncodeSharedKeyValue:(NSString*)edate;
 +(NSString*)DecodeSharedKeyValue:(NSString*)edateStr;
 
 /**
- 求字符串所占字节
+ The bytes of the string
 
- @param str 字符串
- @return 所占字节
+ @param str
+ @return Bytes
  */
 + (int)convertToByte:(NSString*)str;
 

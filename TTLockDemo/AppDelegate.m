@@ -1,7 +1,7 @@
 //
 //  AppDelegate.m
-//  Created by 谢元潮 on 14-10-29.
-//  Copyright (c) 2014年 谢元潮. All rights reserved.
+//  Created by TTLock on 14-10-29.
+//  Copyright (c) 2014年 TTLock. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -9,7 +9,6 @@
 #import "DBHelper.h"
 #import "Define.h"
 #import "RequestService.h"
-#import "XYCUtils.h"
 #import "KeyDetailViewController.h"
 #import "OnFoundDeviceModel.h"
 
@@ -24,10 +23,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-   //创建TTLock
+    //create TTLock object
      TTLockHelperClass;
 
-    //是否打印日志
+    //Whether or not print the log in SDK
     [TTLock setDebug:NO];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -42,16 +41,16 @@
     return YES;
     
 }
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    [TTObjectTTLockHelper stopBTDeviceScan];
-   
-}
+
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     
     [TTObjectTTLockHelper startBTDeviceScan:YES];
 }
 
-//禁止横屏
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [TTObjectTTLockHelper stopBTDeviceScan];
+    
+}
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
     return UIInterfaceOrientationMaskPortrait;
 }

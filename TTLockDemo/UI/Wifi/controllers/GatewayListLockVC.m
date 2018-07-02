@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"网关管理的锁列表";
+    self.title = self.plugModel.gatewayMac;
     [self createTableview];
     
     // Do any additional setup after loading the view.

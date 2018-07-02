@@ -2,7 +2,7 @@
 //  LockViewController.m
 //  TTLockDemo
 //
-//  Created by 刘潇翔 on 17/2/10.
+//  Created by LXX on 17/2/10.
 //  Copyright © 2017年 wjj. All rights reserved.
 //
 
@@ -35,10 +35,6 @@ typedef void(^TableViewPullRefrshBlock)();
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    
-    self.title = @"名下锁列表";
-    
-    
 }
 
 - (void)loadData
@@ -105,7 +101,7 @@ typedef void(^TableViewPullRefrshBlock)();
     }
     cell.leftTopLabel.text = lockModel.lockAlias;
     
-    cell.leftBottomLabel.text = [NSString stringWithFormat:@"电量：%d%%", lockModel.electricQuantity];
+    cell.leftBottomLabel.text = [NSString stringWithFormat:@"%@:%d%%",LS(@"words_Battery"), lockModel.electricQuantity];
 
     cell.leftBottomLabel.hidden = lockModel.electricQuantity == -1;
     

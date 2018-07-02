@@ -10,7 +10,7 @@
 
 @interface ICAndFingerprintManagerVC : UIViewController
 
-@property (nonatomic,assign)int type;//0 ic 1 指纹
+@property (nonatomic,assign)int type;//0 ic   1 Fingerprint
 @property(nonatomic,strong)Key *selectedKey;
 
 @end

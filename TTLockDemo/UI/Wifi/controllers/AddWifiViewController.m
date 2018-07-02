@@ -34,7 +34,7 @@
 }
 
 - (void)createTableview{
-     self.dataArray = [NSMutableArray arrayWithArray:@[LS(@"words_wifi_name"),LS(@"words_wifi_password"),LS(@"账号密码")]];
+     self.dataArray = [NSMutableArray arrayWithArray:@[LS(@"words_wifi_name"),LS(@"words_wifi_password"),LS(@"words_account_password")]];
     self.baseWifiTableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
     self.baseWifiTableview.delegate = self;
     self.baseWifiTableview.dataSource = self;
@@ -93,7 +93,7 @@
                    
                }];
            }else{
-               [self showToast:@"所填信息不能为空"];
+               [self showToast:LS(@"alter_empty")];
            }
        }
        
@@ -134,7 +134,7 @@
     return commonTextField;
 }
 - (void)dealloc{
-     NSLog(@"******************* %@ 被销毁了 *******************",NSStringFromClass([self class]));
+     NSLog(@"******************* %@ dealloc *******************",NSStringFromClass([self class]));
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

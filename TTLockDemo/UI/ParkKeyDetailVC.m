@@ -2,7 +2,7 @@
 //  ParkKeyDetailVC.m
 //
 //  Created by wjjxx on 16/8/25.
-//  Copyright © 2016年 谢元潮. All rights reserved.
+//  Copyright © 2016年 TTLock. All rights reserved.
 //
 
 #import "ParkKeyDetailVC.h"
@@ -39,11 +39,11 @@
     // Do any additional setup after loading the view.
 }
 - (void)createTableView{
-    //创建视图的数据源
+
     if ([selectedKey.userType isEqualToString:@"110301"]) {
-      _dataArray = @[@[@"上升", @"下降"],@[@"修改锁名",@"发送电子钥匙",@"锁用户",@"读取开锁记录"]];
+      _dataArray = @[@[LS(@"words_rise"), LS(@"words_fall")],@[LS(@"change_lock_name"),LS(@"send_ekey"),LS(@"words_common_ekeys_of_lock"),LS(@"words_unlock_records")]];
     }else{
-     _dataArray = @[@[@"上升",@"下降"]];
+     _dataArray = @[@[LS(@"words_rise"),LS(@"words_fall")]];
     }
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64) style:UITableViewStyleGrouped];
     _tableView.delegate = self;
@@ -144,11 +144,11 @@
         case 1:{
             switch (indexPath.row) {
                 case 0:{
-                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"修改锁名", nil)
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:LS(@"change_lock_name")
                                                                     message:nil
                                                                    delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"取消", nil)
-                                                          otherButtonTitles:NSLocalizedString(@"确定", nil),nil];
+                                                          cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
+                                                          otherButtonTitles:NSLocalizedString(@"words_sure_ok", nil),nil];
                     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                     
                     alert.tag = TAG_CHANGE_NAME;
@@ -156,8 +156,8 @@
                     
                 } break;
                 case 1:{
-                    //发送电子钥匙
-                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"请输入接收方用户名(方便起见，这里默认发送电子钥匙的有效期是从当前时间开始,20分钟内有效)"
+               
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:LS(@"tint_please_enter_the_receiver's_account")
                                                                     message:nil
                                                                    delegate:self
                                                           cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
@@ -168,13 +168,13 @@
                     [alert show];
                 } break;
                 case 2:{
-                    //所用户
+           
                     UserManageViewController * unlockRecord = [[UserManageViewController alloc]initWithNibName:@"UserManageViewController" bundle:nil];
                     unlockRecord.currentKey = selectedKey;
                     [self.navigationController pushViewController:unlockRecord animated:YES];
                 }break;
                 case 3:{
-                    //读取开锁记录
+              
                     UnlockRecordsViewController * unlockRecord = [[UnlockRecordsViewController alloc]initWithNibName:@"UnlockRecordsViewController" bundle:nil];
                     unlockRecord.selectedKey = selectedKey;
                     [self.navigationController pushViewController:unlockRecord animated:YES];

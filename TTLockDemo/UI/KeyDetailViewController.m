@@ -60,7 +60,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        //防止在ios7上出现，tableview被nav遮住的情况
+  
         NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"7.0" options: NSNumericSearch];
         if (order == NSOrderedSame || order == NSOrderedDescending)
         {
@@ -102,46 +102,21 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
     delegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 }
 - (void)createDataArray{
-    if(selectedKey.lockAlias){
-        
-        self.title = selectedKey.lockAlias;
-    }else{
-        
-        self.title=@"Key Detail";
-    }
-    
+
+    self.title = selectedKey.lockAlias;
     if (selectedKey.isAdmin == YES) {
         if ([selectedKey.lockVersion hasPrefix:@"5.3"]){
-           
-            //@"IC卡操作",@"指纹操作",@"设置锁里的手环key"] 要根据特征值  TTSpecialValueUtil
             
-            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"校准时钟",@"设置管理员开门密码"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"],@[@"点击开门",@"读取操作记录",@"获取锁时间"],@[@"锁升级",@"IC卡操作",@"指纹操作"]];
+            _dataArray = @[@[LS(@"resetting_ekey"),LS(@"reset_keyboard_password"),LS(@"words_Adjust_Clock"),LS(@"title_nokeyps_manage")],@[LS(@"send_ekey"),LS(@"change_lock_name"),LS(@"words_common_ekeys_of_lock"),LS(@"words_all_created_passcodes_of_a_lock"),LS(@"words_Get_a_passcode"),LS(@"words_unlock_records")],@[LS(@"words_click_to_unlock"),LS(@"Tint_Reading_operating_logs"),LS(@"words_Get_lock_time")],@[LS(@"Words_Lock_Upgrade"),LS(@"words_IC_card_operation"),LS(@"words_Fingerprint_operation")]];
         }else{
-            _dataArray = @[@[@"重置电子钥匙",@"重置键盘密码",@"校准时钟",@"设置管理员开门密码",@"设置管理员删除密码"],@[@"发送电子钥匙",@"键盘密码版本",@"修改锁名",@"锁的普通钥匙列表",@"获取锁的键盘密码列表",@"生成用户键盘密码",@"读取开锁记录"]];
+            _dataArray = @[@[LS(@"resetting_ekey"),LS(@"reset_keyboard_password"),LS(@"words_Adjust_Clock"),LS(@"title_nokeyps_manage"),LS(@"alert_set_delete_ps")],@[LS(@"send_ekey"),LS(@"change_lock_name"),LS(@"words_common_ekeys_of_lock"),LS(@"words_all_created_passcodes_of_a_lock"),LS(@"words_Get_a_passcode"),LS(@"words_unlock_records")]];
         }
-        
-        [NetworkHelper getKeyboardPwdVersion:selectedKey.lockId completion:^(id info, NSError *error) {
-            KeyboardPwdVersion *version = [KeyboardPwdVersion mj_objectWithKeyValues:info];
-            if (version.keyboardPwdVersion == 0) {
-                _keyboardPwdVersion = @"未知";
-            }else if (version.keyboardPwdVersion == 1) {
-                _keyboardPwdVersion = @"老版900个键盘密码";
-            }else if (version.keyboardPwdVersion == 2) {
-                _keyboardPwdVersion = @"新版300个键盘密码，最长180天";
-            }else if (version.keyboardPwdVersion == 3) {
-                _keyboardPwdVersion = @"新版300个键盘密码，支持月份和永久";
-            }else if (version.keyboardPwdVersion == 4) {
-                _keyboardPwdVersion = @"三代锁的密码版本，支持限时和循环等类型";
-            }
-            [customTableView reloadData];
-        }];
-        
         
     }else{
         if ([selectedKey.lockVersion hasPrefix:@"5.3"]){
-            _dataArray = @[@[@"校准时钟"],@[@"键盘密码版本"],@[@"点击开门",@"读取操作记录",@"获取锁时间"]];
+            _dataArray = @[@[LS(@"words_Adjust_Clock")],@[],@[LS(@"words_click_to_unlock"),LS(@"Tint_Reading_operating_logs")]];
         }else{
-            _dataArray = @[@[@"校准时钟"],@[@"键盘密码版本"]];
+            _dataArray = @[@[LS(@"words_Adjust_Clock")]];
         }
     }
     
@@ -233,7 +208,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    //判断蓝牙是否打开
+
     if (indexPath.section != 1) {
          if (![BlueToothHelper getBlueState]) {
              return nil;
@@ -246,13 +221,13 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 case 0:{
                     
                     if ([selectedKey isAdmin]) {
-                        //重置电子钥匙
+                      
                         UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                                      initWithTitle:@"重置电子钥匙，重置电子钥匙之后，所有发送的电子钥匙都将无法开门。是否重置？"
+                                                      initWithTitle:LS(@"alert_After_resetting_the_ekey_all_the_ekeys_sent_will_be_unable_to_open_the_door")
                                                       delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"取消", nil)
+                                                      cancelButtonTitle:LS(@"words_cancel")
                                                       destructiveButtonTitle:nil
-                                                      otherButtonTitles:NSLocalizedString(@"重置", nil), nil];
+                                                      otherButtonTitles:LS(@"words_reset"), nil];
                         [actionSheet showInView:self.view];
                         actionSheet.tag=TAG_RESET_EKEY;
                     }else{
@@ -276,13 +251,13 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                    
                 }break;
                 case 1:{
-                    //初始化900密码
+       
                     UIActionSheet *actionSheet = [[UIActionSheet alloc]
-                                                  initWithTitle:@"重置用户密码，选择重置之后，之前发送给用户的密码都将失效。是否重置？"
+                                                  initWithTitle:LS(@"alert_After_reset_the_password_that_was_sent_to_the_user_before_that_will_fail")
                                                   delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
+                                                  cancelButtonTitle:LS(@"words_cancel")
                                                   destructiveButtonTitle:nil
-                                                  otherButtonTitles:@"重置", nil];
+                                                  otherButtonTitles:LS(@"words_reset"), nil];
                     [actionSheet showInView:self.view];
                     actionSheet.tag = TAG_SHEET_RESET_900_PS;
                     
@@ -308,8 +283,8 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
  
                 }break;
                 case 3:{
-                    //设置键盘密码
-                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"请输入键盘密码(4到9位数字)":@"请输入键盘密码(7到9位数字)"
+           
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?LS(@"4_9_digits"):LS(@"7_9_digits")
                                                                     message:nil
                                                                    delegate:self
                                                           cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
@@ -322,8 +297,8 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
   
                 }break;
                 case 4:{
-                    //管理员删除密码
-                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?@"请输入管理员删除密码(4到9位数字)":@"请输入管理员删除密码(7到9位数字)"
+  
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:[selectedKey.lockVersion hasPrefix:@"5.3"]?LS(@"4_9_digits"):LS(@"7_9_digits")
                                                                     message:nil
                                                                    delegate:self
                                                           cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
@@ -342,12 +317,12 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
             switch (indexPath.row) {
                 case 0:{
                     if ([selectedKey isAdmin]) {
-                        //发送电子钥匙
-                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"请输入接收方用户名(方便起见，这里默认发送电子钥匙的有效期是从当前时间开始,20分钟内有效)"
+                  
+                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:LS(@"tint_please_enter_the_receiver's_account")
                                                                         message:nil
                                                                        delegate:self
-                                                              cancelButtonTitle:NSLocalizedString(@"words_cancel", nil)
-                                                              otherButtonTitles:NSLocalizedString(@"words_sure_ok", nil),nil];
+                                                              cancelButtonTitle:LS(@"words_cancel")
+                                                              otherButtonTitles:LS(@"words_sure_ok"),nil];
                         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                         
                         alert.tag = TAG_SEND_EKEY;
@@ -355,44 +330,32 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                     }
 
                 }break;
+                
                 case 1:{
-                    if (selectedKey.isAdmin == NO) {
-                        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"修改锁名", nil)
-                                                                        message:nil
-                                                                       delegate:self
-                                                              cancelButtonTitle:NSLocalizedString(@"取消", nil)
-                                                              otherButtonTitles:NSLocalizedString(@"确定", nil),nil];
-                        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-                        
-                        alert.tag = TAG_CHANGE_NAME;
-                        [alert show];
-                    }
-                }break;
-                case 2:{
-                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"修改锁名", nil)
+                    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:LS(@"change_lock_name")
                                                                     message:nil
                                                                    delegate:self
-                                                          cancelButtonTitle:NSLocalizedString(@"取消", nil)
-                                                          otherButtonTitles:NSLocalizedString(@"确定", nil),nil];
+                                                          cancelButtonTitle:LS(@"words_cancel")
+                                                          otherButtonTitles:LS(@"words_sure_ok"),nil];
                     [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
                     
                     alert.tag = TAG_CHANGE_NAME;
                     [alert show];
 
                 }break;
-                case 3:{
-                    //所用户
+                case 2:{
+               
                     UserManageViewController * unlockRecord = [[UserManageViewController alloc]initWithNibName:@"UserManageViewController" bundle:nil];
                     unlockRecord.currentKey = selectedKey;
                     [self.navigationController pushViewController:unlockRecord animated:YES];
                 }break;
-                case 4:{
+                case 3:{
                     TimePsSendedListVC *sendedList = [[TimePsSendedListVC alloc] initWithNibName:@"TimePsSendedListVC" bundle:nil];
                     sendedList.selectedKey = selectedKey;
                     [self.navigationController pushViewController:sendedList animated:YES];
                   
                 }break;
-                case 5:{
+                case 4:{
                     if ([selectedKey.lockVersion hasPrefix:@"5.3"]) {
                         V3SendPwdBaseVC *v3VC = [[V3SendPwdBaseVC alloc]init];
                         v3VC.selectedKey = selectedKey;
@@ -408,8 +371,8 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                     }
                     
                 }break;
-                case 6:{
-                    //读取开锁记录
+                case 5:{
+         
                     UnlockRecordsViewController * unlockRecord = [[UnlockRecordsViewController alloc]initWithNibName:@"UnlockRecordsViewController" bundle:nil];
                     unlockRecord.selectedKey = selectedKey;
                     [self.navigationController pushViewController:unlockRecord animated:YES];
@@ -509,19 +472,16 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                 [self showHUD:nil];
                 //接收者的唯一name
                 NSString * receiver = [alertViewT textFieldAtIndex:0].text;
-                
-                NSString *startDate = [XYCUtils GetCurrentTimeInMillisecond];
-                long long startDateInt = startDate.longLongValue;
-                NSString * endDate = [NSString stringWithFormat:@"%lli",startDateInt+20*60*60*1000];
-                
-                [NetworkHelper sendKey:selectedKey.lockId receiverUsername:receiver startDate:startDate endDate:endDate remarks:@"" completion:^(id info, NSError *error) {
+
+              
+                [NetworkHelper sendKey:selectedKey.lockId receiverUsername:receiver startDate:0 endDate:0 remarks:@"" completion:^(id info, NSError *error) {
                     [self hideHUD];
                     if (!error) {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"发送电子钥匙成功" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"words_error_share_key_success") message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:LS(@"words_sure_ok"), nil];
                         [alert show];
 
                     } else {
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"发送电子钥匙失败" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"single_word_fail") message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:LS(@"words_sure_ok"), nil];
                         [alert show];
 
                     }
@@ -531,8 +491,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
             }
             case TAG_SET_KEYBOARD_PS:
             {
-                //设置管理员密码
-                
+    
                 NSString * ps = [alertViewT textFieldAtIndex:0].text;
                 
                 if ([selectedKey.lockVersion hasPrefix:@"5.3"])
@@ -565,8 +524,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
             case TAG_SET_KEYBOARD_PS_DELETE:
             {
                 NSString * ps = [alertViewT textFieldAtIndex:0].text;
-                
-                //设置管理员删除密码
+            
                 if ([selectedKey.lockVersion hasPrefix:@"5.3"])
                     [self showHUDToWindow:nil];
                 else
@@ -596,7 +554,7 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
             }
             case TAG_CHANGE_NAME:
             {
-                //修改锁名
+  
                 if ([alertViewT textFieldAtIndex:0].text.length>0) {
 
                     if (!psPoolProgressView) {
@@ -611,10 +569,10 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                     [NetworkHelper rename:[alertViewT textFieldAtIndex:0].text lockId:selectedKey.lockId completion:^(id info, NSError *error) {
                         [self hideHUD];
                         if (!error) {
-                            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"温馨提示", nil)
-                                                                            message:@"修改成功"
+                            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:nil
+                                                                            message:LS(@"words_change_deadline_success")
                                                                            delegate:self
-                                                                  cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                                                                  cancelButtonTitle:LS(@"words_sure_ok")
                                                                   otherButtonTitles:nil];
                             [alertV show];
                             
@@ -623,10 +581,10 @@ static KeyDetailViewController *KeyDetailViewInstance=nil;
                             [customTableView reloadData];
 
                         } else{
-                            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"温馨提示", nil)
-                                                                            message:@"修改失败，请稍后再试"
+                            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:nil
+                                                                            message:LS(@"words_change_deadline_fail")
                                                                            delegate:self
-                                                                  cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                                                                  cancelButtonTitle:LS(@"words_sure_ok")
                                                                   otherButtonTitles:nil];
                             [alertV show];
 

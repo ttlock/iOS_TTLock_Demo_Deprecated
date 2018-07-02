@@ -2,7 +2,7 @@
 //  SSToastHelper.m
 //  Sciener
 //
-//  Created by 王娟娟 on 2017/7/24.
+//  Created by WJJ on 2017/7/24.
 //  Copyright © 2017年 sciener. All rights reserved.
 //
 
@@ -50,14 +50,14 @@ void sync_main(dispatch_block_t block) {
 @implementation SSToastHelper
 + (void)showToastWithStatus:(NSString *)status{
     
-    //加载到 uiwindow上
+ 
       async_main(^{
     [SSToastHelper showToastWithStatus:status containerView:TTWindow];
          });
     
 }
 + (void)showToastWithStatus:(NSString *)status containerView:(UIView*)containerView{
-    //如果提示语长度为0 就不显示
+  
    
     
          async_main(^{
@@ -74,10 +74,6 @@ void sync_main(dispatch_block_t block) {
              
              [[SSHUDHelper sharedInstance]show:status];
          });
-
-    
-    //加载到
-    
     
     
 }

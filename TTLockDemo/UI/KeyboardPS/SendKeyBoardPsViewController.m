@@ -26,7 +26,6 @@
     NSArray *_titleArray;
     TimePsGroup mCurTimePsGroup;
     UILabel *_desLabel;
-    //放生成密码的label
     CopyableLabel *_generatePwdLabel;
     
 }
@@ -105,7 +104,7 @@
     _desLabel.numberOfLines = 0;
     _desLabel.textColor = COMMON_FONT_GRAY_COLOR;
     _desLabel.font = [UIFont systemFontOfSize:15];
-    _desLabel.text = [NSString stringWithFormat:@"%@:\n1 %@\n2 %@",LS(@"words_Notes"),LS(@"words_Lock_first_tips"),LS(@"words_Lock_second_tips")];
+    _desLabel.text = [NSString stringWithFormat:@"1 %@\n2 %@",LS(@"words_Lock_first_tips"),LS(@"words_Lock_second_tips")];
     [self.view addSubview:_desLabel];
     [_desLabel makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view.mas_left).offset(10);
@@ -113,13 +112,13 @@
         make.width.equalTo(SCREEN_WIDTH - 20);
     }];
 }
-//生成密码
+
 - (void)generateButtonClick{
     [self showToast:LS(@"words_wait_please")];
     [NetworkHelper getKeyboardPwd:_selectedKey.lockId keyboardPwdVersion:1 keyboardPwdType:mCurTimePsGroup startDate:@"" endDate:@"" completion:^(id info, NSError *error) {
         [self hideHUD];
         if (!error) {
-            _generatePwdLabel.text = @"成功";
+          
         }else {
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alert_title_alert", nil)
                                                             message:NSLocalizedString(@"alert_msg_title_request_error", nil)

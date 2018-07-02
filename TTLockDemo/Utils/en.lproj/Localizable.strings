@@ -9,17 +9,8 @@
 
 "posturl"="http://www.sciener.cn/servlet/lockservice";
 "posturl_headimg"="http://www.sciener.cn/upload/uploadHeadImage";
-
-
-//"posturl"="http://192.168.31.188:8081/lockservice/servlet/lockservice";
-//"posturl_headimg"="http://192.168.31.188:8081/upload/uploadHeadImage";
-
-
 "url_clause"="http://www.sciener.cn/about/progress/";
-
 "url_reset_ps"="http://www.sciener.cn/user/toFindPassword";
-
-//"url_author_request_token"="http://192.168.1.188:8080/openAPI/oauth2/token";
 "url_author_request_token"="https://api.ttlock.com.cn/oauth2/token";
 
 "sound_for_lock_no_power"="English_sound_for_lock_no_power";
@@ -40,7 +31,6 @@
 "words_Lock_5days"="5days";
 "words_Lock_6days"="6days";
 "words_Lock_7days"="7days";
-"words_Notes"="Notes";
 "words_Lock_first_tips"="The validity period begins counting down when the passcode used for the first time.";
 "words_Lock_second_tips"="When a new passcode used, the previous ones will be invalid.";
 
@@ -359,7 +349,6 @@
 "words_please_input_placehold_roomname"="Room Name";
 "version_not_support"="House Lock does not support this feature.";
 "words_please_normal_user_cannot_delete"="Cannot delete normal user.";
-"words_end_time"="End Time";
 "words_receiver"="Reciever Account";
 "words_yesterday"="Yesterday";
 "words_today"="Today";
@@ -899,13 +888,13 @@
 "Delete_the_administrator"="Delete The Admin Key Verification";
 "Modify_The_Management_Password_Authentication"="Change Management Passcode verification";
 "Authorize_Validation"="Authorize Verification";
-//添加电动车
+
 
 "electrocar" = "electrocar";
 "electrocar_description" = "Through mobile phone control each function of electric vehicles";
 
 
-/*********************************IC Fingerprint Wristband **********************************/
+
 "words_IC"="IC Card";
 "words_Fingerprint"="Fingerprint";
 "words_bong"="Wristband";
@@ -950,7 +939,7 @@
 "Fingerprint_Code_not_exist"="This fingerprint card doesn't exist.";
 "alter_clear_keys"="All keys of this lock will be deleted";
 
-/********************* 网关模块  ***************************/
+"words_WiFi_gateway"="Gateway";
 "words_add_WiFiGateway"="Add Gateway";
 "words_wifi_name"="WiFi Name";
 "words_wifi_password"="WiFi Password";
@@ -979,7 +968,8 @@
 "words_offline"="offline";
 "words_Gateway_lock"="Lock";
 "Tint_the_length_of_the_name_is_too_long"="The length of the name is too long.";
-/********************* 固件升级  ***************************/
+
+
 "Words_Lock_Upgrade" = "Lock Upgrade";
 "Words_Check_for_updates" = "Check for updates";
 "Words_Upgrade" = "Upgrade";
@@ -1013,3 +1003,30 @@
 "words_exit"="Exit";
 "Tint_Entering_the_upgrade_mode" = "Entering the upgrade mode";
 "Tint_Exiting_the_upgrade_mode"= "Exiting the upgrade mode";
+
+
+"words_lock_nearby"="Nearby Locks";
+"alert_request_error"="Request Failed";
+"words_Battery"="Battery";
+"input_email_or_account"="Phone number/Email";
+"words_login_ps_holdspace"="Password";
+"Alter_Enter_your_App_account_password"="Please enter the Application Password";
+"words_account_password"="Application Password";
+"words_Active_Time"="Start Time";
+"words_Expire_Time"="End Time";
+
+"words_Account_information"="Account information";
+"words_the_lock_list_of_account"="The lock list of an account";
+"words_Sync_ekey_data"="Sync the ekey data";
+"words_common_ekeys_of_lock"="common ekeys of a lock";
+"words_all_created_passcodes_of_a_lock"="all created passcodes of a lock";
+"words_Get_a_passcode"="Get a passcode";
+"words_unlock_records"="unlock records";
+"words_click_to_unlock"="click to unlock";
+"words_Get_lock_time"="Get lock time";
+"words_IC_card_operation"="IC card operation";
+"words_Fingerprint_operation"="Fingerprint operation";
+"alert_After_resetting_the_ekey_all_the_ekeys_sent_will_be_unable_to_open_the_door"="After resetting the ekey, all the ekeys sent will be unable to open the door. Do you reset it?";
+"alert_After_reset_the_password_that_was_sent_to_the_user_before_that_will_fail"="After reset, the password that was sent to the user before that will fail. Do you reset it?";
+"tint_please_enter_the_receiver's_account"="Enter Recipient's Account";
+"alert_click_on_the_left_Login_button_first_to_get_accesstoken"="Please click the left 'Login' button to get accesstoken.";

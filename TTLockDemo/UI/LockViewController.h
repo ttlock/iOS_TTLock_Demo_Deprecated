@@ -2,7 +2,7 @@
 //  LockViewController.h
 //  TTLockDemo
 //
-//  Created by 刘潇翔 on 17/2/10.
+//  Created by LXX on 17/2/10.
 //  Copyright © 2017年 wjj. All rights reserved.
 //
 

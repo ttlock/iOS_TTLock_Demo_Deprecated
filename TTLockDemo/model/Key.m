@@ -1,8 +1,8 @@
 //
 //  Key.m
 //
-//  Created by 谢元潮 on 15/5/20.
-//  Copyright (c) 2015年 谢元潮. All rights reserved.
+//  Created by TTLock on 15/5/20.
+//  Copyright (c) 2015年 TTLock. All rights reserved.
 //
 
 #import "Key.h"

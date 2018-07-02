@@ -9,53 +9,43 @@
 #import <Foundation/Foundation.h>
 
 @interface TTLockGateway : NSObject
-/**
- *  连接进度的Block
- *
- *  @param process 进度
- */
+
 typedef void(^TTSmartLinkProcessBlock)(NSInteger process);
 
-/**
- *  设置成功以后的Block
- *
- *  @param ip
- *  @param mac
- */
 typedef void(^TTSmartLinkSuccessBlock)(NSString *ip,NSString *mac);
 /**
- *  设置失败的信息
+ *  Fail Block
  *
- *  连接超时，请确认网关是否处于可添加状态。
+ *  Connection timeout, please confirm whether the gateway is in the add state.
  */
 typedef void(^TTSmartLinkFailBlock)();
 
 
 /**
- *  获取当前连接的无线网名字SSID 如果返回为nil 说明当前手机没有连接无线网
+ *  Get the name of the wireless network SSID for the current connection. If returned nil, the current mobile phone is not connected to the wireless network.
  */
 + (NSString *)getSSID;
 
 /**
- *  开始配置（方法一）
+ *  Start configuration (method one)
  *
- * @param SSID     无线网名称
- * @param wifiPwd  无线密码(不能有中文）
- * @param uid      用户id
- * @param userPwd  用户密码（明文）
+ * @param SSID     Wireless network name
+ * @param wifiPwd  Wireless password (no Chinese)
+ * @param uid      uid
+ * @param userPwd  User password (clear text)
  */
 +(void)startWithSSID:(NSString*)SSID wifiPwd:(NSString*)wifiPwd uid:(int)uid userPwd:(NSString*)userPwd  processblock:(TTSmartLinkProcessBlock)pblock successBlock:(TTSmartLinkSuccessBlock)sblock failBlock:(TTSmartLinkFailBlock)fblock;
 
 /**
-  开始配置（方法二，功能与方法一相同）
+   Start configuration (method two)
 
  @param infoDic   key:SSID      type:NSString
-                  key:wifiPwd   type:NSString  (不能有中文）
+                  key:wifiPwd   type:NSString  (no Chinese)
                   key:uid       type:NSNumber
                   key:userPwd   type:NSString
- @param pblock 进度的回调
- @param sblock 成功的回调
- @param fblock 失败的回调
+ @param pblock    Process Block
+ @param sblock    Success Block
+ @param fblock    Fail Block
  */
 +(void)startWithInfoDic:(NSDictionary*)infoDic processblock:(TTSmartLinkProcessBlock)pblock successBlock:(TTSmartLinkSuccessBlock)sblock failBlock:(TTSmartLinkFailBlock)fblock;
 

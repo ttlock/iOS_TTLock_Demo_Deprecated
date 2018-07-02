@@ -2,7 +2,7 @@
 //  KeyViewController.m
 //  TTLockDemo
 //
-//  Created by 刘潇翔 on 17/2/9.
+//  Created by LXX on 17/2/9.
 //  Copyright © 2017年 wjj. All rights reserved.
 //
 
@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"已添加钥匙";
+    self.title = LS(@"words_Sync_ekey_data");
     
     _keyArray = [[DBHelper sharedInstance] fetchKeys];
     
@@ -51,7 +51,7 @@
         
         NSMutableArray *dbKeyList = [[DBHelper sharedInstance] fetchKeys];
         
-        for (KeyModel *keyModel in syncKeyInfo.keyList) {//同步钥匙
+        for (KeyModel *keyModel in syncKeyInfo.keyList) {
             
             
             for (Key *dbKey in dbKeyList) {
@@ -107,30 +107,27 @@
     
     cell.leftTopLabel.text = key.lockAlias;
     
-    if ([key isAdmin])
-        cell.leftBottomLabel.text = [NSString stringWithFormat:@"管理员  电量:%d%%",key.electricQuantity];
-    else{
-    if (key.startDate==0 && key.endDate==0)
-        cell.leftBottomLabel.text = [NSString stringWithFormat:@"永久  电量:%d%%",key.electricQuantity];
-    else
-        cell.leftBottomLabel.text = [NSString stringWithFormat:@"期限  电量:%d%%",key.electricQuantity];
+    if (key.electricQuantity != -1) {
+        cell.leftBottomLabel.text = [NSString stringWithFormat:@"%@:%d%%",LS(@"words_Battery"),key.electricQuantity];
+    }else{
+        cell.leftBottomLabel.text = @"";
     }
     
-    if (key.electricQuantity==-1) {
-        if ([key isAdmin])
-            cell.leftBottomLabel.text = @"管理员";
-        else{
-            if (key.startDate==0 && key.endDate==0)
-                cell.leftBottomLabel.text = @"永久";
-            else
-                cell.leftBottomLabel.text = @"期限";
-        }
+   
+    if ([key isAdmin])
+        cell.leftBottomLabel.text = [NSString stringWithFormat:@"%@  %@", LS(@"words_admin"),cell.leftBottomLabel.text];
+    else{
+        if (key.startDate==0 && key.endDate==0)
+            cell.leftBottomLabel.text = [NSString stringWithFormat:@"%@  %@", LS(@"forever_password"),cell.leftBottomLabel.text];
+        else
+            cell.leftBottomLabel.text = [NSString stringWithFormat:@"%@  %@", LS(@"words_Shared_key"),cell.leftBottomLabel.text]; LS(@"");
     }
+
     
     if ([key.keyStatus isEqualToString:KeyStatusReceived]) {
-        cell.rightLabel.text = @"已生效";
+        cell.rightLabel.text = LS(@"words_key_state_type_Work");
     }else if ([key.keyStatus isEqualToString:KeyStatusFreezed]){
-        cell.rightLabel.text = @"已冻结";
+        cell.rightLabel.text = LS(@"words_key_state_type_Blocked");
     }
     
     return cell;
@@ -157,7 +154,7 @@
   forRowAtIndexPath:(NSIndexPath *)indexPath{
     selectedKey = _keyArray[indexPath.row];
     if (editingStyle == UITableViewCellEditingStyleDelete){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"是否确定删除钥匙？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"alert_msg_delete_sure") message:nil delegate:self cancelButtonTitle:LS(@"words_cancel") otherButtonTitles:LS(@"words_delete"), nil];
     
         [alert show];
         
@@ -212,11 +209,11 @@
         if (error) return ;
         
         [[DBHelper sharedInstance] deleteKey:selectedKey];
-        
+
         [_keyArray removeObject:selectedKey];
         
         [self.tableView reloadData];
-        [self showToast:@"删除成功"];
+        [self showToast:LS(@"alter_Succeed")];
         
     }];
 }

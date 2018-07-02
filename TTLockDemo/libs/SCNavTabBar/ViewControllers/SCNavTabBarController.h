@@ -10,15 +10,11 @@
 #import "SCNavTabBar.h"
 
 
-// 协议, 返回当前页面下标 index
+
 @protocol SCNavTabBarControllerDelete <NSObject>
 
 @optional
-/**
- *  返回当前页面下标
- *
- *  @param index 当前下标
- */
+
 - (void)currentSelectIndex:(NSInteger)index;
 
 @end
@@ -91,6 +87,3 @@
 
 @end
 
-// 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com 

@@ -14,48 +14,47 @@
 NSString *const KKBLEErrorCodeKey = @"errorCode";
 NSString *const KKBLECommandKey = @"command";
 
-NSString * const KKBLE_SCAN = @"ble_scan";//搜索
-NSString * const KKBLE_CONNECT = @"ble_connect";//连接
-NSString * const KKBLE_DISCONNECT = @"ble_disconnect";//断开连接
+NSString * const KKBLE_SCAN = @"ble_scan";
+NSString * const KKBLE_CONNECT = @"ble_connect";
+NSString * const KKBLE_DISCONNECT = @"ble_disconnect";
 
-NSString * const KKBLE_ADD_ADMIN = @"ble_add_addmin";//添加管理员
-NSString * const KKBLE_UNLOCK = @"ble_unlock";//开门
-NSString * const KKBLE_LOCK = @"ble_lock";//闭锁
+NSString * const KKBLE_ADD_ADMIN = @"ble_add_addmin";
+NSString * const KKBLE_UNLOCK = @"ble_unlock";
+NSString * const KKBLE_LOCK = @"ble_lock";
 
-NSString * const KKBLE_SET_LOCK_TIME = @"ble_SET_lock_time";//校准锁时间
-NSString * const KKBLE_READ_TIME = @"ble_read_time";//读取锁的时间
-NSString * const KKBLE_READ_CHARACTERVALUE = @"ble_read_characterValue";//读取锁的特征值
-NSString * const KKBLE_LOCK_VERSION = @"ble_lock_version";//读取锁的版本信息
-NSString * const KKBLE_UNLOCK_RECORD = @"ble_unlock_record";//读取开锁记录
+NSString * const KKBLE_SET_LOCK_TIME = @"ble_SET_lock_time";
+NSString * const KKBLE_READ_TIME = @"ble_read_time";
+NSString * const KKBLE_READ_CHARACTERVALUE = @"ble_read_characterValue";
+NSString * const KKBLE_LOCK_VERSION = @"ble_lock_version";
+NSString * const KKBLE_UNLOCK_RECORD = @"ble_unlock_record";
 
-NSString * const KKBLE_RESET_ADMIN_KEYBORADPWD = @"ble_reset_admin_keyboardpwd";//修改管理员密码
-NSString * const KKBLE_MODIFY_KEYBORADPWD = @"ble_modify_keyboardpwd";//修改密码
-NSString * const KKBLE_RESET_ADMIN_DELETE_KEYBOARDPWD = @"ble_admin_delete_keyboardpwd";//修改管理员删除密码
-NSString * const KKBLE_DELETE_ONE_KEYBOARDPWD = @"ble_delete_one_keyboardpwd";//删除单个键盘密码
-NSString * const KKBLE_RESET_KEYBOARDPWD = @"ble_reset_keyboardpwd";//重置键盘密码
-NSString * const KKBLE_RESET_EKEY = @"ble_reset_ekey";//重置电子钥匙
-NSString * const KKBLE_RESET_LOCK = @"ble_reset_lock";//恢复出厂设置
-NSString * const KKBLE_RESET_TIME = @"ble_reset_time";//设置锁的时间
+NSString * const KKBLE_RESET_ADMIN_KEYBORADPWD = @"ble_reset_admin_keyboardpwd";
+NSString * const KKBLE_MODIFY_KEYBORADPWD = @"ble_modify_keyboardpwd";
+NSString * const KKBLE_RESET_ADMIN_DELETE_KEYBOARDPWD = @"ble_admin_delete_keyboardpwd";
+NSString * const KKBLE_DELETE_ONE_KEYBOARDPWD = @"ble_delete_one_keyboardpwd";
+NSString * const KKBLE_RESET_KEYBOARDPWD = @"ble_reset_keyboardpwd";
+NSString * const KKBLE_RESET_EKEY = @"ble_reset_ekey";
+NSString * const KKBLE_RESET_LOCK = @"ble_reset_lock";
+NSString * const KKBLE_RESET_TIME = @"ble_reset_time";
 
-NSString * const KKBLE_ACTIVE_UPGRADE = @"ble_active_upgrade";//激活锁 进入可升级状态
-NSString * const KKBLE_READ_FIRMWARE = @"ble_read_firmware";//读取锁的固件版本
-NSString * const KKBLE_UPGRADE = @"ble_upgrade";//升级
-NSString * const KKBLE_UPGRADE_PROGRESS = @"ble_upgrade_progress";//升级进度
+NSString * const KKBLE_ACTIVE_UPGRADE = @"ble_active_upgrade";
+NSString * const KKBLE_READ_FIRMWARE = @"ble_read_firmware";
+NSString * const KKBLE_UPGRADE = @"ble_upgrade";
+NSString * const KKBLE_UPGRADE_PROGRESS = @"ble_upgrade_progress";
 
-NSString * const KKBLE_Config_DEVICE = @"ble_config_device";//操作锁  IC 指纹  手环 闭锁时间  是否在屏幕上显示输入的密码
-NSString * const KKBLE_DELETE_DEVICE = @"ble_delete_device";//删除   IC 指纹  手环 闭锁时间  是否在屏幕上显示输入的密码
-NSString * const KKBLE_CLEAN_DEVICE = @"ble_clean_device";//清空   IC 指纹  手环 闭锁时间  是否在屏幕上显示输入的密码
-NSString * const KKBLE_MODIF_DEVICE = @"ble_modify_device";//修改   IC 指纹  手环 闭锁时间  是否在屏幕上显示输入的密码
-NSString * const KKBLE_QUERY_DEVICE = @"ble_query_device";//查询   IC 指纹  手环 闭锁时间  是否在屏幕上显示输入的密码
-NSString * const KKBLE_BONG_RSSI = @"ble_bong_rssi";//手环感应的范围
-NSString * const KKBLE_SET_BONG = @"ble_set_bong";//设置手环
+NSString * const KKBLE_Config_DEVICE = @"ble_config_device";
+NSString * const KKBLE_DELETE_DEVICE = @"ble_delete_device";
+NSString * const KKBLE_CLEAN_DEVICE = @"ble_clean_device";
+NSString * const KKBLE_MODIF_DEVICE = @"ble_modify_device";
+NSString * const KKBLE_QUERY_DEVICE = @"ble_query_device";
+NSString * const KKBLE_BONG_RSSI = @"ble_bong_rssi";
+NSString * const KKBLE_SET_BONG = @"ble_set_bong";
+NSString * const KKBLE_CUSTOM_KEYBOARDPWD = @"ble_custom_keyboardpwd";
+NSString * const KKBLE_GET_LOCK_TIME = @"ble_get_lock_time";
+NSString * const KKBLE_GET_DEVICE_INFO = @"ble_get_device_info";
+NSString * const KKBLE_GET_PWD_DATA = @"ble_get_pwd_data";
 
-NSString * const KKBLE_CUSTOM_KEYBOARDPWD = @"ble_custom_keyboardpwd";//自定义密码
-NSString * const KKBLE_GET_LOCK_TIME = @"ble_get_lock_time";//获取锁时间
-NSString * const KKBLE_GET_DEVICE_INFO = @"ble_get_device_info";//获取锁版本信息
-NSString * const KKBLE_GET_PWD_DATA = @"ble_get_pwd_data";//获取锁版本信息
-
-BOOL isReachDefaultConnectTimeout;//是否达到连接超时
+BOOL isReachDefaultConnectTimeout;
 
 @interface TTLockHelper ()
 
@@ -86,8 +85,9 @@ static  TTLockHelper *instace;
     self.TTObject.isShowBleAlert = YES;
     [self.TTObject setupBlueTooth];
     _bleBlockDict = [NSMutableDictionary dictionary];
-    //是否打印
+   // Whether or not print the log in SDK
 //    [TTLock setDebug:YES];
+    
     return self;
     
 }
@@ -98,7 +98,7 @@ static  TTLockHelper *instace;
           [_TTObject stopBTDeviceScan];
     }else if (state == TTManagerStateUnsupported){
         dispatch_sync(dispatch_get_main_queue(), ^(void){
-            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"非常抱歉，您使用的设备不支持低功耗4.0蓝牙，将无法正常使用我们的程序。(Your device does not support ble4.0, unable to use our app.)" message:nil delegate:self cancelButtonTitle:LS(@"words_sure_ok") otherButtonTitles: nil];
+            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Your device does not support ble4.0, unable to use our app." message:nil delegate:self cancelButtonTitle:LS(@"words_sure_ok") otherButtonTitles: nil];
             [alert show];
             
         });
@@ -110,7 +110,7 @@ static  TTLockHelper *instace;
 
 + (void) connectKey:(Key *)key connectBlock:(BLEConnectBlock)connectBlock{
    
-    //lock锁 没有mac 但安卓那边有mac 要兼容
+    //One generation lock，ios can not get the mac
     NSString *mac;
     if ([key.lockVersion hasPrefix:@"5.1"]) {
         mac = key.lockName;
@@ -127,12 +127,11 @@ static  TTLockHelper *instace;
 
         if ([TTLockHelper shareInstance].currentKey){
       
-            NSLog(@"稍等  现在已经有一个正在尝试连接的钥匙，要断开前面的");
-            //如果之前有 先取消前面的超时，再进行这次
+            NSLog(@"Now there is a key that is trying to connect. It needs to be disconnected.");
             [[TTLockHelper shareInstance] cancelConnectTimeOut];
             [[TTLockHelper shareInstance] connectTimeOut];
         
-            //断开之后 需要一定一点时间 才能收到回调  如果锁不在身边 是收不到回调的 所以这里用超时来解决
+            //If the lock is not around, there is no callback, so this timeout is used to solve the problem
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
              
                 isReachDefaultConnectTimeout = NO;
@@ -163,7 +162,7 @@ static  TTLockHelper *instace;
     
     NSLog(@"onlyOnePeripheralCanConnectAtTheSameTimeWithDeviceMAC %@",key.lockName);
     if ([TTLockHelper shareInstance].currentKey) {
-        NSLog(@"现在有一个正在操作的钥匙  就需要取消当前的");
+        NSLog(@"Now there is a key that is trying to connect. It needs to be disconnected.");
         return;
     }
     if (connectBlock) {
@@ -178,7 +177,6 @@ static  TTLockHelper *instace;
     
     NSLog(@"connectTimeOut");
      isReachDefaultConnectTimeout = YES;
-    //主动断开
     [TTLockHelper disconnectKey:TTLockHelperClass.currentKey disConnectBlock:nil];
     TTLockHelperClass.currentKey = nil ;
     [TTLockHelper removeBlock:nil untilExecute:YES];
@@ -191,14 +189,14 @@ static  TTLockHelper *instace;
 }
 + (void)disconnectKey:(Key *)key disConnectBlock:(BLEDisconnectBlock)disConnectBlock{
     if (key) {
-          //lock锁 没有mac 但安卓那边有mac 要兼容
+          ////One generation lock，ios can not get the mac
          NSString *mac;
         if ([key.lockVersion hasPrefix:@"5.1"]) {
             mac = key.lockName;
         }else{
             mac = key.lockMac.length ? key.lockMac : key.lockName;
         }
-        NSLog(@"断开锁 %@",key.lockName);
+        NSLog(@"disConnect %@",key.lockName);
         [TTLockHelper disConnectDeviceMAC:mac disConnectBlock:disConnectBlock];
     }
 }
@@ -212,7 +210,6 @@ static  TTLockHelper *instace;
 
 + (void)unlock:(Key *)key unlockBlock:(BLEBlock)unlockBlock{
 
-    //如果钥匙不存在则不继续执行
     if (!key) {
          return;
     }
@@ -223,7 +220,7 @@ static  TTLockHelper *instace;
    }
     
      [TTLockHelper shareInstance].lockUniqueid = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970]];
-    //管理员 普通用户
+  
     if (key.isAdmin) {
         [[TTLockHelper shareInstance].TTObject unlockByAdministrator_adminPS:key.adminPwd
                                                                           lockKey:key.lockKey
@@ -246,7 +243,6 @@ static  TTLockHelper *instace;
 }
 + (void)lock:(Key *)key lockBlock:(BLEBlock)lockBlock{
     
-    //如果钥匙不存在则不继续执行
     if (!key) {
         return;
     }
@@ -255,7 +251,7 @@ static  TTLockHelper *instace;
         [[TTLockHelper shareInstance].bleBlockDict setObject:lockBlock forKey:KKBLE_LOCK];
     }
     [TTLockHelper shareInstance].lockUniqueid = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970]];
-    //管理员 普通用户
+
     if (key.isAdmin) {
           [TTObjectTTLockHelper locking_lockKey:key.lockKey
                                        aesKey:key.aesKeyStr
@@ -283,7 +279,7 @@ static  TTLockHelper *instace;
     
     [[TTLockHelper shareInstance].TTObject setLockTime_lockKey:key.lockKey aesKey:key.aesKeyStr version:key.lockVersion unlockFlag:key.lockFlagPos referenceTime:[NSDate date] timezoneRawOffset:key.timezoneRawOffset];
 }
-//重置电子钥匙
+
 + (void)resetEkey:(Key *)key complition:(BLEBlock)complition{
     
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_RESET_EKEY];
@@ -511,8 +507,8 @@ static  TTLockHelper *instace;
                                      unlockFlag:key.lockFlagPos
                               timezoneRawOffset:key.timezoneRawOffset];
 }
-#pragma mark 蓝牙回调
-//蓝牙搜索，连接相关回调
+
+#pragma mark TTSDKDelegate
 -(void)onFoundDevice_peripheralWithInfoDic:(NSDictionary*)infoDic{
     
       OnFoundDeviceModel *deviceModel = [[OnFoundDeviceModel alloc] initOnFoundDeviceModelWithDic:infoDic];
@@ -536,8 +532,6 @@ static  TTLockHelper *instace;
     
 }
 
-
-// 蓝牙 连接成功
 -(void)onBTConnectSuccess_peripheral:(CBPeripheral *)peripheral lockName:(NSString*)lockName{
 
   
@@ -564,10 +558,10 @@ static  TTLockHelper *instace;
         }];
     }
     
-    NSLog(@"-----------CONNECT SUCCESS 蓝牙名字 %@ --------------",peripheral.name);
+    NSLog(@"-----------CONNECT SUCCESS lockName %@ --------------",peripheral.name);
 }
 
-//开锁成功
+
 -(void)onUnlockWithLockTime:(NSTimeInterval)lockTime electricQuantity:(int)electricQuantity {
     
     BLEBlock unlockBlock = _bleBlockDict[KKBLE_UNLOCK];
@@ -582,9 +576,9 @@ static  TTLockHelper *instace;
         });
     }
     
-    [SSToastHelper showToastWithStatus:@"开门成功"];
+    [SSToastHelper showToastWithStatus:@"Unlock success"];
 }
-//上锁成功
+
 - (void)onLockingWithLockTime:(NSTimeInterval)lockTime electricQuantity:(int)electricQuantity{
     
     BLEBlock lockBlock = _bleBlockDict[KKBLE_LOCK];
@@ -599,12 +593,12 @@ static  TTLockHelper *instace;
         });
     }
     
-   [SSToastHelper showToastWithStatus:@"上锁成功"];
+   [SSToastHelper showToastWithStatus:@"Lock success"];
   
 }
 - (void)onSetLockTime{
        [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
-    //更新锁的标志位
+
     BLEBlock setLockTimeBlock = _bleBlockDict[KKBLE_SET_LOCK_TIME];
     if (setLockTimeBlock) {
         async_main(^{
@@ -614,14 +608,14 @@ static  TTLockHelper *instace;
     }
 }
 -(void)onResetEkey{
-    NSLog(@"更新锁的标志位");
+
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     sync_main(^{
         _currentKey.lockFlagPos = _currentKey.lockFlagPos + 1;
         [[DBHelper sharedInstance]update];
     });
     
-    //更新锁的标志位
+
     BLEBlock resetEkeyBlock = _bleBlockDict[KKBLE_RESET_EKEY];
     if (resetEkeyBlock) {
         async_main(^{
@@ -632,7 +626,6 @@ static  TTLockHelper *instace;
     
 }
 - (void)onSetAdminKeyboardPassword{
-    NSLog(@"设置管理员键盘密码成功");
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setAdminKbPwBlock = _bleBlockDict[KKBLE_RESET_ADMIN_KEYBORADPWD];
     if (setAdminKbPwBlock){
@@ -644,7 +637,6 @@ static  TTLockHelper *instace;
 }
 - (void)onSetAdminDeleteKeyboardPassword{
     
-    NSLog(@"设置管理员删除密码成功");
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock resetAdminDeleteKbPwBlock = _bleBlockDict[KKBLE_RESET_ADMIN_DELETE_KEYBOARDPWD];
     if (resetAdminDeleteKbPwBlock){
@@ -658,9 +650,7 @@ static  TTLockHelper *instace;
 
 
 -(void)onResetKeyboardPassword_timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo{
-    
-     NSLog(@"重置键盘密码成功");
-    
+
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     sync_main(^{
         _currentKey.timestamp = timestamp;
@@ -678,13 +668,12 @@ static  TTLockHelper *instace;
         });
     }
     [NetworkHelper resetKeyboardPwd:pwdInfo lockId:self.currentKey.lockId timestamp:timestamp completion:^(id info, NSError *error) {
-        if (!error)  [SSToastHelper showToastWithStatus:@"重置键盘密码上传成功"];
-        else    [SSToastHelper showToastWithStatus:@"重置键盘密码上传失败"];
+        if (!error)  [SSToastHelper showToastWithStatus:@"alter_Succeed"];
+        else    [SSToastHelper showToastWithStatus:@"alter_Failed"];
     }];
 }
 - (void)OnDeleteUserKeyBoardPassword{
     
-    NSLog(@"deleteUserKeyBoardPasswordSuccess");
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     
     BLEBlock deleteOneKbPwBlock = _bleBlockDict[KKBLE_DELETE_ONE_KEYBOARDPWD];
@@ -698,7 +687,6 @@ static  TTLockHelper *instace;
 
 - (void)onResetLock{
    
-    NSLog(@"onResetLock");
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock resetLockBlock = _bleBlockDict[KKBLE_RESET_LOCK];
     if (resetLockBlock){
@@ -710,7 +698,7 @@ static  TTLockHelper *instace;
 }
 
 - (void)onClearIC{
-    NSLog(@"清空IC卡 ");
+
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_CLEAN_DEVICE];
     if (setupDevBlock){
@@ -722,7 +710,7 @@ static  TTLockHelper *instace;
     
 }
 - (void)onDeleteIC{
-    NSLog(@"删除IC卡 成功");
+
      [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_DELETE_DEVICE];
     if (setupDevBlock){
@@ -734,7 +722,7 @@ static  TTLockHelper *instace;
    
 }
 - (void)onModifyIC{
-    NSLog(@"修改IC卡 ");
+
        [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_MODIF_DEVICE];
     if (setupDevBlock){
@@ -747,7 +735,7 @@ static  TTLockHelper *instace;
 
 }
 - (void)onClearFingerprint{
-    NSLog(@"清空指纹 ");
+
       [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_CLEAN_DEVICE];
     if (setupDevBlock){
@@ -760,7 +748,7 @@ static  TTLockHelper *instace;
 
 }
 - (void)onDeleteFingerprint{
-    NSLog(@"删除指纹 ");
+
        [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_DELETE_DEVICE];
     if (setupDevBlock){
@@ -774,7 +762,7 @@ static  TTLockHelper *instace;
 }
 - (void)onModifyFingerprint{
     
-    NSLog(@"修改指纹");
+
      [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_MODIF_DEVICE];
     if (setupDevBlock){
@@ -787,7 +775,6 @@ static  TTLockHelper *instace;
 }
 - (void)onSetLockWristbandKey{
     
-      NSLog(@"添加锁内手环信息");
        [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_Config_DEVICE];
@@ -804,7 +791,7 @@ static  TTLockHelper *instace;
 
 - (void)onAddUserKeyBoardPassword{
    
-     NSLog(@"onAddUserKeyBoardPassword");
+
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
    
     BLEBlock customPwdBlock = _bleBlockDict[KKBLE_CUSTOM_KEYBOARDPWD];
@@ -818,7 +805,6 @@ static  TTLockHelper *instace;
 }
 - (void)onModifyUserKeyBoardPassword{
     
-  NSLog(@"onModifyUserKeyBoardPasswordNoti");
      [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock updatePwBlock = _bleBlockDict[KKBLE_MODIFY_KEYBORADPWD];
     if (updatePwBlock){
@@ -831,7 +817,7 @@ static  TTLockHelper *instace;
 }
 
 - (void)onQueryScreenState:(BOOL)state{
-    NSLog(@"onQueryScreenState");
+
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_QUERY_DEVICE];
     if (setupDevBlock){
         async_main(^{
@@ -845,7 +831,6 @@ static  TTLockHelper *instace;
 
 - (void)onModifyScreenShowState{
     
-    NSLog(@"修改ScreenShowState");
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_MODIF_DEVICE];
     if (setupDevBlock){
@@ -857,7 +842,6 @@ static  TTLockHelper *instace;
 }
 - (void)onQueryLockingTimeWithCurrentTime:(int)currentTime minTime:(int)minTime maxTime:(int)maxTime{
 
-    NSLog(@"onQueryLockingTimeWithCurrentTime");
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_QUERY_DEVICE];
     if (setupDevBlock){
         async_main(^{
@@ -873,7 +857,7 @@ static  TTLockHelper *instace;
 }
 
 - (void)onModifyLockingTime{
-    NSLog(@"修改LockingTime");
+
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_MODIF_DEVICE];
     if (setupDevBlock){
@@ -887,12 +871,7 @@ static  TTLockHelper *instace;
 
 - (void)onGetOperateLog_LockOpenRecordStr:(NSString *)LockOpenRecordStr{
 
-    //操作记录
-    if (LockOpenRecordStr.length > 0) {
-        [SSToastHelper showToastWithStatus:LockOpenRecordStr];
-    }else{
-        [SSToastHelper showToastWithStatus:@"读取成功 没有记录"];
-    }
+     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
     BLEBlock recordBlock = _bleBlockDict[KKBLE_UNLOCK_RECORD];
     if (recordBlock){
         async_main(^{
@@ -970,7 +949,7 @@ static  TTLockHelper *instace;
             if (isReachDefaultConnectTimeout == YES) {
                 if (connectBlock && execute)connectBlock(info,KKBLE_CONNECT_TIMEOUT);
             }else{
-                 //如果是没到时间的超时
+        
                 if (connectBlock && execute)connectBlock(info,KKBLE_CONNECTED_INSTANTLY_DISCONNECT);
             }
         }else if ([key isEqualToString:KKBLE_SCAN])

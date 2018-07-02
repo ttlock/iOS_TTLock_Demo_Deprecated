@@ -5,31 +5,43 @@
 
 
 #import <Foundation/Foundation.h>
-#import <CoreBluetooth/CoreBluetooth.h>
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
 #import "TTSpecialValueUtil.h"
 #import "TTUtils.h"
 #import "SecurityUtil.h"
 #import "TTLockGateway.h"
 #import "TTSDKDelegate.h"
 
-//以下是接口
 @interface TTLock : NSObject<CBPeripheralDelegate,CBCentralManagerDelegate>
 
-//用来设置SDK是否打印Log的接口，YES打印，NO不打印 默认为No
+/**
+ Whether or not print the log in SDK
+ @param debug The default value is `NO`.
+ */
 + (void)setDebug:(BOOL)debug;
-/** SDK 代理*/
+
+/* An object that will receive the TTLock delegate methods */
 @property (nonatomic, weak) id <TTSDKDelegate> delegate;
-/**服务器上用户的唯一标识，用于锁内部存储操作记录 即openid */
+
+/** Which user's operation is recorded，corresponding to the "openid" of the "openAPI". */
+
 @property (nonatomic, strong) NSString *uid;
-/**三代锁锁添加管理员时的固定数据 可不设置，用完一次后就会恢复为默认值*/
+
+/** Special string of v3 lock when adding administrator
+    There is a default value that can not be set */
 @property (nonatomic, strong) NSString *setClientPara;
-/**设置系统的弹框是否显示，创建完TTLock单例对象就调用 yes开 no关  默认是关闭（启动APP时,如果蓝牙未打开，系统会弹框提醒*/
+
+/**If yes - the ttlock object is created, if the Bluetooth is not turned on, the system will alert the box.
+ The default value is `NO` */
 @property (nonatomic,assign) BOOL isShowBleAlert;
-/**中心设备对象*/
+
+/** Entry point to the central role */
 @property (nonatomic,strong,readonly) CBCentralManager *manager;
-/**当前连接的蓝牙*/
+
+/** Current connected Bluetooth */
 @property (nonatomic,strong, readonly) CBPeripheral *activePeripheral;
+
 /*!
  *  @property state
  *
@@ -46,20 +58,20 @@
  */
 @property(nonatomic, assign, readonly) BOOL isScanning NS_AVAILABLE(NA, 9_0);
 
-/**初始化科蓝牙类*/
+/** Initialize the TTLock class */
 -(id)initWithDelegate:(id<TTSDKDelegate>)TTDelegate;
 
-/**获取单例*/
+/** Get a single case */
 + (TTLock*)sharedInstance;
 
-/**创建蓝牙对象
+/** Creating a Bluetooth object
  *
  *  @see TTManagerDidUpdateState:
  */
 -(void)setupBlueTooth;
 
 /**
- 开始扫描附近的蓝牙 特定服务的门锁 推荐使用
+ Start scanning near specific service Bluetooth.
 
  @param isScanDuplicates every time the peripheral is seen, which may be many times per second. This can be useful in specific situations.If you only support v3 lock,we recommend this value to be 'NO',otherwise to be 'YES'.
  *
@@ -67,106 +79,112 @@
  */
 -(void)startBTDeviceScan:(BOOL)isScanDuplicates;
 /**
- 开始扫描附近的蓝牙 所有蓝牙设备 如果开发手环的需要 可以用
-
+ Start scanning all Bluetooth nearby
+ If you need to develop wristbands, you can use this method
  @param isScanDuplicates every time the peripheral is seen, which may be many times per second. This can be useful in specific situations.Recommend this value to be NO
  *
  *  @see onFoundDevice_peripheralWithInfoDic:
  */
 - (void)scanAllBluetoothDeviceNearby:(BOOL)isScanDuplicates;
 
-/** 停止扫描附近的蓝牙
+/** Stop scanning
  */
 -(void)stopBTDeviceScan;
 
-/** 连接蓝牙 Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect}.
+/** Connecting peripheral
+ *  Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect}.
  *
  *  @see  onBTConnectSuccess_peripheral:lockName:
  */
 -(void)connect:(CBPeripheral *)peripheral;
 
-/** 断开蓝牙连接
+/** Cancel connection
  *
  *  @see onBTDisconnect_peripheral:
  */
 -(void)disconnect:(CBPeripheral *)peripheral;
 
 /**
- 连接蓝牙 Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link cancelConnectPeripheralWithLockMac}.
- @param lockMac 锁的mac地址（老的锁没有mac地址就传lockName锁名）
+ Connecting peripheral
+ Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link cancelConnectPeripheralWithLockMac}.
+ @param lockMac (If there is no 'lockMac',you can use 'lockName'）
  *
  *  @see  onBTConnectSuccess_peripheral:lockName:
  */
 - (void)connectPeripheralWithLockMac:(NSString *)lockMac;
 /**
- 取消连接蓝牙
- @param lockMac 锁的mac地址（老的锁没有mac地址就传lockName锁名）
+ Cancel connection
+ @param lockMac （If there is no 'lockMac',you can use 'lockName'）
  *
  *  @see onBTDisconnect_peripheral:
  */
 - (void)cancelConnectPeripheralWithLockMac:(NSString *)lockMac;
 
 /**
- *  添加管理员 (也适用于车位锁)
- * param addDic参数为字典  下面对应键及其值的意义
- * lockMac               锁的mac
- * protocolType          协议类别
- * protocolVersion       协议版本
- * adminPassward         可以不传  管理员密码（车位锁没有这个功能）  若传nil 则随机生成7位数密码
- * deletePassward        可以不传  清空码（车位锁与三代锁没有这个功能） 若传nil 则随机生成7位数密码
- *                            密码范围:二代锁7-9位数字 三代锁 4-9位数字
+ * Add administrator (It also applies to Parking Lock)
+ * param addDic
+      Key                    Type       required     Description
+ 
+      lockMac              NSString      YES
+      protocolType         NSNumber      YES
+      protocolVersion      NSNumber      YES
+      adminPassward        NSString      NO           Admin Passcode
+      deletePassward       NSString      NO           Erase Passcode
+                                                      Passcode range ： v2 lock : 7 - 9 Digits in length
+                                                                        v3 lock : 4 - 9 Digits in length
  *
  *  @see  onAddAdministrator_addAdminInfoDic:
  *  @see  TTError: command: errorMsg:
  */
 -(void)addAdministrator_addDic:(NSDictionary *)addDic;
 
-/** 获取锁版本
+/** Get the version of lock
  *
  *  @see  onGetProtocolVersion:
  *  @see  TTError: command: errorMsg:
  */
 -(void)getProtocolVersion;
 
-/** 管理员开锁 (也适用于车位锁，下降)
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
- *  uniqueid  记录唯一标识 用于锁内部存储开锁记录 大小不能超过4个字节 建议传时间戳（秒为单位）
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+/** Administrator unlock (It also applies to Parking Lock drop)
+
+ *  adminPS    admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey    The key data which will be used to unlock
+ *  aesKey     AES encryption key
+ *  version    Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag       The flag which will be used to check the validity of the ekey
+ *  uniqueid   It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds)
+ *  timezoneRawOffset   The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onUnlockWithLockTime:
  *  @see  TTError: command: errorMsg:
  */
 -(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
 
-/** eKey开锁 (也适用于车位锁，下降)
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  startDate  开始时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或 2000-1-1 0:0
- *  endDate    结束时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或 2099-12-31 23:59
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
- *  uniqueid  记录唯一标识 用于锁内部存储开锁记录 大小不能超过4个字节 建议传时间戳（秒为单位）
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+/** eKey unlock (It also applies to Parking Lock drop)
+ *  lockkey    The key data which will be used to unlock
+ *  aesKey     AES encryption key
+ *  startDate  The time when it becomes valid.  If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  endDate    The time when it is expired. If it's a permanent key ,set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  version    Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag       The flag which will be used to check the validity of the ekey
+ *  uniqueid   It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds)
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onUnlockWithLockTime:
  *  @see  TTError: command: errorMsg:
  */
 -(void)unlockByUser_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey startDate:(NSDate*)startDate endDate:(NSDate*)endDate version:(NSString*)version unlockFlag:(int)flag  uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
 
-/**  eKey校准锁的时钟并开锁，和referenceTime一致
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  startDate  开始时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2000-1-1 0:0
- *  endDate    结束时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2099-12-31 23:59
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
- *  referenceTime  传入的校准时间
- *  uniqueid  记录唯一标识 用于锁内部存储开锁记录 大小不能超过4个字节 建议传时间戳（秒为单位）
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+/**  eKey calibrate the lock's clock and unlock it, consistent with referenceTime.
+ *  lockkey    The key data which will be used to unlock
+ *  aesKey     AES encryption key
+ *  startDate  The time when it becomes valid.  If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  endDate    The time when it is expired. If it's a permanent key ,set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  version    Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag       The flag which will be used to check the validity of the ekey
+ *  referenceTime  Time of calibration
+ *  uniqueid  It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds)
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onUnlockWithLockTime:
  *  @see  TTError: command: errorMsg:
@@ -174,41 +192,42 @@
 -(void)calibationTimeAndUnlock_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey startDate:(NSDate *)sdate endDate:(NSDate *)edate version:(NSString*)version unlockFlag:(int)flag referenceTime:(NSDate *)time uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
 
 /**
- 关（闭）锁 （适用于支持此功能的门锁，也适用于车位锁上升）
- @param lockkey  约定数
- @param aesKey  aesKey
- @param  flag  标记位
- @param uniqueid 记录唯一标识 用于锁内部存储开锁记录 大小不能超过4个字节 建议传时间戳（秒为单位）
- @param isAdmin  YSE为管理员 反之为普通用户  管理员开始和结束时间可任意传
- @param sdate 开始时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2000-1-1 0:0
- @param edate   结束时间  如果是永久钥匙 传 [NSDate dateWithTimeIntervalSince1970:0]  或2099-12-31 23:59
- @param timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ lock （It also applies to door locks that support this function and Parking Lock rise）
+ @param lockkey  The key data which will be used to unlock
+ @param aesKey   AES encryption key
+ @param  flag    The flag which will be used to check the validity of the ekey
+ @param uniqueid It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds)
+ @param isAdmin  YSE is the administrator,otherwise it's ekey
+ @param sdate    The time when it becomes valid.  If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ @param edate    The time when it is expired. If it's a permanent key ,set the [NSDate dateWithTimeIntervalSince1970:0]
+ @param timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onLockingWithLockTime:
  *  @see  TTError: command: errorMsg:
  */
 - (void)locking_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid isAdmin:(BOOL)isAdmin startDate:(NSDate *)sdate endDate:(NSDate *)edate timezoneRawOffset:(long)timezoneRawOffset;
 
-/** 校准锁的时钟(车位锁不支持)
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
- *  referenceTime  传入的校准时间
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+/** Calibrate the lock of the clock
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
+ *  version Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag  The flag which will be used to check the validity of the ekey
+ *  referenceTime  Time of calibration
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onSetLockTime
  *  @see  TTError: command: errorMsg:
  */
 -(void)setLockTime_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag referenceTime:(NSDate *)time timezoneRawOffset:(long)timezoneRawOffset;
 
-/** 设置锁管理员键盘密码
- *  keyboardPassword  要设置的键盘密码 密码范围:二代锁7-9位数字 三代锁 4-9位数字
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
+/** Set Admin Passcode
+ *  keyboardPassword  Admin Passcod, Passcode range ： v2 lock : 7 - 9 Digits in length
+                                                      v3 lock : 4 - 9 Digits in length
+ *  adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey   AES encryption key
+ *  version  Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag     The flag which will be used to check the validity of the ekey
  *
  *  @see  onSetAdminKeyboardPassword
  *  @see  TTError: command: errorMsg:
@@ -216,13 +235,14 @@
 -(void)setAdminKeyBoardPassword:(NSString*)keyboardPassword adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag;
 
 
-/** 设置锁的清空密码
- *  delKeyboardPassword 要设置的删除键盘密码 密码范围:二代锁7-9位数字 三代锁 4-9位数字
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
+/** Set Erase Passcode
+ *  delKeyboardPassword Erase Passcode, Passcode range ： v2 lock : 7 - 9 Digits in length
+                                                          v3 lock : 4 - 9 Digits in length
+ *  adminPS   admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey   The key data which will be used to unlock
+ *  aesKey    AES encryption key
+ *  version   Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag      The flag which will be used to check the validity of the ekey
  *
  *  @see  onSetAdminDeleteKeyboardPassword
  *  @see  TTError: command: errorMsg:
@@ -230,75 +250,75 @@
 -(void)setAdminDeleteKeyBoardPassword:(NSString*)delKeyboardPassword adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag;
 
 /**
- *  重置普通钥匙
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
+ *  Reset ekey
+ *  adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
+ *  version Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag    The flag which will be used to check the validity of the ekey
  *
  *  @see  onResetEkey
  *  @see  TTError: command: errorMsg:
  */
 -(void)resetEkey_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag;
 
-/** 重置键盘密码
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+/** Reset keyboard Passcode
+ *  adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey   AES encryption key
+ *  version  Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag     The flag which will be used to check the validity of the ekey
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onResetKeyboardPassword_timestamp:pwdInfo:
  *  @see  TTError: command: errorMsg:
  */
 -(void)resetKeyboardPassword_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag;
 
-/** 获取锁电量（只有三代锁有）
+/** Get Lock battery（Only for the v3 lock）
  *
  *  @see  onGetElectricQuantity:
  *  @see  TTError: command: errorMsg:
  */
 -(void)getElectricQuantity_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey;
 
-/** 恢复出厂设置 （即删除锁，只有三代锁管理员有）
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
+/** Reset Lock （That is delete the lock，Only for the administrator of v3 lock ）
+ *  adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey   AES encryption key
+ *  version  Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag     The flag which will be used to check the validity of the ekey
  *
  *  @see  onResetLock
  *  @see  TTError: command: errorMsg:
  */
 -(void)resetLock_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag;
 /**
- *  删除单个键盘密码 （只有三代锁管理员有）
- *  keyboardPs  要删除的密码
- *  passwordType(可任意传）
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
+ *  Delete a single keyboard passcode （Only for the administrator of v3 lock）
+ *  keyboardPs  The passcode to delete
+ *  passwordType(can set any value）
+ *  adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey   AES encryption key
+ *  version  Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag     The flag which will be used to check the validity of the ekey
  *
  *  @see  OnDeleteUserKeyBoardPassword
  *  @see  TTError: command: errorMsg:
  */
 -(void)deleteOneKeyboardPassword:(NSString *)keyboardPs adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey passwordType:(KeyboardPsType)passwordType  version:(NSString*)version unlockFlag:(int)flag;
 /**
- 修改键盘密码
+ Modify the keyboard passcode
  
- @param newPassword 新密码 密码范围: 三代锁 4-9位数字 如果不需要修改密码，则传nil
- @param oldPassword 旧密码
- @param startDate 开始时间 如果不需要修改时间，则传nil
- @param endDate 结束时间   如果不需要修改时间，则传nil
- @param adminPS 管理员密码 管理员开门时校验管理员身份的
- @param lockkey 约定数开门使用
- @param aesKey 开门使用
- @param flag 开门标记位
- @param timezoneRawOffset  锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ @param newPassword  new passcode ,Passcode range : 4 - 9 Digits in length. If you do not need to modify the password, set the nil
+ @param oldPassword  old passcode
+ @param startDate The time when it becomes valid .If you do not need to modify the time, set the nil
+ @param endDate  The time when it is expired .If you do not need to modify the time, set the nil
+ @param adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ @param lockkey The key data which will be used to unlock
+ @param aesKey AES encryption key
+ @param flag The flag which will be used to check the validity of the ekey
+ @param timezoneRawOffset  The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onModifyUserKeyBoardPassword
  *  @see  TTError: command: errorMsg:
@@ -307,19 +327,19 @@
 
 
 /**
- 恢复键盘密码
+ Recover the keyboard passcode
  
- @param passwordType   密码类型
- @param cycleType    循环类型  循环密码需要传 其他类型任意传
- @param newPassword 新密码
- @param oldPassword 旧密码
- @param startDate 开始时间
- @param endDate 结束时间   限时密码需要结束时间 其他类型可以传nil
- @param adminPS 管理员密码
- @param lockkey  约定数开门使用
- @param aesKey 开门使用
- @param flag 开门标记位
- @param timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ @param passwordType  Passcode Type
+ @param cycleType     Cycle Type , if passwordType != KeyboardPsTypeCycle ,can set any value
+ @param newPassword   New Passcode
+ @param oldPassword   Old Passcode
+ @param startDate The time when it becomes valid
+ @param endDate The time when it is expired, if passwordType != KeyboardPsTypePeriod ,can set nil
+ @param adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ @param lockkey  The key data which will be used to unlock
+ @param aesKey AES encryption key
+ @param flag The flag which will be used to check the validity of the ekey
+ @param timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onRecoverUserKeyBoardPassword
  *  @see  TTError: command: errorMsg:
@@ -327,16 +347,16 @@
 - (void)recoverKeyboardPassword_passwordType:(KeyboardPsType)passwordType cycleType:(NSInteger)cycleType newPassword:(NSString *)newPassword oldPassword:(NSString *)oldPassword  startDate:(NSDate*)startDate endDate:(NSDate*)endDate adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
 
 /**
- 添加键盘密码
+ Add keyboard passcode
  
- @param keyboardPs 要添加的密码 密码范围: 三代锁 4-9位数字
- @param startDate 开始时间 必传
- @param endDate 结束时间 必传
- @param adminPS 管理员密码 管理员开门时校验管理员身份的
- @param lockkey 约定数开门使用
- @param aesKey 开门使用
- @param flag 开门标记位
- @param timezoneRawOffset  锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ @param keyboardPs The Passcode to add ,Passcode range : 4 - 9 Digits in length. If you do not need to modify the password, set the nil
+ @param startDate The time when it becomes valid
+ @param endDate The time when it is expired
+ @param adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ @param lockkey The key data which will be used to unlock
+ @param aesKey AES encryption key
+ @param flag The flag which will be used to check the validity of the ekey
+ @param timezoneRawOffset  The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onAddUserKeyBoardPassword
  *  @see  TTError: command: errorMsg:
@@ -344,82 +364,85 @@
  */
 - (void)addKeyboardPassword_password:(NSString *)keyboardPs startDate:(NSDate*)startDate endDate:(NSDate*)endDate adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
 /**
- *  读取开锁记录 （只有三代锁有）
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ *  Get the operation record
+ *  aesKey  AES encryption key
+ *  version Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag The flag which will be used to check the validity of the ekey
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onGetOperateLog_LockOpenRecordStr:
  *  @see  TTError: command: errorMsg:
  */
 - (void)getOperateLog_aesKey:(NSString*)aesKey version:(NSString *)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
 /**
- *  获取锁时间 （只有三代锁有）
- *  aesKey  开门使用
- *  version 版本号 由（protocolType.protocolVersion.scene.groupId.orgId组成） 中间以点(.）连接
- *  flag  标记位
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ *  Get Lock Time
+ *  aesKey  AES encryption key
+ *  version Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  flag The flag which will be used to check the validity of the ekey
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onGetLockTime:
  *  @see  TTError: command: errorMsg:
  */
 - (void)getLockTime_aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
 /**
- *  获取锁特征值 （只有三代锁有）
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
+ *  Get Lock SpecialValue
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
  *
  *  @see  onGetDeviceCharacteristic:
  *  @see  TTError: command: errorMsg:
  */
 - (void)getDeviceCharacteristic_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey;
 /**
- *  操作IC卡 （只有三代锁有）
- *  type  参考枚举OprationType  恢复的回调是添加成功的那个回调
- *  ICNumber 卡号   类型:清空、添加和查询传 nil
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  startDate endDate 开始时间和结束时间  类型为OprationTypeModify需要传 永久有效卡期限:2000-1-1 0:0  2099-1-1 0:0
- *  flag  标记位
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ *  Operate IC
+ *  type      OprationType
+ *  ICNumber  Card Number , if (type == OprationTypeClear || type == OprationTypeAdd || type == OprationTypeQuery) ,set the nil.
+ *  adminPS   Admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey   The key data which will be used to unlock
+ *  aesKey    AES encryption key
+ *  startDate The time when it becomes valid. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  endDate   The time when it is expired. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  flag      The flag which will be used to check the validity of the ekey
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see onAddICWithState: ICNumber:
  *  @see onClearIC
  *  @see onDeleteIC
  *  @see onModifyIC
+ *  @see onGetOperateLog_LockOpenRecordStr:
  *  @see  TTError: command: errorMsg:
  */
 - (void)operate_type:(OprationType)type adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey ICNumber:(NSString*)ICNumber startDate:(NSDate*)startDate endDate:(NSDate*)endDate unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
 
 /**
- *  操作指纹 （只有三代锁有）
- *  type  参考枚举OprationType
- *  FingerprintNumber 指纹编号   类型:清空、添加和查询传 nil
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  startDate endDate 开始时间和结束时间  类型为OprationTypeModify需要传 永久有效卡期限:2000-1-1 0:0  2099-1-1 0:0
- *  unlockFlag  标记位
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ *  Operate  Fingerprint
+ *  type                OprationType
+ *  FingerprintNumber   Fingerprint Number , if (type == OprationTypeClear || type == OprationTypeAdd || type == OprationTypeQuery) ,set the nil.
+ *  adminPS             admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey             The key data which will be used to unlock
+ *  aesKey              AES encryption key
+ *  startDate  The time when it becomes valid. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  endDate    The time when it is expired. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  unlockFlag  The flag which will be used to check the validity of the ekey
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see onAddFingerprintWithState:fingerprintNumber:currentCount:totalCount:
  *  @see onClearFingerprint
  *  @see onDeleteFingerprint
- *  @see onDeleteFingerprint
+ *  @see onGetOperateLog_LockOpenRecordStr:
  *  @see  TTError: command: errorMsg:
  */
 - (void)operateFingerprint_type:(OprationType)type adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey FingerprintNumber:(NSString*)FingerprintNumber startDate:(NSDate*)startDate endDate:(NSDate*)endDate unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
 
 /**
- *  设置闭锁时间
- *  OprationType 只有查询和修改
- *  time 是设置的闭锁时间 修改：传0是不闭锁  查询：可传任意值
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- * unlockFlag  标记位
+ *  Set Locking Time
+ *  OprationType   only Query and Modify
+ *  time           Locking time,  if (type == OprationTypeModify),set the 0 means no locking .  if (type == OprationTypeQuery),set the any value
+ *  adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
+ *  unlockFlag  The flag which will be used to check the validity of the ekey
  *
  *  @see onQueryLockingTimeWithCurrentTime: minTime: maxTime:
  *  @see onModifyLockingTime
@@ -427,43 +450,43 @@
  */
 - (void)setLockingTime_type:(OprationType)type time:(int)time adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 /**
- * 读取设备的信息  包括 1-产品型号 2-硬件版本号 3-固件版本号 4-生产日期 5-	蓝牙地址 6-时钟
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
+ *  Get Device Info   1-Product model 2-Hardware version 3-Firmware version
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
  *
  *  @see onGetDeviceInfo:
  *  @see  TTError: command: errorMsg:
  */
 - (void)getDeviceInfo_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey;
 /**
- *  进入可固件升级状态
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  unlockFlag 开门标记位
+ *  Enter lock upgrade state
+ *  adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey   AES encryption key
+ *  unlockFlag  The flag which will be used to check the validity of the ekey
  *
  *  @see onEnterFirmwareUpgradeMode
  *  @see  TTError: command: errorMsg:
  */
 - (void)upgradeFirmware_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
-/** 查询锁开关状态
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
+/** Get Lock Switch State
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
  *
  *  @see onGetLockSwitchState:
  *  @see  TTError: command: errorMsg:
  */
 - (void)getLockSwitchState_aesKey:(NSString*)aesKey;
 /**
- 是否在屏幕上显示输入的密码
+ Whether the input password is displayed on the screen
  
- @param type  操作类型 1- 查询 2- 修改
- @param isShow 是否显示密码  0-隐藏  1-显示 操作类型为修改时有用
- @param adminPS  管理员密码
- @param lockkey 约定数
- @param aesKey aesKey
- @param unlockFlag 标记位
+ @param type   1- Query 2- Modify
+ @param isShow Whether or not to display a password , NO-hide  YES-show ,It is useful when the operation type is 2- Modify
+ @param adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ @param lockkey  The key data which will be used to unlock
+ @param aesKey  AES encryption key
+ @param unlockFlag The flag which will be used to check the validity of the ekey
  *
  *  @see onGetLockSwitchState:
  *  @see onModifyScreenShowState
@@ -471,10 +494,10 @@
  */
 - (void)operateScreen_type:(int)type isShow:(BOOL)isShow adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 /**
- *  读取开锁密码列表 （只有三代管理员才能读取开锁密码）成功的回调是 onGetOperateLog_LockOpenRecordStr
- *  adminPS 管理员密码
- *  aesKey  开门使用
- *  timezoneRawOffset 锁初始化时所在时区和UTC时区时间的差数,单位milliseconds(毫秒)  没有这个值，则传-1
+ *  Read the unlocked password list
+ *  adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  aesKey  AES encryption key
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see onGetOperateLog_LockOpenRecordStr:
  *  @see  TTError: command: errorMsg:
@@ -482,19 +505,19 @@
 - (void)getKeyboardPasswordList_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
 
 /**
- 读取新密码方案参数（约定数、映射数、删除日期）
+    Reading new password data
  *
  *  @see onGetPasswordData_timestamp:pwdInfo:
  */
 - (void)getPasswordData_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
 /**
- *  门磁闭锁操作
- *  OprationType 只有查询和修改
- *  isOn 是设置门磁闭锁开关 查询：可传任意值 修改：传YES是开，NO是关
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  unlockFlag  标记位
+ *  Operate  Door Sensor Locking
+ *  OprationType  only Query and Modify
+ *  isOn    Set door sensor locking switch , NO-off  YES-on ,It is useful when the operation type is 2- Modify
+ *  adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
+ *  unlockFlag  The flag which will be used to check the validity of the ekey
  *
  *  @see onQueryDoorSensorLocking:
  *  @see onModifyDoorSensorLocking
@@ -502,22 +525,22 @@
  */
 - (void)operateDoorSensorLocking_type:(OprationType)type isOn:(BOOL)isOn adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
-/** 查询门磁状态
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
+/** Get Door Sensor State
+ *  lockkey The key data which will be used to unlock
+ *  aesKey  AES encryption key
  *
  * @see onGetDoorSensorState:
  * @see  TTError: command: errorMsg:
  */
 - (void)getDoorSensorState_aesKey:(NSString*)aesKey;
 /**
- *  远程开锁开关控制
- *  OprationType 只有查询和修改
- *  isOn 是设置远程开锁开关 查询：可传任意值 修改：传YES是开，NO是关
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  unlockFlag  标记位
+ *  Operate         Remote Unlock Swicth
+ *  OprationType    only Query and Modify
+ *  isOn            NO-off  YES-on ,It is useful when the operation type is 2- Modify
+ *  adminPS         admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey         The key data which will be used to unlock
+ *  aesKey          AES encryption key
+ *  unlockFlag      The flag which will be used to check the validity of the ekey
  *
  *  @see onOperateRemoteUnlockSwicth_type:stateInfo:
  *  @see  TTError: command: errorMsg:
@@ -525,29 +548,29 @@
 - (void)operateRemoteUnlockSwicth_type:(OprationType)type isOn:(BOOL)isOn adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
 /**
- *  设置门锁里手环的Key （只有三代锁有）
- *  wristbandKey 设置的wristbandKey
- *  keyboardPassword  现有的管理员开门密码 如果想修改管理员密码 也可以不传现有的  必传参数
- *  adminPS 管理员密码 管理员开门时校验管理员身份的
- *  lockkey 约定数开门使用
- *  aesKey  开门使用
- *  unlockFlag  标记位
+ *  Set Lock's Wristband Key
+ *  wristbandKey  set wristband Key
+ *  keyboardPassword  the lock's Admin Passcode
+ *  adminPS      admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey      The key data which will be used to unlock
+ *  aesKey       AES encryption key
+ *  unlockFlag   The flag which will be used to check the validity of the ekey
  *
  *  @see onSetLockWristbandKey
  *  @see  TTError: command: errorMsg:
  */
 - (void)setLockWristbandKey:(NSString*)wristbandKey keyboardPassword:(NSString*)keyboardPassword adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 /**
- * 设置手环里的key
- * isOpen 这个功能是否打开
+ * Set Wristband's Key
+ * isOpen  Does this function open
  *
  *  @see onSetWristbandKey
  *  @see  TTError: command: errorMsg:
  */
 - (void)setWristbandKey:(NSString*)wristbandKey isOpen:(BOOL)isOpen;
 /**
- * 配置手环信号值
- * rssi 要设置的信号值
+ * Set Wristband's Rssi
+ * rssi    set rssi
  *
  *  @see onSetWristbandRssi
  *  @see  TTError: command: errorMsg:
@@ -556,55 +579,20 @@
 
 #pragma mark --- 废弃
 
-/**车位锁 升为yes 降为no*/
-@property (nonatomic) BOOL parklockAction __attribute__((deprecated("SDK2.6.3 开锁接口是降 关锁接口locking_lockKey是升")));
-/**三代锁中广播的一个信号值 0表示不连接 其他表示连接*/
+@property (nonatomic) BOOL parklockAction __attribute__((deprecated("SDK2.6.3")));
 @property (nonatomic,readonly) int allowUnlock __attribute__((deprecated("SDK2.6")));
-/**三代锁中广播的一个信号值 这个数值是离锁一米左右的rssi*/
 @property (nonatomic,readonly) int oneMeterRSSI __attribute__((deprecated("SDK2.6")));
-/** 管理员开锁 （用的是referenceTime校准）
- *  用上边的unlockByAdministrator_adminPS管理员开锁方法和校准时间方法 替换此方法
- */
 - (void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag referenceTime:(NSDate *)referenceTime __attribute__((deprecated("SDK2.6")));
-
-/** 校准锁的时钟，和当前使用手机时间一致 (不包含车位锁)
- * 用上边的setLockTime_lockKey校准锁的时钟方法  替换此方法
- */
 -(void)setLockTime_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  version:(NSString*)version unlockFlag:(int)flag __attribute__((deprecated("SDK2.6")));
-/** 取消连接蓝牙
- */
 -(void)cancelConnectPeripheral:(CBPeripheral *)peripheral __attribute__((deprecated("SDK2.7.1")));
-/** 开始扫描附近的蓝牙 特定服务的门锁 推荐使用 */
 -(void)startBTDeviceScan __attribute__((deprecated("SDK2.7.1")));
-
-/** 开始扫描附近的蓝牙 所有蓝牙设备 如果开发手环的需要 可以用 */
 - (void)scanAllBluetoothDeviceNearby __attribute__((deprecated("SDK2.7.1")));
-
-/** 开始扫描附近特定服务的蓝牙
- * servicesArray 数组里的元素要NSString类型
- */
 - (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray*)servicesArray __attribute__((deprecated("SDK2.7.1")));
-/** 管理员开锁*/
 -(void)unlockByAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag uniqueid:(NSNumber*)uniqueid __attribute__((deprecated("SDK2.7.1")));
-/**
- *  添加管理员 (也适用于车位锁)
- *
- *  @param advertisementData  蓝牙广播的数据advertisementData
- *  @param adminPassward      管理员密码（车位锁没有这个功能）  若传nil 则随机生成7位数密码
- *  @param deletePassward     清空码（车位锁与三代锁没有这个功能） 若传nil 则随机生成7位数密码
- *                            密码范围:二代锁7-9位数字 三代锁 4-9位数字
- */
 -(void)addAdministrator_advertisementData:(NSDictionary *)advertisementData adminPassword:(NSString*)adminPassward deletePassword:(NSString*)deletePassward __attribute__((deprecated("SDK2.7.4")));
-/**
- 开始扫描附近特定服务的蓝牙
- @param servicesArray 服务
- @see {@link onFoundDevice_peripheralWithInfoDic:}
- */
 - (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray<NSString *>*)servicesArray isScanDuplicates:(BOOL)isScanDuplicates __attribute__((deprecated("SDK2.7.5")));
-/**
- *  获取锁电量，在调用开锁接口成功后再调用此接口((deprecated("SDK2.7.5")))
- */
 -(int)getPower;
+
 @end
 
 

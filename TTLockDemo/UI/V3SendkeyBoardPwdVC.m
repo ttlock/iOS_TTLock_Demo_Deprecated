@@ -13,9 +13,9 @@
 #import "NSDate+CalculateDay.h"
 #import "AppDelegate.h"
 #import "RequestService.h"
+#import "KeyboardPwd.h"
 @interface V3SendkeyBoardPwdVC ()<KMDatePickerDelegate,UITextFieldDelegate,MMChoiceViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 @property (nonatomic, strong) UITextField *txtFCurrent;
-//键盘密码类型
 @property (nonatomic, assign) int keyboardPwdType;
 
 @end
@@ -45,18 +45,18 @@
     UIView *bgview = [[UIView alloc]init];
     bgview.backgroundColor = [UIColor colorWithRed:0.961 green:0.965 blue:0.973 alpha:1.000];
     [self.view addSubview:bgview];
-    UILabel * startLabel = [self createLabelWithFont:15 text:NSLocalizedString(@"start_time", nil)];
+    UILabel * startLabel = [self createLabelWithFont:15 text:LS(@"words_Active_Time")];
     startLabel.backgroundColor =[UIColor clearColor];
         CGRect rect = [[UIScreen mainScreen] bounds];
     rect = CGRectMake(0.0, 0.0, rect.size.width, 216.0);
-    // 年月日时分
+  
     _startDatePicker= [[KMDatePicker alloc]
                                 initWithFrame:rect
                                 delegate:self
                                 datePickerStyle:KMDatePickerStyleYearMonthDayHour];
     _startDatePicker.minLimitedDate = [[DateHelper localeDate] addMonthAndDay:0 days:0];
     
-    // 年月日时分
+
     _endDatePicker = [[KMDatePicker alloc]
                       initWithFrame:rect
                       delegate:self
@@ -67,7 +67,7 @@
     _endTextField.inputView = _endDatePicker;
     _endTextField.delegate = self;
     
-    //时
+ 
     KMDatePicker *hourMinuteDatePicker = [[KMDatePicker alloc]
                                           initWithFrame:rect
                                           delegate:self
@@ -170,7 +170,7 @@
     }
     
     if (_type ==1 || _type == 2) {
-        UILabel * endLabel = [self createLabelWithFont:15 text:NSLocalizedString(@"end_time", nil)];
+        UILabel * endLabel = [self createLabelWithFont:15 text:NSLocalizedString(@"words_Expire_Time", nil)];
         endLabel.backgroundColor =[UIColor clearColor];
         
         _endTextField = [self createTextField];
@@ -256,12 +256,10 @@
     pickRow = row;
     [_recycleBtn setTitle:_recycleWayArray[row] forState:UIControlStateNormal];
 }
-// 返回1表明该控件只包含1列
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView
 {
     return 1;
 }
-//一列中有三行
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component{
     
@@ -321,7 +319,7 @@ numberOfRowsInComponent:(NSInteger)component{
     
     _usePSBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _usePSBtn.backgroundColor = COMMON_BLUE_COLOR;
-    [_usePSBtn setTitle:@"获取密码" forState:UIControlStateNormal];
+    [_usePSBtn setTitle:LS(@"word_generate_passcode") forState:UIControlStateNormal];
     [_usePSBtn setTitleColor:COMMON_FONT_BLACK_COLOR forState:UIControlStateNormal];
     [self.view addSubview:_usePSBtn];
     [_usePSBtn addTarget:self action:@selector(usePS) forControlEvents:UIControlEventTouchUpInside];
@@ -340,16 +338,16 @@ numberOfRowsInComponent:(NSInteger)component{
     UILabel *desLabel = [self createLabelWithFont:15 text:@""];
     if (_type == 0 || _type ==1) {
         
-        desLabel.text = [NSString stringWithFormat:@"%@:\n1.%@\n2.%@",LS(@"word_note"),LS(@"alter_the_checkbox_is_checked"),LS(@"used_at_least_once_within_24_hours")];
+        desLabel.text = [NSString stringWithFormat:@"1.%@\n2.%@",LS(@"alter_the_checkbox_is_checked"),LS(@"used_at_least_once_within_24_hours")];
     }else if (_type == 2){
-         desLabel.text = [NSString stringWithFormat:@"%@:\n1.%@",LS(@"word_note"),LS(@"used_at_least_once_within_24_hours")];
+         desLabel.text = [NSString stringWithFormat:@"1.%@",LS(@"used_at_least_once_within_24_hours")];
     }else if (_type == 3){
-         desLabel.text = [NSString stringWithFormat:@"%@:\n1.%@\n",LS(@"word_note"),LS(@"valid_within_6_hours")];
+         desLabel.text = [NSString stringWithFormat:@"1.%@\n",LS(@"valid_within_6_hours")];
     }
     desLabel.lineBreakMode = NSLineBreakByCharWrapping;
     desLabel.numberOfLines = 0;
     desLabel.textColor = COMMON_FONT_GRAY_COLOR;
-    //动态求高度
+
     CGSize size = [self sizeWithString:desLabel.text font:[UIFont systemFontOfSize:15] maxSize:CGSizeMake(SCREEN_WIDTH-30, MAXFLOAT)];
     [self.view addSubview:desLabel];
     [desLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -366,7 +364,6 @@ numberOfRowsInComponent:(NSInteger)component{
     
     NSTimeInterval total;
     
-    //选择结束时间
     NSString *todayStr = [TTUtils formateDate:[NSDate date] format:@"yyyy-MM-dd" timezoneRawOffset:_selectedKey.timezoneRawOffset];
     
     
@@ -374,19 +371,19 @@ numberOfRowsInComponent:(NSInteger)component{
     NSTimeInterval todayTimeInterval = [TTUtils formateDateFromStringToDate:endTime format:@"yyyy-MM-dd HH:mm" timezoneRawOffset:_selectedKey.timezoneRawOffset].timeIntervalSince1970;
    
     
-    //当天时间 周日 是1 周一是2 依次
+    //Sunday is 1, Monday is 2 ...
     NSInteger orderWeekday =  [self orderDayFromDate:[NSDate date]];
-    //选择pickRow 3-8 指的是周一到周六
+    //Select pickRow3-8, from Monday to Saturday
     if (pickRow >= 3 && pickRow <= 8) {
-        //如果今天是周日 选的周几就加几天
+        //If today is Sunday, a few days will be added to the selected week
         if (orderWeekday == 1) {
            total = [NSDate date].timeIntervalSince1970 + (pickRow-2)*24*60*60;
         }
-        //如果选择的日期 大于今天
+        //If the date of selection is greater than today
         else if (orderWeekday < pickRow - 1) {
            total = [NSDate date].timeIntervalSince1970 + (pickRow-1-orderWeekday)*24*60*60;
         }
-        //等于今天
+        //Equal to today
         else if (orderWeekday == pickRow - 1){
             if (todayTimeInterval <= [NSDate date].timeIntervalSince1970) {
                 total = [NSDate date].timeIntervalSince1970 + 7*24 * 60* 60;
@@ -399,7 +396,7 @@ numberOfRowsInComponent:(NSInteger)component{
            total = [NSDate date].timeIntervalSince1970 + (7-orderWeekday-1+pickRow-2)*24*60*60;
         }
     }
-    //选择是周日
+    //The choice is Sunday
     else if (pickRow == 9){
      if (orderWeekday == 1) {
          if (todayTimeInterval <= [NSDate date].timeIntervalSince1970) {
@@ -411,7 +408,7 @@ numberOfRowsInComponent:(NSInteger)component{
           total = [NSDate date].timeIntervalSince1970 + (7-orderWeekday-1)*24*60*60;
         }
     }
-    //周末
+    //The choice is weekend
     else if (pickRow == 0){
         if (orderWeekday == 1 || orderWeekday == 7) {
             if (todayTimeInterval <= [NSDate date].timeIntervalSince1970 && orderWeekday == 1) {
@@ -424,7 +421,7 @@ numberOfRowsInComponent:(NSInteger)component{
            total = [NSDate date].timeIntervalSince1970 + (7-orderWeekday-2)*24*60*60;
         }
     }
-    //工作日
+    //The choice is Workday
     else if (pickRow == 2){
         if (orderWeekday == 1) {
             total = [NSDate date].timeIntervalSince1970 + 24 * 60 *60;
@@ -439,7 +436,7 @@ numberOfRowsInComponent:(NSInteger)component{
             }
         }
     }
-    //每天
+    //The choice is Daily
     else{
         if (todayTimeInterval <= [NSDate date].timeIntervalSince1970) {
             total = [NSDate date].timeIntervalSince1970 + 24* 60* 60;
@@ -453,7 +450,7 @@ numberOfRowsInComponent:(NSInteger)component{
 
 
 - (int)getKeyboardPwd{
-     //键盘密码类型
+
     if (_type == 0) {
         _keyboardPwdType = 2;
     }else if (_type == 1){
@@ -485,7 +482,7 @@ numberOfRowsInComponent:(NSInteger)component{
 
     
     [self showHUD:nil];
-    //连接的不是同一个lock
+   
     [NetworkHelper getKeyboardPwd:_selectedKey.lockId keyboardPwdVersion:4 keyboardPwdType:[self getKeyboardPwd] startDate:sdatetime endDate:edatetime completion:^(id info, NSError *error) {
         [self hideHUD];
         if (!error) {
@@ -493,19 +490,19 @@ numberOfRowsInComponent:(NSInteger)component{
                 UIPasteboard *pboard = [UIPasteboard generalPasteboard];
                 KeyboardPwd *pwd = [KeyboardPwd mj_objectWithKeyValues:info];
                 pboard.string = pwd.keyboardPwd;
-                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"温馨提示"
-                                                                 message:[NSString stringWithFormat:@"密码%@已复制到剪贴板",pboard.string]
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                 message: [NSString stringWithFormat:LS(@"password_copy_pasteboard") ,pboard.string]
                                                                 delegate:self
-                                                       cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                                                       cancelButtonTitle:nil otherButtonTitles:LS(@"words_sure_ok"), nil];
                 
                 [alert show];
             }
 
         }else {
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"温馨提示"
-                                                            message:@"请求失败"
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:nil
+                                                    message:LS(@"alert_request_error")
                                                            delegate:self
-                                                  cancelButtonTitle:@"确定"
+                                                  cancelButtonTitle:LS(@"words_sure_ok")
                                                   otherButtonTitles:nil];
             [alert show];
 

@@ -2,17 +2,13 @@
 //  TimePsSendedListVC.h
 //  sciener
 //
-//  Created by 谢元潮 on 15/1/19.
+//  Created by TTLock on 15/1/19.
 //
 //
 
 #import <UIKit/UIKit.h>
 #import "Key.h"
 
-/*!
- @class
- @abstract 键盘密码使用记录界面
- */
 @interface TimePsSendedListVC : UIViewController
 {
 

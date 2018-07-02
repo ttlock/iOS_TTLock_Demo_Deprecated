@@ -10,10 +10,9 @@
 #import "RequestService.h"
 #import "AppDelegate.h"
 #import "Define.h"
-#import "XYCUtils.h"
 #import "UnlockRecordCell.h"
 #import "UnlockRecord.h"
-
+#import "XYCUtils.h"
 @interface UnlockRecordsViewController ()
 {
     
@@ -34,7 +33,6 @@
         
         self.title = NSLocalizedString(@"keydetail_item_title_records", nil);
         
-        //防止在ios7上出现，tableview被nav遮住的情况
         NSComparisonResult order = [[UIDevice currentDevice].systemVersion compare: @"7.0" options: NSNumericSearch];
         if (order == NSOrderedSame || order == NSOrderedDescending)
         {
@@ -146,7 +144,7 @@
     UnlockRecord* record = [records objectAtIndex:indexPath.row];
     
     cell.label_unlcok_type.text = NSLocalizedString(@"words_unlock", nil);
-    cell.label_operator.text = [NSString stringWithFormat:@"用户名:%@",record.openid];
+    cell.label_operator.text = [NSString stringWithFormat:@"%@",record.openid];
     
     
     cell.label_date.text = [XYCUtils formateDate:record.date format:@"yyyy-MM-dd HH::mm"];

@@ -2,7 +2,7 @@
 //  NetworkHelper.m
 //  TTLockDemo
 //
-//  Created by 刘潇翔 on 17/2/7.
+//  Created by LXX on 17/2/7.
 //  Copyright © 2017年 wjj. All rights reserved.
 //
 
@@ -42,7 +42,6 @@ static NSString *const AppDomain = @"AppDomain";
         parame[@"aesKeyStr"] = @"";
     }
 
-//    parame[@"date"] = LockModel.date;
     [NetworkHelper apiPost:@"lock/init" parameters:parame completion:^(id info, NSError *error) {
         completion(info,error);
     }];
@@ -153,7 +152,7 @@ static NSString *const AppDomain = @"AppDomain";
     }];
 }
 
-//  发送钥匙
+
 + (void)sendKey:(NSInteger)lockId receiverUsername:(NSString *)receiverUsername startDate:(NSString*)startDate endDate:(NSString*)endDate remarks:(NSString *)remarks completion:(RequestBlock) completion
 {
     NSMutableDictionary *parame = [NetworkHelper initParame];
@@ -169,7 +168,7 @@ static NSString *const AppDomain = @"AppDomain";
         completion(info,error);
     }];
 }
-//  同步钥匙数据
+
 + (void)syncKeyData:(NSString*)lastUpdateDate completion:(RequestBlock) completion
 {
     NSMutableDictionary *parame = [NetworkHelper initParame];
@@ -180,7 +179,7 @@ static NSString *const AppDomain = @"AppDomain";
         completion(info,error);
     }];
 }
-//  删除钥匙
+
 + (void)deleteKey:(NSInteger)keyId completion:(RequestBlock) completion{
     NSMutableDictionary *parame = [NetworkHelper initParame];
     parame[@"keyId"] = @(keyId);
@@ -189,7 +188,7 @@ static NSString *const AppDomain = @"AppDomain";
     }];
 
 };
-//  冻结钥匙
+
 + (void)freezeKey:(NSInteger)keyId completion:(RequestBlock) completion{
     NSMutableDictionary *parame = [NetworkHelper initParame];
     parame[@"keyId"] = @(keyId);
@@ -198,7 +197,7 @@ static NSString *const AppDomain = @"AppDomain";
     }];
 
 }
-//  解除冻结钥匙
+
 + (void)unFreezeKey:(NSInteger)keyId completion:(RequestBlock) completion
 {
     NSMutableDictionary *parame = [NetworkHelper initParame];
@@ -208,7 +207,7 @@ static NSString *const AppDomain = @"AppDomain";
     }];
 
 }
-//  修改钥匙有效期
+
 + (void)changeKeyPeriod:(NSInteger)keyId startDate:(NSString*)startDate endDate:(NSString*)endDate completion:(RequestBlock) completion{
     NSMutableDictionary *parame = [NetworkHelper initParame];
     parame[@"keyId"] = @(keyId);
@@ -219,7 +218,7 @@ static NSString *const AppDomain = @"AppDomain";
     }];
 }
 
-//  获取键盘密码
+
 +(void)getKeyboardPwd:(NSInteger)lockId keyboardPwdVersion:(NSInteger)keyboardPwdVersion keyboardPwdType:(NSInteger)keyboardPwdType startDate:(NSString *)startDate endDate:(NSString *)endDate completion:(RequestBlock)completion
 {
     NSMutableDictionary *parame = [NetworkHelper initParame];
@@ -235,7 +234,7 @@ static NSString *const AppDomain = @"AppDomain";
 
 }
 
-//  删除钥匙
+
 + (void)deleteKeyboardPwd:(NSInteger)keyboardPwdId lockId:(NSInteger)lockId deleteType:(NSInteger)deleteType completion:(RequestBlock) completion
 {
     NSMutableDictionary *parame = [NetworkHelper initParame];
@@ -375,19 +374,19 @@ static NSString *const AppDomain = @"AppDomain";
         
         NSError *error = nil;
         id valueData = [self apiResponseParse:responseObject error:&error];
-        //log  返回日志
+
         [NetworkHelper logDebugInfoWithResponse:responseObject url:url error:error];
         if (completion)
             completion(valueData,error);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //log  返回日志
+  
         [NetworkHelper logDebugInfoWithResponse:nil url:url error:error];
         
         if (completion)
             completion(nil, error);
     }];
     
-    //log 请求日志
+
     
     [NetworkHelper logDebugInfoWithRequest:request apiName:method requestParams:parameters httpMethod:@"POST"];
 }
@@ -408,20 +407,18 @@ static NSString *const AppDomain = @"AppDomain";
     [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *error = nil;
         id valueData = [self apiResponseParse:responseObject error:&error];
-        //log  返回日志
+     
         [NetworkHelper logDebugInfoWithResponse:responseObject url:url error:error];
         if (completion)
             completion(valueData,error);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        //log  返回日志
+
         [NetworkHelper logDebugInfoWithResponse:nil url:url error:error];
         if (completion)
             completion(nil, error);
     }];
     
-    
-    //log 请求日志
     [NetworkHelper logDebugInfoWithRequest:request apiName:method requestParams:parameters httpMethod:@"GET"];
 }
 
@@ -469,13 +466,11 @@ static NSString *const AppDomain = @"AppDomain";
       NSDictionary *data = responseObject;
       NSString * errorCode = responseObject[@"errcode"];
       NSString * errorMsg  = responseObject[@"errmsg"];
-        //统一显示网络请求失败错误
+
     if (errorCode.intValue < 0) {
-        //统一显示网络请求失败错误
+ 
          [SSToastHelper showToastWithStatus:errorMsg];
     }
-
-    
         id valueData = nil;
         BOOL isValid = (errorCode == nil || [errorCode intValue] == 0);
         valueData = data;
@@ -484,7 +479,6 @@ static NSString *const AppDomain = @"AppDomain";
                 *error = [NSError errorWithDomain:AppDomain code:[errorCode integerValue] userInfo:@{NSLocalizedDescriptionKey:errorMsg}];
                 
                 if ([errorCode intValue] == 10004) {
-                    // token过期了
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"invalid grant" object:nil];
                 }
             }
@@ -495,9 +489,6 @@ static NSString *const AppDomain = @"AppDomain";
         }
         return valueData;
 }
-
-
-#pragma mark 请求log日志输入
 
 + (void)logDebugInfoWithRequest:(NSURLRequest *)request apiName:(NSString *)apiName requestParams:(NSDictionary *)requestParams httpMethod:(NSString *)httpMethod
 {
