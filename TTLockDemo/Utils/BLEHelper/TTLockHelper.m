@@ -511,24 +511,24 @@ static  TTLockHelper *instace;
 #pragma mark TTSDKDelegate
 -(void)onFoundDevice_peripheralWithInfoDic:(NSDictionary*)infoDic{
     
-      OnFoundDeviceModel *deviceModel = [[OnFoundDeviceModel alloc] initOnFoundDeviceModelWithDic:infoDic];
-
-      if (deviceModel.isAllowUnlock == NO) return;
-        __block  Key *dbKey = nil;
-        sync_main(^{
-            if (deviceModel.mac.length){
-                 dbKey =  [[DBHelper sharedInstance] fetchKeyWithLockMac:deviceModel.mac];
-            }
-            else{
-                dbKey =  [[DBHelper sharedInstance] fetchKeyWithDoorName:deviceModel.lockName];
-            }
-        });
-
-    if (dbKey && deviceModel.rssi.intValue >= RSSI_SETTING_1m && deviceModel.rssi.intValue != 127){
-        
-        [TTLockHelper onlyOnePeripheralCanConnectAtTheSameTimeWithDeviceMAC:deviceModel.mac.length ? deviceModel.mac : deviceModel.lockName key:dbKey connectBlock:nil];
-
-    }
+//      OnFoundDeviceModel *deviceModel = [[OnFoundDeviceModel alloc] initOnFoundDeviceModelWithDic:infoDic];
+//
+//      if (deviceModel.isAllowUnlock == NO) return;
+//        __block  Key *dbKey = nil;
+//        sync_main(^{
+//            if (deviceModel.mac.length){
+//                 dbKey =  [[DBHelper sharedInstance] fetchKeyWithLockMac:deviceModel.mac];
+//            }
+//            else{
+//                dbKey =  [[DBHelper sharedInstance] fetchKeyWithDoorName:deviceModel.lockName];
+//            }
+//        });
+//
+//    if (dbKey && deviceModel.rssi.intValue >= RSSI_SETTING_1m && deviceModel.rssi.intValue != 127){
+//
+//        [TTLockHelper onlyOnePeripheralCanConnectAtTheSameTimeWithDeviceMAC:deviceModel.mac.length ? deviceModel.mac : deviceModel.lockName key:dbKey connectBlock:nil];
+//
+//    }
     
 }
 
@@ -551,7 +551,8 @@ static  TTLockHelper *instace;
             connectBlock(peripheral,KKBLE_CONNECT_SUCCESS);
             [_bleBlockDict removeObjectForKey:KKBLE_CONNECT];
         });
-    }else{
+    }
+    else{
 
         [TTLockHelper unlock:_currentKey unlockBlock:^(id info, BOOL succeed) {
             
