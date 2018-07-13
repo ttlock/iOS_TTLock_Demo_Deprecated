@@ -594,7 +594,6 @@
 			children = (
 				FC6A2B7F1F418349001D6B2B /* controllers */,
 				FC6A2B881F418349001D6B2B /* models */,
-				FC6A2B8D1F418349001D6B2B /* views */,
 			);
 			path = Wifi;
 			sourceTree = "<group>";
@@ -623,13 +622,6 @@
 				FC6A2B8C1F418349001D6B2B /* PlugLockListModel.m */,
 			);
 			path = models;
-			sourceTree = "<group>";
-		};
-		FC6A2B8D1F418349001D6B2B /* views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = views;
 			sourceTree = "<group>";
 		};
 		FC6A2B8E1F418349001D6B2B /* libs */ = {

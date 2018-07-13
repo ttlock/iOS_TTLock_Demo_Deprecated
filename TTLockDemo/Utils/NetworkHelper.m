@@ -34,7 +34,11 @@ static NSString *const AppDomain = @"AppDomain";
     parame[@"pwdInfo"] = lockModel.pwdInfo;
     parame[@"timestamp"] = lockModel.timestamp;
     parame[@"specialValue"] = @(lockModel.specialValue);
-    
+    parame[@"electricQuantity"] = @(lockModel.electricQuantity);
+    parame[@"modelNum"] = lockModel.modelNum;
+    parame[@"hardwareRevision"] = lockModel.hardwareRevision;
+    parame[@"firmwareRevision"] = lockModel.firmwareRevision;
+
     if (!lockModel.lockMac) {
         parame[@"lockMac"] = @"";
     }

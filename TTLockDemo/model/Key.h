@@ -72,6 +72,9 @@
 @property (nonatomic,assign) ino64_t specialValue;
 @property (nonatomic, retain) NSString *pwdInfo;
 @property (nonatomic, retain) NSString *timestamp;
+@property (nonatomic, retain) NSString *modelNum;
+@property (nonatomic, retain) NSString *hardwareRevision;
+@property (nonatomic, retain) NSString *firmwareRevision;
 - (BOOL)isAdmin;
 
 

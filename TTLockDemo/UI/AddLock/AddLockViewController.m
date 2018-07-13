@@ -231,17 +231,17 @@
 - (void)onAddAdministrator_addAdminInfoDic:(NSDictionary *)addAdminInfoDic{
     
     LockVersion *version = [LockVersion new];
-    
+
     NSArray *versionArr = [addAdminInfoDic[@"version"] componentsSeparatedByString:@"."];
     version.protocolType = [[versionArr objectAtIndex:0] integerValue];
     version.protocolVersion = [[versionArr objectAtIndex:1] integerValue];
     version.scene = [[versionArr objectAtIndex:2] integerValue];
     version.groupId = [[versionArr objectAtIndex:3] integerValue];
     version.orgId = [[versionArr objectAtIndex:4] integerValue];
-    
+
     NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
     NSTimeInterval timeValue = [timeZone secondsFromGMTForDate:[NSDate date]];
-    
+
     _keyAdded.lockVersion = version;
     _keyAdded.lockMac = addAdminInfoDic[@"mac"];
     _keyAdded.adminPwd = addAdminInfoDic[@"adminPS"];
@@ -253,7 +253,13 @@
     _keyAdded.timezoneRawOffset = timeValue * 1000;
     _keyAdded.timestamp = addAdminInfoDic[@"timestamp"];
     _keyAdded.pwdInfo = addAdminInfoDic[@"pwdInfo"];
-    
+
+    _keyAdded.specialValue = [addAdminInfoDic[@"Characteristic"] longLongValue];
+    _keyAdded.electricQuantity = [addAdminInfoDic[@"electricQuantity"] intValue];
+    _keyAdded.modelNum = addAdminInfoDic[@"DeviceInfoType"][@"1"];
+    _keyAdded.hardwareRevision = addAdminInfoDic[@"DeviceInfoType"][@"2"];
+    _keyAdded.firmwareRevision = addAdminInfoDic[@"DeviceInfoType"][@"3"];
+
     [self addAdminSuccess];
     
     
