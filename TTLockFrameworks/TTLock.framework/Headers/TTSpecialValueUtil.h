@@ -85,4 +85,14 @@
  是否支持远程开锁开关控制
  */
 + (BOOL)isSupportRemoteUnlockSwicth:(long long)specialValue;
+/**
+ Whether to enable or disable voice management
+ 是否支持启用或者禁用语音提示管理
+ */
++ (BOOL)isSupportAudioSwitch:(long long)specialValue;
+/**
+ Whether to support NB
+ 是否支持NB
+ */
++ (BOOL)isSupportNB:(long long)specialValue;
 @end

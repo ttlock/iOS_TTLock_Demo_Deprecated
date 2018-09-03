@@ -91,6 +91,7 @@ typedef NS_ENUM(int, DoorSceneType)
     ParkSceneType = 7,
     PadLockSceneType = 8,
     CylinderLockSceneType = 9,
+    RemoteControlFourButtonType = 10,
 };
 /*!
  *  @enum KeyboardPsType
@@ -209,7 +210,10 @@ typedef NS_ENUM(NSInteger,AddFingerprintState)
  *  @constant DeviceInfoTypeOfFirmwareVersion     Firmware version
  *  @constant DeviceInfoTypeOfProductionDate      Production Date
  *  @constant DeviceInfoTypeOfProductionMac       Mac
-  *  @constant DeviceInfoTypeOfProductionClock    Clock
+ *  @constant DeviceInfoTypeOfProductionClock     Clock
+ *  @constant DeviceInfoTypeOfNbNodeId            Nb Node Id
+ *  @constant DeviceInfoTypeOfNbCardNumber        Nb Card Number
+ *  @constant DeviceInfoTypeOfNbRssi              Nb Rssi
  *
  */
 typedef NS_ENUM(NSInteger,DeviceInfoType) {
@@ -218,7 +222,11 @@ typedef NS_ENUM(NSInteger,DeviceInfoType) {
     DeviceInfoTypeOfFirmwareVersion = 3,
     DeviceInfoTypeOfProductionDate = 4,
     DeviceInfoTypeOfProductionMac = 5,
-    DeviceInfoTypeOfProductionClock = 6
+    DeviceInfoTypeOfProductionClock = 6,
+    DeviceInfoTypeOfNBOperator = 7,
+    DeviceInfoTypeOfNbNodeId = 8,
+    DeviceInfoTypeOfNbCardNumber = 9,
+    DeviceInfoTypeOfNbRssi = 10,
     
 };
 
@@ -226,6 +234,14 @@ typedef NS_ENUM(NSInteger, AdvertisementDataType)
 {
     AdvertisementDataTypeSearch = 1,
     AdvertisementDataTypeAdd,
+};
+
+typedef NS_ENUM(NSInteger, RemoteControlButtonValueType)
+{
+    RemoteControlButtonValueOne = 0x01,
+    RemoteControlButtonValueTwo = 0x02,
+    RemoteControlButtonValueThree = 0x04,
+    RemoteControlButtonValueFour = 0x08,
 };
 
 

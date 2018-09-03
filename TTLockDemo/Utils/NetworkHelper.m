@@ -15,38 +15,14 @@
 static NSString *const AppDomain = @"AppDomain";
 @implementation NetworkHelper
 
-+ (void)initLock:(KeyModel *)lockModel completion:(RequestBlock)completion
++ (void)lockInitializeWithlockAlias:(NSString *)lockAlias lockData:(NSString*)lockData completion:(RequestBlock)completion
 {
     NSMutableDictionary *parame = [NetworkHelper initParame];
     
-        
-    parame[@"timezoneRawOffSet "] = @(lockModel.timezoneRawOffset);
-    parame[@"lockName"] = lockModel.lockName;
-    parame[@"lockAlias"] = lockModel.lockAlias;
-    parame[@"lockMac"] = lockModel.lockMac;
-    parame[@"lockKey"] = lockModel.lockKey;
-    parame[@"lockFlagPos"] = @(lockModel.lockFlagPos);
-    parame[@"aesKeyStr"] = lockModel.aesKeyStr;
-    parame[@"lockVersion"] = lockModel.lockVersion.mj_JSONString;
-    parame[@"adminPwd"] = lockModel.adminPwd;
-    parame[@"noKeyPwd"] = lockModel.noKeyPwd;
-    parame[@"deletePwd"] = lockModel.deletePwd;
-    parame[@"pwdInfo"] = lockModel.pwdInfo;
-    parame[@"timestamp"] = lockModel.timestamp;
-    parame[@"specialValue"] = @(lockModel.specialValue);
-    parame[@"electricQuantity"] = @(lockModel.electricQuantity);
-    parame[@"modelNum"] = lockModel.modelNum;
-    parame[@"hardwareRevision"] = lockModel.hardwareRevision;
-    parame[@"firmwareRevision"] = lockModel.firmwareRevision;
-
-    if (!lockModel.lockMac) {
-        parame[@"lockMac"] = @"";
-    }
-    if (!lockModel.aesKeyStr) {
-        parame[@"aesKeyStr"] = @"";
-    }
-
-    [NetworkHelper apiPost:@"lock/init" parameters:parame completion:^(id info, NSError *error) {
+    parame[@"lockAlias"] = lockAlias;
+    parame[@"lockData"] = lockData;
+    
+    [NetworkHelper apiPost:@"lock/initialize" parameters:parame completion:^(id info, NSError *error) {
         completion(info,error);
     }];
     

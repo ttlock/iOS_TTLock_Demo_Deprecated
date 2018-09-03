@@ -20,7 +20,7 @@ typedef void(^RequestBlock)(id info, NSError* error);
 + (void)apiGet:(NSString *)method parameters:(NSMutableDictionary *)parameters completion:(RequestBlock)completion;
 
 
-+ (void)initLock:(KeyModel *)LockModel completion:(RequestBlock) completion;
++ (void)lockInitializeWithlockAlias:(NSString *)lockAlias lockData:(NSString*)lockData completion:(RequestBlock)completion;
 
 + (void)listOfLock:(NSInteger)pageNo completion:(RequestBlock) completion;
 

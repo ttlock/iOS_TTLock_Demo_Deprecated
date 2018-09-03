@@ -225,49 +225,17 @@
     _keyAdded.peripheralUUIDStr = peripheral.identifier.UUIDString;
     currentPeripheral = peripheral;
 
-    [TTObjectTTLockHelper addAdministrator_addDic:@{@"lockMac":_selectModel.lockMac,@"protocolType":@(_selectModel.protocolType),@"protocolVersion":@(_selectModel.protocolVersion)}];
+    [TTObjectTTLockHelper lockInitializeWithInfoDic:@{@"lockMac":_selectModel.lockMac,@"protocolType":@(_selectModel.protocolType),@"protocolVersion":@(_selectModel.protocolVersion)}];
    
 }
-- (void)onAddAdministrator_addAdminInfoDic:(NSDictionary *)addAdminInfoDic{
+- (void)onLockInitializeWithLockData:(NSString *)lockData{
     
-    LockVersion *version = [LockVersion new];
-
-    NSArray *versionArr = [addAdminInfoDic[@"version"] componentsSeparatedByString:@"."];
-    version.protocolType = [[versionArr objectAtIndex:0] integerValue];
-    version.protocolVersion = [[versionArr objectAtIndex:1] integerValue];
-    version.scene = [[versionArr objectAtIndex:2] integerValue];
-    version.groupId = [[versionArr objectAtIndex:3] integerValue];
-    version.orgId = [[versionArr objectAtIndex:4] integerValue];
-
-    NSTimeZone *timeZone = [NSTimeZone systemTimeZone];
-    NSTimeInterval timeValue = [timeZone secondsFromGMTForDate:[NSDate date]];
-
-    _keyAdded.lockVersion = version;
-    _keyAdded.lockMac = addAdminInfoDic[@"mac"];
-    _keyAdded.adminPwd = addAdminInfoDic[@"adminPS"];
-    _keyAdded.lockKey = addAdminInfoDic[@"lockKey"];
-    _keyAdded.aesKeyStr = addAdminInfoDic[@"aesKey"];
-    _keyAdded.lockFlagPos = 0;
-    _keyAdded.noKeyPwd = addAdminInfoDic[@"adminPassword"];
-    _keyAdded.deletePwd = addAdminInfoDic[@"deletePassword"];
-    _keyAdded.timezoneRawOffset = timeValue * 1000;
-    _keyAdded.timestamp = addAdminInfoDic[@"timestamp"];
-    _keyAdded.pwdInfo = addAdminInfoDic[@"pwdInfo"];
-
-    _keyAdded.specialValue = [addAdminInfoDic[@"Characteristic"] longLongValue];
-    _keyAdded.electricQuantity = [addAdminInfoDic[@"electricQuantity"] intValue];
-    _keyAdded.modelNum = addAdminInfoDic[@"DeviceInfoType"][@"1"];
-    _keyAdded.hardwareRevision = addAdminInfoDic[@"DeviceInfoType"][@"2"];
-    _keyAdded.firmwareRevision = addAdminInfoDic[@"DeviceInfoType"][@"3"];
-
-    [self addAdminSuccess];
+    isAddSuccess = YES;
+    if (currentPeripheral) {
+        [TTObjectTTLockHelper disconnect:currentPeripheral];
+    }
     
-    
-}
-
-- (void)addAdminSuccess{
-    
-    [NetworkHelper initLock:_keyAdded completion:^(id info, NSError *error) {
+    [NetworkHelper lockInitializeWithlockAlias:_keyAdded.lockAlias lockData:lockData completion:^(id info, NSError *error) {
         if (!error) {
             [self.navigationController popViewControllerAnimated:YES];
             [self hideHUD];
@@ -276,11 +244,9 @@
             
             return ;
         }
+        NSLog(@"绑定失败");
     }];
-
 }
-
-
 - (void)TTError:(TTError)error command:(int)command errorMsg:(NSString *)errorMsg{
     
     if (error == TTErrorInvalidClientPara) {
@@ -317,14 +283,7 @@
          return;
     }
 }
-- (void)onSetLockTime{
-    NSLog(@"onSetLockTime");
-    isAddSuccess = YES;
-    if (currentPeripheral) {
-        [TTObjectTTLockHelper disconnect:currentPeripheral];
-    }
-    [self addAdminSuccess];
-}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

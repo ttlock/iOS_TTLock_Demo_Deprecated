@@ -53,7 +53,7 @@ NSString * const KKBLE_CUSTOM_KEYBOARDPWD = @"ble_custom_keyboardpwd";
 NSString * const KKBLE_GET_LOCK_TIME = @"ble_get_lock_time";
 NSString * const KKBLE_GET_DEVICE_INFO = @"ble_get_device_info";
 NSString * const KKBLE_GET_PWD_DATA = @"ble_get_pwd_data";
-
+NSString * const KKBLE_GET_ELECTRIC_QUANTITY =@"ble_get_electric_quantity";
 BOOL isReachDefaultConnectTimeout;
 
 @interface TTLockHelper ()

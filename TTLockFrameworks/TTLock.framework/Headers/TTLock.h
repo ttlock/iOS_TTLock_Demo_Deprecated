@@ -121,22 +121,22 @@
 - (void)cancelConnectPeripheralWithLockMac:(NSString *)lockMac;
 
 /**
- * Add administrator (It also applies to Parking Lock)
+ * Lock initialize (Add administrator, it also applies to Parking Lock)
  * param addDic
-      Key                    Type       required     Description
+ Key                    Type       required     Description
  
-      lockMac              NSString      YES
-      protocolType         NSNumber      YES
-      protocolVersion      NSNumber      YES
-      adminPassward        NSString      NO           Admin Passcode
-      deletePassward       NSString      NO           Erase Passcode
-                                                      Passcode range ： v2 lock : 7 - 9 Digits in length
-                                                                        v3 lock : 4 - 9 Digits in length
+ lockMac              NSString      YES
+ protocolType         NSNumber      YES
+ protocolVersion      NSNumber      YES
+ adminPassward        NSString      NO           Admin Passcode
+ deletePassward       NSString      NO           Erase Passcode
+                                                 Passcode range ： v2 lock : 7 - 9 Digits in length
+                                                                   v3 lock : 4 - 9 Digits in length
  *
- *  @see  onAddAdministrator_addAdminInfoDic:
+ *  @see  onLockInitializeWithLockData:
  *  @see  TTError: command: errorMsg:
  */
--(void)addAdministrator_addDic:(NSDictionary *)addDic;
+-(void)lockInitializeWithInfoDic:(NSDictionary *)infoDic;
 
 /** Get the version of lock
  *
@@ -450,7 +450,7 @@
  */
 - (void)setLockingTime_type:(OprationType)type time:(int)time adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 /**
- *  Get Device Info   1-Product model 2-Hardware version 3-Firmware version
+ *  Get Device Info   1-Product model 2-Hardware version 3-Firmware version..., reference enum: TTUtils.h -> DeviceInfoType
  *  lockkey The key data which will be used to unlock
  *  aesKey  AES encryption key
  *
@@ -513,7 +513,7 @@
 /**
  *  Operate  Door Sensor Locking
  *  OprationType  only Query and Modify
- *  isOn    Set door sensor locking switch , NO-off  YES-on ,It is useful when the operation type is 2- Modify
+ *  isOn    Set door sensor locking switch , NO-off  YES-on ,It is useful when the operation type is Modify
  *  adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
  *  lockkey The key data which will be used to unlock
  *  aesKey  AES encryption key
@@ -534,9 +534,9 @@
  */
 - (void)getDoorSensorState_aesKey:(NSString*)aesKey;
 /**
- *  Operate         Remote Unlock Swicth
+ *  Operate  Remote Unlock Swicth
  *  OprationType    only Query and Modify
- *  isOn            NO-off  YES-on ,It is useful when the operation type is 2- Modify
+ *  isOn            NO-off  YES-on ,It is useful when the operation type is Modify
  *  adminPS         admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
  *  lockkey         The key data which will be used to unlock
  *  aesKey          AES encryption key
@@ -546,6 +546,47 @@
  *  @see  TTError: command: errorMsg:
  */
 - (void)operateRemoteUnlockSwicth_type:(OprationType)type isOn:(BOOL)isOn adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Operate Audio Switch
+ *  OprationType    only Query and Modify
+ *  isOn            NO-off  YES-on ,It is useful when the operation type is Modify
+ *  adminPS         admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey         The key data which will be used to unlock
+ *  aesKey          AES encryption key
+ *  unlockFlag      The flag which will be used to check the validity of the ekey
+ *
+ *  @see onQueryAudioSwitch:
+ *  @see onModifyAudioSwitch
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)operateAudioSwitch_type:(OprationType)type isOn:(BOOL)isOn adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Operate Remote Control
+ * If the user presses the button all the time, it needs to send a button message every 500 milliseconds.
+ *  OprationType    1-Query , 2-Click button
+ *  buttonValue     enum RemoteControlButtonValueType,It is useful when the operation type is 2-Click button
+ *  isAdmin         YSE is the administrator,otherwise it's ekey
+ *  startDate       The time when it becomes valid.  If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  endDate         The time when it is expired. If it's a permanent key ,set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  lockkey         The key data which will be used to unlock
+ *  aesKey          AES encryption key
+ *  version          Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
+ *  unlockFlag      The flag which will be used to check the validity of the ekey
+ *  uniqueid        It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds).
+ *  timezoneRawOffset  The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
+ 
+ *  @see  onQueryRemoteControl:
+          Only when 1-Query has a response, the 2-Click button  has no response.
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)operateRemoteControl_type:(int)type buttonValue:(RemoteControlButtonValueType)buttonValue isAdmin:(BOOL)isAdmin startDate:(NSDate*)startDate endDate:(NSDate*)endDate lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)unlockFlag uniqueid:(NSNumber*)uniqueid timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+ *  Set NB Server
+ *  @see  onSetNBServer
+ *  @see  TTError: command: errorMsg:
+ */
+-(void)setNBServerWithPortNumber:(NSString*)portNumber serverAddress:(NSString*)serverAddress adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
 /**
  *  Set Lock's Wristband Key
@@ -592,7 +633,7 @@
 -(void)addAdministrator_advertisementData:(NSDictionary *)advertisementData adminPassword:(NSString*)adminPassward deletePassword:(NSString*)deletePassward __attribute__((deprecated("SDK2.7.4")));
 - (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray<NSString *>*)servicesArray isScanDuplicates:(BOOL)isScanDuplicates __attribute__((deprecated("SDK2.7.5")));
 -(int)getPower;
-
+-(void)addAdministrator_addDic:(NSDictionary *)addDic __attribute__((deprecated("SDK2.7.7")));
 @end
 
 
