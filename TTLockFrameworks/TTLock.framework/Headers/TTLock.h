@@ -3,7 +3,6 @@
 //  Created by TTLock on 2017/8/11.
 //  Copyright © 2017年 TTLock. All rights reserved.
 
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
@@ -49,6 +48,7 @@
  *				Updates are provided by required delegate method {@link TTLockManagerDidUpdateState:}.
  *
  */
+
 @property(nonatomic, assign, readonly) TTManagerState state;
 /*!
  *  @property isScanning
