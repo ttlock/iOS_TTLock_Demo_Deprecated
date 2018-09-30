@@ -26,7 +26,6 @@
 		FC6A2BF01F418349001D6B2B /* OnFoundDeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B091F418349001D6B2B /* OnFoundDeviceModel.m */; };
 		FC6A2BF31F418349001D6B2B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B0F1F418349001D6B2B /* LaunchScreen.xib */; };
 		FC6A2BF41F418349001D6B2B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B111F418349001D6B2B /* Main.storyboard */; };
-		FC6A2BF51F418349001D6B2B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B131F418349001D6B2B /* Info.plist */; };
 		FC6A2BF61F418349001D6B2B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B141F418349001D6B2B /* main.m */; };
 		FC6A2BF71F418349001D6B2B /* TTLockDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B151F418349001D6B2B /* TTLockDemo.xcdatamodeld */; };
 		FC6A2BFB1F418349001D6B2B /* CopyableLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B211F418349001D6B2B /* CopyableLabel.m */; };
@@ -83,7 +82,6 @@
 		FC6A2C331F418349001D6B2B /* KMDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B931F418349001D6B2B /* KMDatePicker.m */; };
 		FC6A2C341F418349001D6B2B /* KMDatePickerDateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B951F418349001D6B2B /* KMDatePickerDateModel.m */; };
 		FC6A2C351F418349001D6B2B /* NSDate+CalculateDay.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B971F418349001D6B2B /* NSDate+CalculateDay.m */; };
-		FC6A2C361F418349001D6B2B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2B991F418349001D6B2B /* LICENSE */; };
 		FC6A2C371F418349001D6B2B /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B9C1F418349001D6B2B /* MASCompositeConstraint.m */; };
 		FC6A2C381F418349001D6B2B /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B9F1F418349001D6B2B /* MASConstraint.m */; };
 		FC6A2C391F418349001D6B2B /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BA11F418349001D6B2B /* MASConstraintMaker.m */; };
@@ -103,7 +101,6 @@
 		FC6A2C471F41834A001D6B2B /* MMPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BC41F418349001D6B2B /* MMPopupView.m */; };
 		FC6A2C481F41834A001D6B2B /* MMPopupWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BC61F418349001D6B2B /* MMPopupWindow.m */; };
 		FC6A2C491F41834A001D6B2B /* MMSheetView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BC81F418349001D6B2B /* MMSheetView.m */; };
-		FC6A2C4A1F41834A001D6B2B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2BC91F418349001D6B2B /* LICENSE */; };
 		FC6A2C4B1F41834A001D6B2B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BCA1F418349001D6B2B /* README.md */; };
 		FC6A2C4E1F41834A001D6B2B /* SCNavTabBar.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2BD11F418349001D6B2B /* SCNavTabBar.bundle */; };
 		FC6A2C4F1F41834A001D6B2B /* SCNavTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2BD41F418349001D6B2B /* SCNavTabBarController.m */; };
@@ -866,14 +863,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC6A2C271F418349001D6B2B /* UserManageCell.xib in Resources */,
-				FC6A2C4A1F41834A001D6B2B /* LICENSE in Resources */,
 				FC6A2C181F418349001D6B2B /* KeyDetailViewController.xib in Resources */,
 				FC6A2C141F418349001D6B2B /* TimePsSendedListVC.xib in Resources */,
 				FC6A2C161F418349001D6B2B /* KeyDetailCell.xib in Resources */,
 				FC6A2BE91F418349001D6B2B /* Images.xcassets in Resources */,
 				FC6A2BFD1F418349001D6B2B /* Localizable.strings in Resources */,
 				FC6A2C1E1F418349001D6B2B /* Tab0ViewCell.xib in Resources */,
-				FC6A2C361F418349001D6B2B /* LICENSE in Resources */,
 				FC6A2C121F418349001D6B2B /* TimePsSendedCell.xib in Resources */,
 				FC6A2C4E1F41834A001D6B2B /* SCNavTabBar.bundle in Resources */,
 				FC6A2C231F418349001D6B2B /* UnlockRecordCell.xib in Resources */,
@@ -885,7 +880,6 @@
 				FC6A2C0B1F418349001D6B2B /* ChangeKeyDateViewController.xib in Resources */,
 				FC6A2BF41F418349001D6B2B /* Main.storyboard in Resources */,
 				FC6A2C201F418349001D6B2B /* Tab0ViewController.xib in Resources */,
-				FC6A2BF51F418349001D6B2B /* Info.plist in Resources */,
 				FC6A2C251F418349001D6B2B /* UnlockRecordsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
