@@ -6,7 +6,7 @@
 
 
 ## Minimum Xcode Version: 
-   Xcode 9.3 
+   Xcode 10 
 
 
 ## Installation
