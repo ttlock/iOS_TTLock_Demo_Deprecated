@@ -37,7 +37,10 @@ typedef NS_ENUM(NSInteger, TTError)
     TTErrorCardNotExist =	0x18,					     /** IC card does not exist */
     TTErrorFingerprintDuplication =	0x19,			     /** Duplication of fingerprints */
     TTErrorFingerprintNotExist = 0x1A,                   /** Fingerprints do not exist */
+    TTErrorInvalidCommand = 0x1B,                        /** Invalid Command */
+    TTErrorInFreezeMode = 0x1C,                          /** In Freeze Mode */
     TTErrorInvalidClientPara = 0x1D,                     /** Invalid special string */
+    TTErrorLockIsLocked = 0x1E,                          /** Locked */
     TTErrorNotSupportModifyPwd = 0x60                    /** Do not support the modification of the password */
     
 };
@@ -92,6 +95,7 @@ typedef NS_ENUM(int, DoorSceneType)
     PadLockSceneType = 8,
     CylinderLockSceneType = 9,
     RemoteControlFourButtonType = 10,
+    HotelSafeLockSceneType = 11,
 };
 /*!
  *  @enum KeyboardPsType

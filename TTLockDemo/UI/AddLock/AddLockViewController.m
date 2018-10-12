@@ -62,7 +62,7 @@
 - (void)createTableView{
     _peripherals = [NSMutableArray array];
     _tempPeripheralsArray = [NSMutableArray array];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, BAR_TOTAL_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-BAR_TOTAL_HEIGHT) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-BAR_TOTAL_HEIGHT) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];

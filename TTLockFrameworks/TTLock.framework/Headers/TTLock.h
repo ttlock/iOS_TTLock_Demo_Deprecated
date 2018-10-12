@@ -128,14 +128,10 @@
  lockMac              NSString      YES
  protocolType         NSNumber      YES
  protocolVersion      NSNumber      YES
- adminPassward        NSString      NO           Admin Passcode
- deletePassward       NSString      NO           Erase Passcode
-                                                 Passcode range ： v2 lock : 7 - 9 Digits in length
-                                                                   v3 lock : 4 - 9 Digits in length
  *
  *  @see  onLockInitializeWithLockData:
  *  @see  TTError: command: errorMsg:
- */
+ */   
 -(void)lockInitializeWithInfoDic:(NSDictionary *)infoDic;
 
 /** Get the version of lock
@@ -587,6 +583,8 @@
  *  @see  TTError: command: errorMsg:
  */
 -(void)setNBServerWithPortNumber:(NSString*)portNumber serverAddress:(NSString*)serverAddress adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+
+-(void)getAdminKeyBoardPasswordWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
 /**
  *  Set Lock's Wristband Key

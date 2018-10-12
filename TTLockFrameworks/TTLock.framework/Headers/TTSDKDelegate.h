@@ -298,6 +298,7 @@
  Set NB Server Successfully
  */
 - (void)onSetNBServer;
+- (void)onGetAdminKeyBoardPassword:(NSString *)adminPasscode;
 
 #pragma mark --- 废弃
 -(void)onFoundDevice_peripheral:(CBPeripheral *)peripheral RSSI:(NSNumber*)rssi lockName:(NSString*)lockName mac:(NSString*)mac advertisementData:(NSDictionary *)advertisementData isContainAdmin:(BOOL)isContainAdmin protocolCategory:(int)protocolCategory __attribute__((deprecated("SDK2.6 onFoundDevice_peripheralWithInfoDic" )));
