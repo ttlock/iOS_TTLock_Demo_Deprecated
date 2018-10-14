@@ -6,7 +6,7 @@
 
 
 ## Minimum Xcode Version: 
-   Xcode 9.3 
+   Xcode 10
 
 
 ## Installation
@@ -26,9 +26,8 @@ pod install
 ### Manually
 1.Drag the TTLock.framework into your project.
 <br>2.Find Target -> 'General' -> 'Embedded Binaries', add the framework above.
-<br>3.Find Target->Build Settings ->Enable Bitcode ,then set 'NO'.
-<br>4.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth.framework to your project .
-<br>5.Please refer to the last item "Dynamic frameworks are uploaded to AppStore" of this document,if you need to upload to App Store.
+<br>3.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth.framework to your project .
+<br>4.Please refer to the last item "Dynamic frameworks are uploaded to AppStore" of this document,if you need to upload to App Store.
 
 ### If you need to upgrade devices into your application,you should in addition to add TTLockDFU.framework and DFUDependence.framework
 
@@ -47,10 +46,9 @@ pod install
 Manually
 <br>1.Drag the TTLock.framework,TTLockDFU.framework and DFUDependence.framework into your project.
 <br>2.Find Target -> 'General' -> 'Embedded Binaries', add the three frameworks above.
-<br>3.Find Target->Build Settings ->Enable Bitcode ,then set 'NO'.
-<br>4.Find Target->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
-<br>5.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth.framework to your project .
-<br>6.Please refer to the last item "Dynamic frameworks are uploaded to AppStore" of this document,if you need to upload to App Store.
+<br>3.Find Target->Build Settings ->Always Embed Swift Standard Libraries ,then set 'YES'.
+<br>4.Find Target->Build Phases -> Link Binary With Libraries ,then add the CoreBluetooth.framework to your project .
+<br>5.Please refer to the last item "Dynamic frameworks are uploaded to AppStore" of this document,if you need to upload to App Store.
 
 
 ## Introduction
