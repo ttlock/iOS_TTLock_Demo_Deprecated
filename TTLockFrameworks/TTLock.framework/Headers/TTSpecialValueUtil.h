@@ -96,11 +96,6 @@
  */
 + (BOOL)isSupportNB:(long long)specialValue;
 /**
- Whether to support Hotel Card
- 是否支持酒店卡
- */
-+ (BOOL)isSupportHotelCard:(long long)specialValue;
-/**
  Whether to support Admin Passcode
  是否支持获取管理员开门密码
  */

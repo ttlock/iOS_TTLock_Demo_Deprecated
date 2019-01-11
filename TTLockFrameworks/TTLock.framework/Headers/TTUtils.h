@@ -41,8 +41,8 @@ typedef NS_ENUM(NSInteger, TTError)
     TTErrorInFreezeMode = 0x1C,                          /** In Freeze Mode */
     TTErrorInvalidClientPara = 0x1D,                     /** Invalid special string */
     TTErrorLockIsLocked = 0x1E,                          /** Locked */
-    TTErrorNotSupportModifyPwd = 0x60                    /** Do not support the modification of the password */
-    
+    TTErrorNotSupportModifyPwd = 0x60,                   /** Do not support the modification of the password */
+    TTErrorGetOperateLog = 0x61,                         /** Bluetooth disconnection */
 };
 
 /*!
@@ -134,8 +134,8 @@ typedef NS_ENUM(NSInteger,OprationType)
     OprationTypeDelete = 3,
     OprationTypeModify = 4,
     OprationTypeQuery = 5,
-    OprationTypeRecover = 6
-    
+    OprationTypeRecover = 6,
+    OprationTypeAddFingerprintData = 7
 };
 
 /*!
@@ -248,6 +248,19 @@ typedef NS_ENUM(NSInteger, RemoteControlButtonValueType)
     RemoteControlButtonValueFour = 0x08,
 };
 
+/**
+ OperateLog Type
+
+ - OperateLogTypeNew: Read new records in the lock
+ - OperateLogTypeAll: Read all records in the lock
+ */
+typedef NS_ENUM(NSInteger, OperateLogType)
+{
+    OperateLogTypeNew = 1,
+    OperateLogTypeAll = 2,
+};
+
+
 
 @interface TTUtils : NSObject
 
@@ -319,8 +332,6 @@ typedef NS_ENUM(NSInteger, RemoteControlButtonValueType)
 
 /**
  The bytes of the string
-
- @param str
  @return Bytes
  */
 + (int)convertToByte:(NSString*)str;

@@ -76,7 +76,7 @@ bool DEBUG_TAB0 = true;
 {
    
     if (![SettingHelper getAccessToken]) {
-        UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"请先点击左侧‘登录’按钮，获取accesstoken" message:nil delegate:self cancelButtonTitle:LS(@"words_sure_ok") otherButtonTitles:nil];
+        UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:LS(@"alert_click_on_the_left_Login_button_first_to_get_accesstoken") message:nil delegate:self cancelButtonTitle:LS(@"words_sure_ok") otherButtonTitles:nil];
         [alertView show];
         return;
     }

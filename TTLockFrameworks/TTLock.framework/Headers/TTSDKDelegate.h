@@ -74,6 +74,28 @@
 
 /**
  *  This method is invoked when {@link lockInitializeWithInfoDic:} has succeeded.
+    lockName
+    lockMac
+    lockKey
+    lockFlagPos
+    aesKeyStr
+    lockVersion {protocolType, protocolVersion, scene, groupId,orgId}
+    adminPwd
+    noKeyPwd
+    deletePwd
+    pwdInfo
+    timestamp
+    pwdInfo
+    specialValue
+    electricQuantity
+    timezoneRawOffset
+    modelNum
+    hardwareRevision
+    firmwareRevision
+    nbOperator
+    nbNodeId
+    nbCardNumber
+    nbRssi
  */
 -(void)onLockInitializeWithLockData:(NSString*)lockData;
 
@@ -298,6 +320,9 @@
  Set NB Server Successfully
  */
 - (void)onSetNBServer;
+/**
+  Get Admin Unlock Passcode Successfully
+  */
 - (void)onGetAdminKeyBoardPassword:(NSString *)adminPasscode;
 
 #pragma mark --- 废弃
