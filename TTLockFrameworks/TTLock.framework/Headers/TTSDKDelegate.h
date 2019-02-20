@@ -74,6 +74,28 @@
 
 /**
  *  This method is invoked when {@link lockInitializeWithInfoDic:} has succeeded.
+    lockName
+    lockMac
+    lockKey
+    lockFlagPos
+    aesKeyStr
+    lockVersion {protocolType, protocolVersion, scene, groupId,orgId}
+    adminPwd
+    noKeyPwd
+    deletePwd
+    pwdInfo
+    timestamp
+    pwdInfo
+    specialValue
+    electricQuantity
+    timezoneRawOffset
+    modelNum
+    hardwareRevision
+    firmwareRevision
+    nbOperator
+    nbNodeId
+    nbCardNumber
+    nbRssi
  */
 -(void)onLockInitializeWithLockData:(NSString*)lockData;
 
@@ -298,7 +320,26 @@
  Set NB Server Successfully
  */
 - (void)onSetNBServer;
+/**
+  Get Admin Unlock Passcode Successfully
+  */
 - (void)onGetAdminKeyBoardPassword:(NSString *)adminPasscode;
+/**
+ Query Passage Mode Successfully
+ */
+- (void)onQueryPassageModeWithRecord:(NSString*)record;
+/**
+ Add Or Modify Passage Mode
+ */
+- (void)onConfigPassageMode;
+/**
+ Delete Passage Mode Successfully
+ */
+- (void)onDeletePassageMode;
+/**
+ Clear Passage Mode Successfully
+ */
+- (void)onClearPassageMode;
 
 #pragma mark --- 废弃
 -(void)onFoundDevice_peripheral:(CBPeripheral *)peripheral RSSI:(NSNumber*)rssi lockName:(NSString*)lockName mac:(NSString*)mac advertisementData:(NSDictionary *)advertisementData isContainAdmin:(BOOL)isContainAdmin protocolCategory:(int)protocolCategory __attribute__((deprecated("SDK2.6 onFoundDevice_peripheralWithInfoDic" )));
