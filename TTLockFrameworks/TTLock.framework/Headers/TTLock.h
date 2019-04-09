@@ -359,8 +359,10 @@
  
  */
 - (void)addKeyboardPassword_password:(NSString *)keyboardPs startDate:(NSDate*)startDate endDate:(NSDate*)endDate adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
+
 /**
  *  Get the operation record
+ *  type    OperateLogType
  *  aesKey  AES encryption key
  *  version Lock version ,Consist of protocolType.protocolVersion.scene.groupId.orgId, dot-separated components , Such as: 5.3.2.1.1
  *  flag The flag which will be used to check the validity of the ekey
@@ -369,7 +371,7 @@
  *  @see  onGetOperateLog_LockOpenRecordStr:
  *  @see  TTError: command: errorMsg:
  */
-- (void)getOperateLog_aesKey:(NSString*)aesKey version:(NSString *)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
+- (void)getOperateLog_type:(OperateLogType)type aesKey:(NSString*)aesKey version:(NSString *)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
 /**
  *  Get Lock Time
  *  aesKey  AES encryption key
@@ -467,7 +469,6 @@
 - (void)upgradeFirmware_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
 /** Get Lock Switch State
- *  lockkey The key data which will be used to unlock
  *  aesKey  AES encryption key
  *
  *  @see onGetLockSwitchState:
@@ -584,6 +585,15 @@
  */
 -(void)setNBServerWithPortNumber:(NSString*)portNumber serverAddress:(NSString*)serverAddress adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
+/**
+ *  Get Admin Unlock Passcode
+ *  adminPS         admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey         The key data which will be used to unlock
+ *  aesKey          AES encryption key
+ *  unlockFlag    The flag which will be used to check the validity of the ekey
+ *  @see  onGetAdminKeyBoardPassword:
+ *  @see  TTError: command: errorMsg:
+ */
 -(void)getAdminKeyBoardPasswordWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
 /**
@@ -616,6 +626,72 @@
  */
 - (void)setWristbandRssi:(int)rssi;
 
+/**
+*  Add FingerprintData
+*  fingerprintData         fingerprintData
+*  tempFingerprintNumber   temp FingerprintNumber
+*  startDate               millisecond
+*  endDate                 millisecond
+*  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+*  lockkey                 The key data which will be used to unlock
+*  aesKey                  AES encryption key
+*  unlockFlag              The flag which will be used to check the validity of the ekey
+*  timezoneRawOffset       The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
+*
+*  @see onAddFingerprintWithState:fingerprintNumber:currentCount:totalCount:
+*  @see  TTError: command: errorMsg:
+ */
+- (void)addFingerprintData:(NSString *)fingerprintData tempFingerprintNumber:(NSString*)tempFingerprintNumber startDate:(long long)startDate endDate:(long long)endDate adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+/**
+ *  Query Passage Mode
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onQueryPassageModeWithRecord:
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)queryPassageModeWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Add Or Modify Passage Mode
+ *  type                 PassageModeType
+ *  weekDays        if type == PassageModeTypeWeek,  week：1~7,1 means Sunday，2 means  Monday ,...,6 means Saturday,  0 means everyday
+ if type != PassageModeTypeWeek,  effective value ：1~31
+ *  month                   effective value ：1~12， set 0 if type != PassageModeTypeMonthAndDay
+ *  startDate               millisecond ,0 means all day
+ *  endDate                 millisecond ,0 means all day
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onConfigPassageMode
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)configPassageModeWithType:(PassageModeType)type weekDays:(NSArray*)weekDays month:(int)month startDate:(int)startDate endDate:(int)endDate adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey  unlockFlag:(int)unlockFlag;
+/**
+ *  Delete Passage Mode
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onDeletePassageMode
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)deletePassageModeWithType:(PassageModeType)type weekDays:(NSArray*)weekDays day:(int)day month:(int)month adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Clear Passage Mode
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onCleanPassageMode
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)clearPassageModeWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 #pragma mark --- 废弃
 
 @property (nonatomic) BOOL parklockAction __attribute__((deprecated("SDK2.6.3")));
@@ -632,6 +708,8 @@
 - (void)scanSpecificServicesBluetoothDevice_ServicesArray:(NSArray<NSString *>*)servicesArray isScanDuplicates:(BOOL)isScanDuplicates __attribute__((deprecated("SDK2.7.5")));
 -(int)getPower;
 -(void)addAdministrator_addDic:(NSDictionary *)addDic __attribute__((deprecated("SDK2.7.7")));
+-(void)getOperateLog_aesKey:(NSString*)aesKey version:(NSString *)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset __attribute__((deprecated("SDK2.7.7")));
+
 @end
 
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name          = "TTLockDFU"
-s.version       = "2.8.3"
+s.version       = "2.8.7"
 s.summary       = "TTLockDFU SDK for iOS."
 s.homepage      = "https://github.com/ttlock/iOS_TTLock_Demo"
 s.license       = { :type => "MIT", :file => "LICENSE" }
@@ -12,6 +12,7 @@ s.preserve_paths      = "TTLockFrameworks/TTLockDFU.framework"
 s.framework     = "CoreBluetooth"
 s.library       = "z"
 s.requires_arc  = true
-s.dependency "DFUDependence"
+s.dependency 'ZIPFoundation', '~> 0.9.8'
+s.dependency "iOSDFULibrary"
 s.dependency "TTLock"
 end

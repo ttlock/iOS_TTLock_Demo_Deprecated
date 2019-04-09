@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0830"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B3E9B3F44CB0DA8D5819A859A0983D4C"
+               BlueprintIdentifier = "1C216765432AF64E6B9F289C662BF7CD"
                BuildableName = "Pods_TTLockDemo.framework"
                BlueprintName = "Pods-TTLockDemo"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B3E9B3F44CB0DA8D5819A859A0983D4C"
+            BlueprintIdentifier = "1C216765432AF64E6B9F289C662BF7CD"
             BuildableName = "Pods_TTLockDemo.framework"
             BlueprintName = "Pods-TTLockDemo"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B3E9B3F44CB0DA8D5819A859A0983D4C"
-            BuildableName = "Pods_TTLockDemo.framework"
-            BlueprintName = "Pods-TTLockDemo"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

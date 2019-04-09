@@ -12,8 +12,6 @@
 		2299A8F91A075D8100291A38 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299A8F81A075D8100291A38 /* UIKit.framework */; };
 		2299A8FB1A075DC700291A38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2299A8FA1A075DC700291A38 /* Foundation.framework */; };
 		7694D27F5F00DB4D9E44233B /* Pods_TTLockDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A6AACAA202C6C61F874F83 /* Pods_TTLockDemo.framework */; };
-		FC61C2F11F43EB6B009D9B25 /* DFUDependence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */; };
-		FC61C2F21F43EB6B009D9B25 /* DFUDependence.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC61C2F31F43EB6E009D9B25 /* TTLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; };
 		FC61C2F41F43EB6E009D9B25 /* TTLock.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FC6A2BE51F418349001D6B2B /* bg0.png in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AF81F418349001D6B2B /* bg0.png */; };
@@ -125,7 +123,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FC61C2F21F43EB6B009D9B25 /* DFUDependence.framework in Embed Frameworks */,
 				FC61C2F41F43EB6E009D9B25 /* TTLock.framework in Embed Frameworks */,
 				FC83484E1F53C3F600728817 /* TTLockDFU.framework in Embed Frameworks */,
 			);
@@ -144,7 +141,7 @@
 		514E1E2D92DD7CAE1D603152 /* Pods-TTLockDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTLockDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TTLockDemo/Pods-TTLockDemo.release.xcconfig"; sourceTree = "<group>"; };
 		76A6AACAA202C6C61F874F83 /* Pods_TTLockDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TTLockDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		921598F868CA5E8839141781 /* Pods-TTLockDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TTLockDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TTLockDemo/Pods-TTLockDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DFUDependence.framework; sourceTree = "<group>"; };
+		FC18F7E221DDDF8900F59FFA /* TTLockDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TTLockDemo.entitlements; sourceTree = "<group>"; };
 		FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TTLock.framework; sourceTree = "<group>"; };
 		FC6A2AF81F418349001D6B2B /* bg0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg0.png; sourceTree = "<group>"; };
 		FC6A2AFC1F418349001D6B2B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -344,7 +341,6 @@
 			files = (
 				2299A8FB1A075DC700291A38 /* Foundation.framework in Frameworks */,
 				2299A8F91A075D8100291A38 /* UIKit.framework in Frameworks */,
-				FC61C2F11F43EB6B009D9B25 /* DFUDependence.framework in Frameworks */,
 				FC83484C1F53C3F400728817 /* TTLockDFU.framework in Frameworks */,
 				FC61C2F31F43EB6E009D9B25 /* TTLock.framework in Frameworks */,
 				228B8BB71A0085FF0060244F /* CoreBluetooth.framework in Frameworks */,
@@ -358,6 +354,7 @@
 		13A06A721D792A2D002E51C2 /* TTLockDemo */ = {
 			isa = PBXGroup;
 			children = (
+				FC18F7E221DDDF8900F59FFA /* TTLockDemo.entitlements */,
 				13A06A731D792A2D002E51C2 /* AppDelegate.h */,
 				13A06A741D792A2D002E51C2 /* AppDelegate.m */,
 				FC6A2AF71F418349001D6B2B /* images */,
@@ -413,7 +410,6 @@
 			isa = PBXGroup;
 			children = (
 				FC83484B1F53C3F400728817 /* TTLockDFU.framework */,
-				FC61C2ED1F43EB4E009D9B25 /* DFUDependence.framework */,
 				FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */,
 			);
 			path = TTLockFrameworks;
@@ -810,7 +806,6 @@
 				228B8B521A0083EB0060244F /* Frameworks */,
 				228B8B531A0083EB0060244F /* Resources */,
 				BCDEA889057DADACDBEAB389 /* [CP] Embed Pods Frameworks */,
-				A79221CC8F4E8318474A8B42 /* [CP] Copy Pods Resources */,
 				FCF85D321F3B0161007410EE /* Embed Frameworks */,
 			);
 			buildRules = (
@@ -833,8 +828,13 @@
 				TargetAttributes = {
 					228B8B541A0083EB0060244F = {
 						CreatedOnToolsVersion = 6.0.1;
-						DevelopmentTeam = 2WZV3BZ6ZK;
+						DevelopmentTeam = 74L56HWE77;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.AccessWiFi = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -843,6 +843,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				"zh-Hans",
@@ -893,28 +894,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TTLockDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		A79221CC8F4E8318474A8B42 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TTLockDemo/Pods-TTLockDemo-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		BCDEA889057DADACDBEAB389 /* [CP] Embed Pods Frameworks */ = {
@@ -923,13 +912,26 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TTLockDemo/Pods-TTLockDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/JSONModel/JSONModel.framework",
+				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
+				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
+				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
+				"${BUILT_PRODUCTS_DIR}/iOSDFULibrary/iOSDFULibrary.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSONModel.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iOSDFULibrary.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TTLockDemo/Pods-TTLockDemo-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TTLockDemo/Pods-TTLockDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1150,12 +1152,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 921598F868CA5E8839141781 /* Pods-TTLockDemo.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TTLockDemo/TTLockDemo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2WZV3BZ6ZK;
+				DEVELOPMENT_TEAM = 74L56HWE77;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1166,7 +1169,7 @@
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/TTLockDemo/Utils/TTLock.pch";
 				INFOPLIST_FILE = "TTLockDemo/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
@@ -1185,6 +1188,7 @@
 				PRODUCT_NAME = TTLockDemo;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -1193,12 +1197,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 514E1E2D92DD7CAE1D603152 /* Pods-TTLockDemo.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = TTLockDemo/TTLockDemo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2WZV3BZ6ZK;
+				DEVELOPMENT_TEAM = 74L56HWE77;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1209,7 +1214,7 @@
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/TTLockDemo/Utils/TTLock.pch";
 				INFOPLIST_FILE = "TTLockDemo/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)",
@@ -1228,6 +1233,7 @@
 				PRODUCT_NAME = TTLockDemo;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;
