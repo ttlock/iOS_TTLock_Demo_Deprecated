@@ -6,5 +6,5 @@ pod 'AFNetworking', '~> 3.0'
 pod 'MJExtension'
 pod 'JSONModel'
 pod 'MJRefresh'
-pod 'iOSDFULibrary', '~> 4.3.0'
+pod 'iOSDFULibrary', '~> 4.4.0'
 end
