@@ -1,0 +1,29 @@
+0000000000000000000000000000000000000000 8db19dc11e91936ded3c3657ee9b7dd356aaf773 ttlock <chensg@sciener.cn> 1514880977 +0800	clone: from https://github.com/ttlock/iOS_TTLock_Demo
+8db19dc11e91936ded3c3657ee9b7dd356aaf773 d485bf46c543e4c532b5b48c38faa09e96ac1c38 ttlock <chensg@sciener.cn> 1514884548 +0800	commit: no message
+d485bf46c543e4c532b5b48c38faa09e96ac1c38 d6327d8ba04c553ccddb9776774e74374af841ca ttlock <chensg@sciener.cn> 1515468180 +0800	commit: no message
+d6327d8ba04c553ccddb9776774e74374af841ca 0f7aa02e82d2c1b14c3d9f805399a650c4109858 ttlock <chensg@sciener.cn> 1515468293 +0800	pull origin master: Merge made by the 'recursive' strategy.
+0f7aa02e82d2c1b14c3d9f805399a650c4109858 ebf726d1b1ae4d20e9eab073b15ba0789265cbe7 ttlock <chensg@sciener.cn> 1515468497 +0800	commit: no message
+ebf726d1b1ae4d20e9eab073b15ba0789265cbe7 054fbb674acc33c3b3c44431ccb1bdf9c0fdf416 ttlock <chensg@sciener.cn> 1515735801 +0800	commit: no message
+054fbb674acc33c3b3c44431ccb1bdf9c0fdf416 2543dfd6312ecf39b7a2e5a04baf9006fe151374 ttlock <chensg@sciener.cn> 1515735892 +0800	pull origin master: Merge made by the 'recursive' strategy.
+2543dfd6312ecf39b7a2e5a04baf9006fe151374 f59dd26ee4b018f4c8dadc10e90fb0b2bb4b02da ttlock <chensg@sciener.cn> 1516610230 +0800	commit: no message
+f59dd26ee4b018f4c8dadc10e90fb0b2bb4b02da 9ed1e193e3d6b3171cfddef573d934f72187ab7a ttlock <chensg@sciener.cn> 1516611977 +0800	commit: no message
+9ed1e193e3d6b3171cfddef573d934f72187ab7a b838b6ab693238c129851501583ec9f720d02190 ttlock <chensg@sciener.cn> 1519366935 +0800	commit: no message
+b838b6ab693238c129851501583ec9f720d02190 350a3c321fe951368dae4feff0c9a2857bc03861 ttlock <chensg@sciener.cn> 1520303113 +0800	pull origin master: Fast-forward
+350a3c321fe951368dae4feff0c9a2857bc03861 c0f187e4b4a64b3fd066d52bea563fa91337955e ttlock <chensg@sciener.cn> 1520303124 +0800	commit: no message
+c0f187e4b4a64b3fd066d52bea563fa91337955e 02d801d4a775647d288a66f080baeb27579c4a27 ttlock <chensg@sciener.cn> 1524810664 +0800	commit: no message
+02d801d4a775647d288a66f080baeb27579c4a27 87544636fd6e50e06933c3546131582c283946ac ttlock <chensg@sciener.cn> 1524810920 +0800	commit: DFUDependence.framework UPdated swift language version to 4.1
+87544636fd6e50e06933c3546131582c283946ac 4e2c24134978b7254eed195a59bb4dc9f8a22261 ttlock <chensg@sciener.cn> 1524822434 +0800	commit: no message
+4e2c24134978b7254eed195a59bb4dc9f8a22261 6fe74213e162067f38754e54fb06a2bc61446f24 ttlock <chensg@sciener.cn> 1524822456 +0800	pull origin master: Merge made by the 'recursive' strategy.
+6fe74213e162067f38754e54fb06a2bc61446f24 fe99cfc924275eeeb26a65eb4e3e4b18b768dd77 ttlock <chensg@sciener.cn> 1524879019 +0800	commit: no message
+fe99cfc924275eeeb26a65eb4e3e4b18b768dd77 e414fd29bb1e3d5fa78219c473919ba740b20a33 ttlock <chensg@sciener.cn> 1530499096 +0800	commit: 1.English annotation
+e414fd29bb1e3d5fa78219c473919ba740b20a33 3a718a8d02cb305fd050538e076a693f1d969c5a ttlock <chensg@sciener.cn> 1530872764 +0800	commit: Remove the function of touching to Unlock
+3a718a8d02cb305fd050538e076a693f1d969c5a 9ee424186ca88bec78655ac3c535e02cf4fc55ae ttlock <chensg@sciener.cn> 1530872792 +0800	pull origin master: Merge made by the 'recursive' strategy.
+9ee424186ca88bec78655ac3c535e02cf4fc55ae bf429a94c0a3a155c67a3ff8bbffe114a085d5b0 ttlock <chensg@sciener.cn> 1531453359 +0800	commit: The network interface "lock/init" adds four parameters (electricQuantity,modelNum,hardwareRevision,firmwareRevision) to upload.
+bf429a94c0a3a155c67a3ff8bbffe114a085d5b0 ceab65d458d1e7e0dbc3289d26779bc051b13e93 ttlock <chensg@sciener.cn> 1535968463 +0800	commit: 1. There is an error with lock communication, and SDK will try again
+ceab65d458d1e7e0dbc3289d26779bc051b13e93 738ec37d4265d53eed2dde708c8d966525c48eae ttlock <chensg@sciener.cn> 1539337789 +0800	commit: 2.8.3
+738ec37d4265d53eed2dde708c8d966525c48eae 591ab15b3a3eaaa0f812a2185338861ea372a0d7 ttlock <chensg@sciener.cn> 1539592268 +0800	commit: 2.8.3
+591ab15b3a3eaaa0f812a2185338861ea372a0d7 0249450a06bbf42639095a732ae6b73ddfecd5b8 王娟娟 <wangjuanjuan@wjj-Pro.local> 1554817500 +0800	commit: swift update
+0249450a06bbf42639095a732ae6b73ddfecd5b8 9a5668766a5cd34b8df98a836f2c27eef63e338c 王娟娟 <wangjuanjuan@wjj-Pro.local> 1554820489 +0800	commit: swift update
+9a5668766a5cd34b8df98a836f2c27eef63e338c c09c1cd56bc2b78dc3dcb8053d9a0500d0547e45 王娟娟 <wangjuanjuan@wjj-Pro.local> 1554859968 +0800	commit: TTLockDFU Migrates to Swift 5
+c09c1cd56bc2b78dc3dcb8053d9a0500d0547e45 8e5063fcbeab1cf3be5830efd707027999fdce08 王娟娟 <wangjuanjuan@wjj-Pro.local> 1554863184 +0800	commit: TTLockDFU Migrates to Swift 5
+8e5063fcbeab1cf3be5830efd707027999fdce08 cafa9f5380e54e080a080371b608722174438156 王娟娟 <wangjuanjuan@wjj-Pro.local> 1554881986 +0800	commit: swift update

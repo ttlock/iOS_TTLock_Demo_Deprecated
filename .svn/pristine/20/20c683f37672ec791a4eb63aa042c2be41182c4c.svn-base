@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "21338817-955e-4faf-b0d3-28977f11dba4++1197",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "21338817-955e-4faf-b0d3-28977f11dba4++1197" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "21338817-955e-4faf-b0d3-28977f11dba4++1197" : 0,
+    "70D65941F6B5432ABB5F90EB531F1F66979F310F" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "FC5D1DFF-1178-471F-9415-A1AADED2A4F7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "21338817-955e-4faf-b0d3-28977f11dba4++1197" : "SDK_Code_demo%20%E5%8E%9F%E7%89%88%20\/",
+    "70D65941F6B5432ABB5F90EB531F1F66979F310F" : "iOS-SDK-Demo%E7%99%BB%E5%BD%95%203"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ScienerDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ScienerDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/120.26.119.23",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "21338817-955e-4faf-b0d3-28977f11dba4++1197"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/ScienerDeveloper\/iOS-SDK-Demo.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "70D65941F6B5432ABB5F90EB531F1F66979F310F"
+    }
+  ]
+}

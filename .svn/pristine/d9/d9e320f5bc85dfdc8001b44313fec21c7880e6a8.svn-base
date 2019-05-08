@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	ignorecase = true
+	precomposeunicode = false
+[branch "master"]
+[remote "origin"]
+	url = https://github.com/ttlock/iOS_TTLock_Demo.git
+	fetch = +refs/heads/*:refs/remotes/origin/*

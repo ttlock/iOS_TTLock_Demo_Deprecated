@@ -1,0 +1,40 @@
+//
+//  TTLock.pch
+//  TTLockDemo
+//
+//  Created by wjjxx on 16/9/2.
+//  Copyright © 2016年 TTLock. All rights reserved.
+//
+
+#ifndef TTLock_pch
+#define TTLock_pch
+
+#import "UIViewController+Category.h"
+#import "Define.h"
+#import "SettingHelper.h"
+#import <TTLock/TTLock.h>
+#import <TTLockDFU/TTLockDFU.h>
+#import "NetworkHelper.h"
+#import "AppDelegate.h"
+#import "SSToastHelper.h"
+#import "TTLockHelper.h"
+#import "BlueToothHelper.h"
+#import "DBHelper.h"
+//define this constant if you want to use Masonry without the 'mas_' prefix
+#define MAS_SHORTHAND
+//define this constant if you want to enable auto-boxing for default syntax
+#define MAS_SHORTHAND_GLOBALS
+#import "Masonry.h"
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#define KeyStatusReceived @"110401"
+#define KeyStatusReceiving @"110402"
+#define KeyStatusFreezing @"110404"
+#define KeyStatusFreezed @"110405"
+#define KeyStatusUnFreezing @"110406"
+#define KeyStatusDeleting @"110407"
+#define KeyStatusDeleted @"110408"
+#define KeyStatusReseted @"110410"
+#define KeyStatusChanging @"110411"
+#endif /* TTLock_pch */

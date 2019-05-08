@@ -1,0 +1,35 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "21338817-955e-4faf-b0d3-28977f11dba4++5224",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "21338817-955e-4faf-b0d3-28977f11dba4++5224" : {
+
+    },
+    "21338817-955e-4faf-b0d3-28977f11dba4++1197" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "21338817-955e-4faf-b0d3-28977f11dba4++5224" : 0,
+    "21338817-955e-4faf-b0d3-28977f11dba4++1197" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "7F8DA52F-8DB5-4C3F-B364-24A2487CCB46",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "21338817-955e-4faf-b0d3-28977f11dba4++5224" : "New%20TTSDK_Code_demo%20\/",
+    "21338817-955e-4faf-b0d3-28977f11dba4++1197" : "SDK_Code_demo%20%E5%8E%9F%E7%89%88%20%202\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "TTLockDemo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "TTLockDemo.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/120.26.119.23",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "21338817-955e-4faf-b0d3-28977f11dba4++1197"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/120.26.119.23",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "21338817-955e-4faf-b0d3-28977f11dba4++5224"
+    }
+  ]
+}
