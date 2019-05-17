@@ -105,4 +105,9 @@
  是否支持常开模式
  */
 + (BOOL)isSupportPassageMode:(long long)specialValue;
+/**
+ Whether to support Wireless Keyboard
+ 是否支持无线键盘
+ */
++ (BOOL)isSupportWirelessKeyboard:(long long)specialValue;
 @end

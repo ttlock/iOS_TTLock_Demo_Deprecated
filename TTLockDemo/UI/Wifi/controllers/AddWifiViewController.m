@@ -88,7 +88,7 @@
                    self.wifiMac = mac;
                    [self isUploadSuccess];
                    
-               } failBlock:^(NSInteger errcode) {
+               } failBlock:^ {
                    [weakSelf showToast :LS(@"hint_make_sure_the_gateway_is_in_adding_status")];
                    
                }];

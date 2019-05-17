@@ -13,6 +13,7 @@
 #import "TTLockGateway.h"
 #import "TTSDKDelegate.h"
 
+
 @interface TTLock : NSObject<CBPeripheralDelegate,CBCentralManagerDelegate>
 
 /**
