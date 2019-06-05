@@ -106,6 +106,11 @@
  */
 + (BOOL)isSupportPassageMode:(long long)specialValue;
 /**
+ Whether to support Turn Off Auto Lock
+ 是否支持关闭自动闭锁
+ */
++ (BOOL)isSupportTurnOffAutoLock:(long long)specialValue;
+/**
  Whether to support Wireless Keyboard
  是否支持无线键盘
  */

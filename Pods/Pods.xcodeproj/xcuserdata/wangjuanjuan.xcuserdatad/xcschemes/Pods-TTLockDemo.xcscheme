@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1C216765432AF64E6B9F289C662BF7CD"
+               BlueprintIdentifier = "E0AE9FDA956287381616BF78252671B7"
                BuildableName = "Pods_TTLockDemo.framework"
                BlueprintName = "Pods-TTLockDemo"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1C216765432AF64E6B9F289C662BF7CD"
+            BlueprintIdentifier = "E0AE9FDA956287381616BF78252671B7"
             BuildableName = "Pods_TTLockDemo.framework"
             BlueprintName = "Pods-TTLockDemo"
             ReferencedContainer = "container:Pods.xcodeproj">

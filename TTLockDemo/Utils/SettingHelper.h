@@ -23,6 +23,11 @@
 
 +(NSString*)getExpireIn;
 
++(void)setUid:(NSString*)object;
+
++(NSString*)getUid;
+
+
 +(void)setCurrentFingerprintNumber:(NSString*)object;
 
 +(NSString*)getCurrentFingerprintNumber;

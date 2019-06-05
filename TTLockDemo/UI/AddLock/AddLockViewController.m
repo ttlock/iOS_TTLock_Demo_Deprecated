@@ -12,8 +12,6 @@
 #import "BlueToothHelper.h"
 #import "DiscoverDeviceCell.h"
 #import "OnFoundDeviceModel.h"
-#import "Key.h"
-
 @interface AddLockViewController ()<TTSDKDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -87,21 +85,7 @@
     
     AddLockModel *model = _peripherals[indexPath.row];
     
-    
-    Key *dbKey;
-    if (model.lockMac && model.lockMac.length > 0) {
-        dbKey = [[DBHelper sharedInstance]fetchKeyWithLockMac:model.lockMac];
-    }else{
-        dbKey = [[DBHelper sharedInstance]fetchKeyWithDoorName:model.peripheral.name];
-    }
-   
-    if (dbKey) {
-        cell.label_left.text = [NSString stringWithFormat:@"%@(%@)",model.peripheral.name,LS(@"words_exist")];
-        cell.label_left.textColor = COMMON_FONT_GRAY_COLOR;
-        cell.image_right.hidden = YES;
-        
-    }
-    else if (model.isContainAdmin) {
+   if (model.isContainAdmin) {
         cell.label_left.text =model.peripheral.name;
         cell.label_left.textColor = COMMON_FONT_GRAY_COLOR;
         cell.image_right.hidden = YES;
@@ -118,14 +102,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     AddLockModel *model = _peripherals[indexPath.row];
-    Key *dbKey;
-    if (model.lockMac && model.lockMac.length > 0) {
-        dbKey = [[DBHelper sharedInstance]fetchKeyWithLockMac:model.lockMac];
-    }else{
-        dbKey = [[DBHelper sharedInstance]fetchKeyWithDoorName:model.peripheral.name];
-    }
     // This lock does not exist locally and there is no administrator in the lock
-    if (!dbKey && model.isContainAdmin == NO) {
+    if (model.isContainAdmin == NO) {
         _selectModel = model;
         [TTObjectTTLockHelper connect:model.peripheral];
         [self performSelector:@selector(connectTimeOut) withObject:nil afterDelay:DEFAULT_CONNECT_TIMEOUT];
@@ -238,10 +216,7 @@
     [NetworkHelper lockInitializeWithlockAlias:_keyAdded.lockAlias lockData:lockData completion:^(id info, NSError *error) {
         if (!error) {
             [self.navigationController popViewControllerAnimated:YES];
-            [self hideHUD];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:LS(@"words_sure_ok") message:nil  delegate:self cancelButtonTitle:nil otherButtonTitles:LS(@"words_sure_ok"), nil];
-            [alert show];
-            
+            [SSToastHelper showToastWithStatus:LS(@"words_add_success")];
             return ;
         }
         NSLog(@"绑定失败");

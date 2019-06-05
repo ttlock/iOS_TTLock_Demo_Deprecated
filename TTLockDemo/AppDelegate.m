@@ -6,7 +6,6 @@
 
 #import "AppDelegate.h"
 #import "Tab0ViewController.h"
-#import "DBHelper.h"
 #import "Define.h"
 #import "RequestService.h"
 #import "KeyDetailViewController.h"
@@ -38,6 +37,11 @@
     
     [self.window makeKeyAndVisible];
     
+    NSString *hotelInfo = [SecurityUtil decodeAdminPSString:@"LTExMywtMTE2LC0xMTYsLTExNiwtMTEwLC0xMTUsLTEyMSwtMzgsLTExNiwtMTE0LC0xMTcsLTEyMSwtNDAsLTM3LC0zNywtMzUsLTExNSwtMTEwLC0xMTYsLTExMywtMTEzLC0xMTQsLTM1LC0xMjIsLTM1LC0zNywtMTE0LC0xMTYsLTEyMSwtMzYsLTExOCwtMzYsLTExNywtMzcsLTExMywtMzMsLTM1LC0xMTgsLTExNiwtMTE1LC0xMTcsLTM4LC0xMTMsLTExNCwtNDAsLTExMywtMzMsLTExNSwtMzcsLTExNiwtMTEwLC0xMTYsLTExNywtMTIxLC0xMTksLTExNiwtMTE0LC0xMjAsLTEyMCwzMg=="];
+    NSLog(@"%@",hotelInfo);
+    NSArray *infoArr = [hotelInfo componentsSeparatedByString:@","];
+     NSLog(@"%@ %@ %@",infoArr[0],infoArr[1],infoArr[2]);
+
     return YES;
     
 }

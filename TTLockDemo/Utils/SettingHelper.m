@@ -65,6 +65,18 @@
     
     return [defaults stringForKey:@"TT_api_expire_in"];
 }
++(void)setUid:(NSString*)object{
+    
+    [[NSUserDefaults standardUserDefaults] setValue:object forKey:@"TT_api_uid"];
+    
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++(NSString*)getUid{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    return [defaults stringForKey:@"TT_api_uid"];
+}
 
 +(void)setCurrentFingerprintNumber:(NSString*)object{
     

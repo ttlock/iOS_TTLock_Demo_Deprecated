@@ -16,4 +16,12 @@
 
 + (NSString *)dateToString:(NSDate *)date withFormat:(NSString *)format;
 
++(NSString*)formateDate:(NSDate*)date format:(NSString*)format;
+
+
++(NSString*)GetCurrentTimeInMillisecond;
+
+
++(NSDate*)formateDateFromStringToDate:(NSString*)dateStr format:(NSString*)format;
+
 @end

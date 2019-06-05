@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KeyModel.h"
 
 #define TTLockHelperClass [TTLockHelper shareInstance]
 #define TTObjectTTLockHelper [[TTLockHelper shareInstance] TTObject]
@@ -43,37 +44,23 @@ typedef void(^BLEDisconnectBlock)(CBPeripheral *peripheral);
 + (instancetype)shareInstance;
 
 @property (strong, nonatomic) TTLock *TTObject;
-@property (strong, nonatomic)  Key * currentKey;
+@property (strong, nonatomic)  KeyModel * currentKey;
 
 
-+ (void)connectKey:(Key *)key connectBlock:(BLEConnectBlock)connectBloc;
-+ (void)disconnectKey:(Key *)key disConnectBlock:(BLEDisconnectBlock)disConnectBlock;
-+ (void)unlock:(Key *)key unlockBlock:(BLEBlock)unlockBlock;
-+ (void)lock:(Key *)key lockBlock:(BLEBlock)lockBlock;
++ (void)connectKey:(KeyModel *)key connectBlock:(BLEConnectBlock)connectBloc;
++ (void)disconnectKey:(KeyModel *)key disConnectBlock:(BLEDisconnectBlock)disConnectBlock;
++ (void)unlock:(KeyModel *)key unlockBlock:(BLEBlock)unlockBlock;
++ (void)lock:(KeyModel *)key lockBlock:(BLEBlock)lockBlock;
 
-+ (void)setLockTime:(Key*)key complition:(BLEBlock)complition;
-+ (void)pullUnlockRecord:(Key *)key complition:(BLEBlock)complition;
-+ (void)resetEkey:(Key *)key complition:(BLEBlock)complition;
-+ (void)resetKeyboardPassword:(Key *)key complition:(BLEBlock)complition;
-+ (void)resetLock:(Key *)key  complition:(BLEBlock)complition;
-+ (void)adminDeleteOneKeyboardPassword:(NSString *)deletePs key:(Key *)key  complition:(BLEBlock)complition;
-
-+ (void)customKeyboardPwd:(NSString *)newKeyboardPwd
-                startDate:(NSDate*)startDate
-                  endDate:(NSDate*)endDate
-                      key:(Key *)key
-               complition:(BLEBlock)complition;
-
-+ (void)modifyKeyboardPassword:(NSString *)pwd
-                      toNewPwd:(NSString *)newPwd
-                     startDate:(NSDate*)startDate
-                       endDate:(NSDate*)endDate
-                           key:(Key *)key
-                    complition:(BLEBlock)complition;
++ (void)setLockTime:(KeyModel *)key complition:(BLEBlock)complition;
++ (void)pullUnlockRecord:(KeyModel *)key complition:(BLEBlock)complition;
++ (void)resetEkey:(KeyModel *)key complition:(BLEBlock)complition;
++ (void)resetKeyboardPassword:(KeyModel *)key complition:(BLEBlock)complition;
++ (void)resetLock:(KeyModel *)key  complition:(BLEBlock)complition;
 //Set Admin Passcode
-+ (void)setAdminKeyboardPassword:(NSString *)keyboardPs key:(Key *)key complition:(BLEBlock)complition;
++ (void)setAdminKeyboardPassword:(NSString *)keyboardPs key:(KeyModel *)key complition:(BLEBlock)complition;
 //Set Erase Passcode
-+ (void)setAdminDeleteKeyBoardPassword:(NSString *)keyboardPs key:(Key *)key complition:(BLEBlock)complition;
++ (void)setAdminDeleteKeyBoardPassword:(NSString *)keyboardPs key:(KeyModel *)key complition:(BLEBlock)complition;
 //Operate IC /Fingerprint/Wristband/Locking Time/ Whether the input password is displayed on the screen
 +  (void)configLockPeripheralDevType:(ConfigDevType)devType
                            startDate:(NSDate*)startDate
@@ -82,22 +69,10 @@ typedef void(^BLEDisconnectBlock)(CBPeripheral *peripheral);
                            devNumber:(NSString *)devNumber
                          lockingTime:(int)lockingTime
                               isShow:(BOOL)isShow
-                                 key:(Key *)key
+                                 key:(KeyModel *)key
                           complition:(BLEBlock)complition;
-
-+ (void)getPwdListWithKey:(Key *)key
-               complition:(BLEBlock)complition;
-
-
-+ (void)getPasswordDataWithKey:(Key *)key
-                    complition:(BLEBlock)complition;
-
-
-+ (void)getLockTimeWithKey:(Key *)key
++ (void)getLockTimeWithKey:(KeyModel *)key
                 complition:(BLEBlock)complition;
-
-+ (void)getDeviceInfoWithKey:(Key *)key
-                  complition:(BLEBlock)complition;
 
 
 

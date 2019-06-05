@@ -24,36 +24,22 @@ NSString * const KKBLE_LOCK = @"ble_lock";
 
 NSString * const KKBLE_SET_LOCK_TIME = @"ble_SET_lock_time";
 NSString * const KKBLE_READ_TIME = @"ble_read_time";
-NSString * const KKBLE_READ_CHARACTERVALUE = @"ble_read_characterValue";
-NSString * const KKBLE_LOCK_VERSION = @"ble_lock_version";
 NSString * const KKBLE_UNLOCK_RECORD = @"ble_unlock_record";
 
 NSString * const KKBLE_RESET_ADMIN_KEYBORADPWD = @"ble_reset_admin_keyboardpwd";
-NSString * const KKBLE_MODIFY_KEYBORADPWD = @"ble_modify_keyboardpwd";
 NSString * const KKBLE_RESET_ADMIN_DELETE_KEYBOARDPWD = @"ble_admin_delete_keyboardpwd";
-NSString * const KKBLE_DELETE_ONE_KEYBOARDPWD = @"ble_delete_one_keyboardpwd";
 NSString * const KKBLE_RESET_KEYBOARDPWD = @"ble_reset_keyboardpwd";
 NSString * const KKBLE_RESET_EKEY = @"ble_reset_ekey";
 NSString * const KKBLE_RESET_LOCK = @"ble_reset_lock";
-NSString * const KKBLE_RESET_TIME = @"ble_reset_time";
-
-NSString * const KKBLE_ACTIVE_UPGRADE = @"ble_active_upgrade";
-NSString * const KKBLE_READ_FIRMWARE = @"ble_read_firmware";
-NSString * const KKBLE_UPGRADE = @"ble_upgrade";
-NSString * const KKBLE_UPGRADE_PROGRESS = @"ble_upgrade_progress";
 
 NSString * const KKBLE_Config_DEVICE = @"ble_config_device";
 NSString * const KKBLE_DELETE_DEVICE = @"ble_delete_device";
 NSString * const KKBLE_CLEAN_DEVICE = @"ble_clean_device";
 NSString * const KKBLE_MODIF_DEVICE = @"ble_modify_device";
 NSString * const KKBLE_QUERY_DEVICE = @"ble_query_device";
-NSString * const KKBLE_BONG_RSSI = @"ble_bong_rssi";
-NSString * const KKBLE_SET_BONG = @"ble_set_bong";
-NSString * const KKBLE_CUSTOM_KEYBOARDPWD = @"ble_custom_keyboardpwd";
 NSString * const KKBLE_GET_LOCK_TIME = @"ble_get_lock_time";
-NSString * const KKBLE_GET_DEVICE_INFO = @"ble_get_device_info";
-NSString * const KKBLE_GET_PWD_DATA = @"ble_get_pwd_data";
-NSString * const KKBLE_GET_ELECTRIC_QUANTITY =@"ble_get_electric_quantity";
+
+
 BOOL isReachDefaultConnectTimeout;
 
 @interface TTLockHelper ()
@@ -108,7 +94,7 @@ static  TTLockHelper *instace;
 
 #pragma mark 蓝牙指令
 
-+ (void) connectKey:(Key *)key connectBlock:(BLEConnectBlock)connectBlock{
++ (void) connectKey:(KeyModel *)key connectBlock:(BLEConnectBlock)connectBlock{
    
     //One generation lock，ios can not get the mac
     NSString *mac;
@@ -158,7 +144,7 @@ static  TTLockHelper *instace;
 
 }
 
-+ (void)onlyOnePeripheralCanConnectAtTheSameTimeWithDeviceMAC:(NSString *)mac  key:(Key *)key connectBlock:(BLEConnectBlock)connectBlock{
++ (void)onlyOnePeripheralCanConnectAtTheSameTimeWithDeviceMAC:(NSString *)mac  key:(KeyModel *)key connectBlock:(BLEConnectBlock)connectBlock{
     
     NSLog(@"onlyOnePeripheralCanConnectAtTheSameTimeWithDeviceMAC %@",key.lockName);
     if ([TTLockHelper shareInstance].currentKey) {
@@ -187,7 +173,7 @@ static  TTLockHelper *instace;
                                               selector:@selector(connectTimeOut)
                                                 object:nil];
 }
-+ (void)disconnectKey:(Key *)key disConnectBlock:(BLEDisconnectBlock)disConnectBlock{
++ (void)disconnectKey:(KeyModel *)key disConnectBlock:(BLEDisconnectBlock)disConnectBlock{
     if (key) {
           ////One generation lock，ios can not get the mac
          NSString *mac;
@@ -208,7 +194,7 @@ static  TTLockHelper *instace;
       [TTObjectTTLockHelper cancelConnectPeripheralWithLockMac:mac];
 }
 
-+ (void)unlock:(Key *)key unlockBlock:(BLEBlock)unlockBlock{
++ (void)unlock:(KeyModel *)key unlockBlock:(BLEBlock)unlockBlock{
 
     if (!key) {
          return;
@@ -241,7 +227,7 @@ static  TTLockHelper *instace;
     }
 
 }
-+ (void)lock:(Key *)key lockBlock:(BLEBlock)lockBlock{
++ (void)lock:(KeyModel *)key lockBlock:(BLEBlock)lockBlock{
     
     if (!key) {
         return;
@@ -273,14 +259,14 @@ static  TTLockHelper *instace;
     }
 }
 
-+ (void)setLockTime:(Key*)key complition:(BLEBlock)complition{
++ (void)setLockTime:(KeyModel *)key complition:(BLEBlock)complition{
     
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_SET_LOCK_TIME];
     
     [[TTLockHelper shareInstance].TTObject setLockTime_lockKey:key.lockKey aesKey:key.aesKeyStr version:key.lockVersion unlockFlag:key.lockFlagPos referenceTime:[NSDate date] timezoneRawOffset:key.timezoneRawOffset];
 }
 
-+ (void)resetEkey:(Key *)key complition:(BLEBlock)complition{
++ (void)resetEkey:(KeyModel *)key complition:(BLEBlock)complition{
     
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_RESET_EKEY];
     
@@ -291,7 +277,7 @@ static  TTLockHelper *instace;
                                          unlockFlag:key.lockFlagPos + 1];
 }
 
-+ (void)resetKeyboardPassword:(Key *)key complition:(BLEBlock)complition{
++ (void)resetKeyboardPassword:(KeyModel *)key complition:(BLEBlock)complition{
     
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_RESET_KEYBOARDPWD];
     
@@ -302,7 +288,7 @@ static  TTLockHelper *instace;
                                                      unlockFlag:key.lockFlagPos];
   
 }
-+ (void)resetLock:(Key *)key  complition:(BLEBlock)complition{
++ (void)resetLock:(KeyModel *)key  complition:(BLEBlock)complition{
     
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_RESET_LOCK];
     [[TTLockHelper shareInstance].TTObject resetLock_adminPS:key.adminPwd
@@ -312,7 +298,7 @@ static  TTLockHelper *instace;
                                          unlockFlag:key.lockFlagPos];
 }
 
-+ (void)pullUnlockRecord:(Key *)key complition:(BLEBlock)complition{
++ (void)pullUnlockRecord:(KeyModel *)key complition:(BLEBlock)complition{
     if (key == nil) return;
     if (complition) {
        
@@ -324,61 +310,8 @@ static  TTLockHelper *instace;
                                             unlockFlag:key.lockFlagPos
                                      timezoneRawOffset:key.timezoneRawOffset];
 }
-+ (void)adminDeleteOneKeyboardPassword:(NSString *)deletePs key:(Key *)key  complition:(BLEBlock)complition{
-    
-    if (complition) {
-      [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_DELETE_ONE_KEYBOARDPWD];
-    }
 
-    [[TTLockHelper shareInstance].TTObject deleteOneKeyboardPassword:deletePs
-                                                    adminPS:key.adminPwd
-                                                    lockKey:key.lockKey
-                                                     aesKey:key.aesKeyStr
-                                               passwordType:KeyboardPsTypePermanent
-                                                    version:key.lockVersion
-                                                 unlockFlag:key.lockFlagPos];
-}
-+ (void)customKeyboardPwd:(NSString *)newKeyboardPwd
-                startDate:(NSDate*)startDate
-                  endDate:(NSDate*)endDate
-                      key:(Key *)key
-               complition:(BLEBlock)complition{
-    
-    [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_CUSTOM_KEYBOARDPWD];
-    
-    [[TTLockHelper shareInstance].TTObject addKeyboardPassword_password:newKeyboardPwd
-                                                     startDate:startDate
-                                                       endDate:endDate
-                                                       adminPS:key.adminPwd
-                                                       lockKey:key.lockKey
-                                                        aesKey:key.aesKeyStr
-                                                    unlockFlag:key.lockFlagPos
-                                             timezoneRawOffset:key.timezoneRawOffset];
-}
-
-+ (void)modifyKeyboardPassword:(NSString *)pwd
-                      toNewPwd:(NSString *)newPwd
-                     startDate:(NSDate*)startDate
-                       endDate:(NSDate*)endDate
-                           key:(Key *)key
-                    complition:(BLEBlock)complition{
-    
-    [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_MODIFY_KEYBORADPWD];
-
-    
-    [[TTLockHelper shareInstance].TTObject modifyKeyboardPassword_newPassword:newPwd
-                                                         oldPassword:pwd
-                                                           startDate:startDate
-                                                             endDate:endDate
-                                                             adminPS:key.adminPwd
-                                                             lockKey:key.lockKey
-                                                              aesKey:key.aesKeyStr
-                                                          unlockFlag:key.lockFlagPos
-                                                   timezoneRawOffset:key.timezoneRawOffset];
-    
-}
-
-+ (void)setAdminKeyboardPassword:(NSString *)keyboardPs key:(Key *)key complition:(BLEBlock)complition{
++ (void)setAdminKeyboardPassword:(NSString *)keyboardPs key:(KeyModel *)key complition:(BLEBlock)complition{
     
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_RESET_ADMIN_KEYBORADPWD];
 
@@ -391,7 +324,7 @@ static  TTLockHelper *instace;
                                                 unlockFlag:key.lockFlagPos];
 }
 
-+ (void)setAdminDeleteKeyBoardPassword:(NSString *)keyboardPs key:(Key *)key complition:(BLEBlock)complition{
++ (void)setAdminDeleteKeyBoardPassword:(NSString *)keyboardPs key:(KeyModel *)key complition:(BLEBlock)complition{
  
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_RESET_ADMIN_DELETE_KEYBOARDPWD];
     
@@ -411,7 +344,7 @@ static  TTLockHelper *instace;
                            devNumber:(NSString *)devNumber
                          lockingTime:(int)lockingTime
                               isShow:(BOOL)isShow
-                             key:(Key *)key
+                             key:(KeyModel *)key
                           complition:(BLEBlock)complition{
     
     if (optionType == OprationTypeAdd) {
@@ -472,17 +405,7 @@ static  TTLockHelper *instace;
                                       unlockFlag:key.lockFlagPos];
     }
 }
-+ (void)getPwdListWithKey:(Key *)key
-               complition:(BLEBlock)complition{
-     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_QUERY_DEVICE];
-    [TTObjectTTLockHelper getKeyboardPasswordList_adminPS:key.adminPwd
-                                                lockKey:key.lockKey
-                                                 aesKey:key.aesKeyStr
-                                             unlockFlag:key.lockFlagPos
-                                      timezoneRawOffset:key.timezoneRawOffset];
-    
-}
-+ (void)getLockTimeWithKey:(Key *)key
++ (void)getLockTimeWithKey:(KeyModel *)key
                 complition:(BLEBlock)complition{
     
     [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_GET_LOCK_TIME];
@@ -491,44 +414,9 @@ static  TTLockHelper *instace;
                                 unlockFlag:key.lockFlagPos
                          timezoneRawOffset:key.timezoneRawOffset];
 }
-+ (void)getDeviceInfoWithKey:(Key *)key
-                complition:(BLEBlock)complition{
-    
-    [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_GET_DEVICE_INFO];
-    [TTObjectTTLockHelper getDeviceInfo_lockKey:key.lockKey
-                                       aesKey:key.aesKeyStr];
-}
-+ (void)getPasswordDataWithKey:(Key *)key
-                    complition:(BLEBlock)complition{
-    
-    [[TTLockHelper shareInstance].bleBlockDict setObject:complition forKey:KKBLE_GET_PWD_DATA];
-    [TTObjectTTLockHelper getPasswordData_lockKey:key.lockKey
-                                         aesKey:key.aesKeyStr
-                                     unlockFlag:key.lockFlagPos
-                              timezoneRawOffset:key.timezoneRawOffset];
-}
-
 #pragma mark TTSDKDelegate
 -(void)onFoundDevice_peripheralWithInfoDic:(NSDictionary*)infoDic{
-    
-//      OnFoundDeviceModel *deviceModel = [[OnFoundDeviceModel alloc] initOnFoundDeviceModelWithDic:infoDic];
-//
-//      if (deviceModel.isAllowUnlock == NO) return;
-//        __block  Key *dbKey = nil;
-//        sync_main(^{
-//            if (deviceModel.mac.length){
-//                 dbKey =  [[DBHelper sharedInstance] fetchKeyWithLockMac:deviceModel.mac];
-//            }
-//            else{
-//                dbKey =  [[DBHelper sharedInstance] fetchKeyWithDoorName:deviceModel.lockName];
-//            }
-//        });
-//
-//    if (dbKey && deviceModel.rssi.intValue >= RSSI_SETTING_1m && deviceModel.rssi.intValue != 127){
-//
-//        [TTLockHelper onlyOnePeripheralCanConnectAtTheSameTimeWithDeviceMAC:deviceModel.mac.length ? deviceModel.mac : deviceModel.lockName key:dbKey connectBlock:nil];
-//
-//    }
+
     
 }
 
@@ -609,14 +497,7 @@ static  TTLockHelper *instace;
     }
 }
 -(void)onResetEkey{
-
-    [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
-    sync_main(^{
-        _currentKey.lockFlagPos = _currentKey.lockFlagPos + 1;
-        [[DBHelper sharedInstance]update];
-    });
     
-
     BLEBlock resetEkeyBlock = _bleBlockDict[KKBLE_RESET_EKEY];
     if (resetEkeyBlock) {
         async_main(^{
@@ -652,40 +533,18 @@ static  TTLockHelper *instace;
 
 -(void)onResetKeyboardPassword_timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo{
 
-    [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
-    sync_main(^{
-        _currentKey.timestamp = timestamp;
-        _currentKey.pwdInfo = pwdInfo;
-        [[DBHelper sharedInstance]update];
-    });
     BLEBlock resetPswBlock = _bleBlockDict[KKBLE_RESET_KEYBOARDPWD];
     if (resetPswBlock){
         async_main(^{
             NSMutableDictionary *info = [NSMutableDictionary dictionary];
             info[@"timestamp"] = timestamp;
             info[@"pwdInfo"] = pwdInfo;
-            resetPswBlock(pwdInfo,YES);
+            resetPswBlock(info,YES);
             [_bleBlockDict removeObjectForKey:KKBLE_RESET_KEYBOARDPWD];
         });
     }
-    [NetworkHelper resetKeyboardPwd:pwdInfo lockId:self.currentKey.lockId timestamp:timestamp completion:^(id info, NSError *error) {
-        if (!error)  [SSToastHelper showToastWithStatus:@"alter_Succeed"];
-        else    [SSToastHelper showToastWithStatus:@"alter_Failed"];
-    }];
+  
 }
-- (void)OnDeleteUserKeyBoardPassword{
-    
-    [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
-    
-    BLEBlock deleteOneKbPwBlock = _bleBlockDict[KKBLE_DELETE_ONE_KEYBOARDPWD];
-    if (deleteOneKbPwBlock){
-        async_main(^{
-            deleteOneKbPwBlock(nil,YES);
-            [_bleBlockDict removeObjectForKey:KKBLE_DELETE_ONE_KEYBOARDPWD];
-        });
-    }
-};
-
 - (void)onResetLock{
    
     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
@@ -790,33 +649,6 @@ static  TTLockHelper *instace;
 
 }
 
-- (void)onAddUserKeyBoardPassword{
-   
-
-    [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
-   
-    BLEBlock customPwdBlock = _bleBlockDict[KKBLE_CUSTOM_KEYBOARDPWD];
-    if (customPwdBlock){
-        async_main(^{
-            customPwdBlock(nil,YES);
-            [_bleBlockDict removeObjectForKey:KKBLE_CUSTOM_KEYBOARDPWD];
-        });
-    }
-
-}
-- (void)onModifyUserKeyBoardPassword{
-    
-     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
-    BLEBlock updatePwBlock = _bleBlockDict[KKBLE_MODIFY_KEYBORADPWD];
-    if (updatePwBlock){
-        async_main(^{
-            updatePwBlock(nil,YES);
-            [_bleBlockDict removeObjectForKey:KKBLE_MODIFY_KEYBORADPWD];
-        });
-    }
-
-}
-
 - (void)onQueryScreenState:(BOOL)state{
 
     BLEBlock setupDevBlock = _bleBlockDict[KKBLE_QUERY_DEVICE];
@@ -872,7 +704,7 @@ static  TTLockHelper *instace;
 
 - (void)onGetOperateLog_LockOpenRecordStr:(NSString *)LockOpenRecordStr{
 
-     [SSToastHelper showToastWithStatus:LS(@"alter_Succeed")];
+    
     BLEBlock recordBlock = _bleBlockDict[KKBLE_UNLOCK_RECORD];
     if (recordBlock){
         async_main(^{
@@ -894,16 +726,6 @@ static  TTLockHelper *instace;
             info[@"lockTime"] = @(lockTime);
             getBlock(info,YES);
             [_bleBlockDict removeObjectForKey:KKBLE_GET_LOCK_TIME];
-        });
-    }
-}
-- (void)onGetDeviceInfo:(NSDictionary*)infoDic{
-    
-    BLEBlock getBlock = _bleBlockDict[KKBLE_GET_DEVICE_INFO];
-    if (getBlock){
-        async_main(^{
-            getBlock(infoDic,YES);
-            [_bleBlockDict removeObjectForKey:KKBLE_GET_DEVICE_INFO];
         });
     }
 }
@@ -960,9 +782,6 @@ static  TTLockHelper *instace;
         {
             BLEDisconnectBlock disconnectBlock = bleBlockDict[key];
             if (disconnectBlock && execute)disconnectBlock(info);
-            
-        }else if ([key isEqualToString:KKBLE_UPGRADE_PROGRESS])
-        {
             
         }else
         {

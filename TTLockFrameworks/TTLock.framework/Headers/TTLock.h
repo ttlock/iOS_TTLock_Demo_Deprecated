@@ -2,7 +2,7 @@
 //
 //  Created by TTLock on 2017/8/11.
 //  Copyright © 2017年 TTLock. All rights reserved.
-
+//  version:2.8.9
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -12,7 +12,10 @@
 #import "SecurityUtil.h"
 #import "TTLockGateway.h"
 #import "TTSDKDelegate.h"
-
+#import "TTWirelessKeypad.h"
+#import "TTWirelessKeypadScanModel.h"
+#import "TTGatewayScanModel.h"
+#import "TTSystemInfoModel.h"
 
 @interface TTLock : NSObject<CBPeripheralDelegate,CBCentralManagerDelegate>
 
@@ -129,6 +132,9 @@
  lockMac              NSString      YES
  protocolType         NSNumber      YES
  protocolVersion      NSNumber      YES
+ hotelInfo            NSString       NO
+ buildingNumber       NSString       NO
+ floorNumber          NSString       NO
  *
  *  @see  onLockInitializeWithLockData:
  *  @see  TTError: command: errorMsg:

@@ -1,7 +1,7 @@
 
 //  Created by TTLock on 2017/8/9.
 //  Copyright © 2017年 TTLock. All rights reserved.
-//
+//  version:2.8.9
 
 #import <Foundation/Foundation.h>
 #import <TTLock/TTLock.h>
@@ -38,10 +38,10 @@ typedef void(^TTLockDFUFailBlock)(UpgradeOpration type, UpgradeErrorCode code);
  
  @param clientId           The app_id which is assigned by system when you create an application
  @param accessToken        Access token
- @param lockId
- @param module
- @param hardwareRevision
- @param firmwareRevision
+ @param lockId             lockId
+ @param module             module
+ @param hardwareRevision   hardwareRevision
+ @param firmwareRevision   firmwareRevision
  @param adminPwd            admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
  @param lockKey             The key data which will be used to unlock
  @param aesKeyStr           AES encryption key
