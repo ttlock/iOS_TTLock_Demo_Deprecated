@@ -79,7 +79,6 @@
 		FCA53A0922A63FEE00840CBD /* KeyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B031F418349001D6B2B /* KeyModel.m */; };
 		FCA53A0C22A65B0000840CBD /* ParkKeyDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA53A0A22A65B0000840CBD /* ParkKeyDetailVC.m */; };
 		FCA53A1122A6742C00840CBD /* NextAddWifiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA53A1022A6742C00840CBD /* NextAddWifiVC.m */; };
-		FCA53A1422A6784000840CBD /* RoundCornerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA53A1222A6784000840CBD /* RoundCornerButton.m */; };
 		FCA53A1722A6800500840CBD /* GatewayTypeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA53A1622A6800500840CBD /* GatewayTypeTableViewController.m */; };
 		FCA53A1A22A6804D00840CBD /* GuideGatewayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA53A1822A6804D00840CBD /* GuideGatewayViewController.m */; };
 		FCA53A1D22A6806A00840CBD /* ChooseGatewayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA53A1C22A6806A00840CBD /* ChooseGatewayViewController.m */; };
@@ -93,6 +92,7 @@
 		FCA6442C22A78F550062463E /* KeypadAddGuide1ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA6442522A78F540062463E /* KeypadAddGuide1ViewController.m */; };
 		FCA6442D22A78F550062463E /* KeypadAddGuide2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA6442622A78F540062463E /* KeypadAddGuide2ViewController.m */; };
 		FCA6443022A790620062463E /* KeypadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA6442E22A790610062463E /* KeypadModel.m */; };
+		FCA6444F22A8E9D00062463E /* RoundCornerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA6444D22A8E9D00062463E /* RoundCornerButton.m */; };
 		FCDDE71922A119560004B2A5 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
 		FCDDE71A22A1195A0004B2A5 /* TTLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; };
 		FCDDE79422A12DD00004B2A5 /* PlugLockListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDDE78722A12DD00004B2A5 /* PlugLockListModel.m */; };
@@ -251,8 +251,6 @@
 		FCA53A0B22A65B0000840CBD /* ParkKeyDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParkKeyDetailVC.h; sourceTree = "<group>"; };
 		FCA53A0F22A6742C00840CBD /* NextAddWifiVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NextAddWifiVC.h; sourceTree = "<group>"; };
 		FCA53A1022A6742C00840CBD /* NextAddWifiVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NextAddWifiVC.m; sourceTree = "<group>"; };
-		FCA53A1222A6784000840CBD /* RoundCornerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoundCornerButton.m; path = ../../../TTLockSourceCodeDemo/TTLockSourceCodeDemo/Vendor/RoundCornerButton.m; sourceTree = "<group>"; };
-		FCA53A1322A6784000840CBD /* RoundCornerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoundCornerButton.h; path = ../../../TTLockSourceCodeDemo/TTLockSourceCodeDemo/Vendor/RoundCornerButton.h; sourceTree = "<group>"; };
 		FCA53A1522A6800400840CBD /* GatewayTypeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GatewayTypeTableViewController.h; sourceTree = "<group>"; };
 		FCA53A1622A6800500840CBD /* GatewayTypeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GatewayTypeTableViewController.m; sourceTree = "<group>"; };
 		FCA53A1822A6804D00840CBD /* GuideGatewayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideGatewayViewController.m; sourceTree = "<group>"; };
@@ -279,6 +277,8 @@
 		FCA6442822A78F550062463E /* KeypadAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadAddViewController.h; sourceTree = "<group>"; };
 		FCA6442E22A790610062463E /* KeypadModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeypadModel.m; sourceTree = "<group>"; };
 		FCA6442F22A790620062463E /* KeypadModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadModel.h; sourceTree = "<group>"; };
+		FCA6444D22A8E9D00062463E /* RoundCornerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundCornerButton.m; sourceTree = "<group>"; };
+		FCA6444E22A8E9D00062463E /* RoundCornerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundCornerButton.h; sourceTree = "<group>"; };
 		FCDDE78722A12DD00004B2A5 /* PlugLockListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlugLockListModel.m; sourceTree = "<group>"; };
 		FCDDE78922A12DD00004B2A5 /* PlugLockListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlugLockListModel.h; sourceTree = "<group>"; };
 		FCDDE78B22A12DD00004B2A5 /* Gateway1AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gateway1AddViewController.h; sourceTree = "<group>"; };
@@ -770,8 +770,8 @@
 		FCDDE77D22A125DA0004B2A5 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				FCA53A1322A6784000840CBD /* RoundCornerButton.h */,
-				FCA53A1222A6784000840CBD /* RoundCornerButton.m */,
+				FCA6444E22A8E9D00062463E /* RoundCornerButton.h */,
+				FCA6444D22A8E9D00062463E /* RoundCornerButton.m */,
 				FC6A2B201F418349001D6B2B /* CopyableLabel.h */,
 				FC6A2B211F418349001D6B2B /* CopyableLabel.m */,
 			);
@@ -945,13 +945,13 @@
 				FC6A2C0E1F418349001D6B2B /* ICAndFingerprintManagerVC.m in Sources */,
 				FC6A2BFB1F418349001D6B2B /* CopyableLabel.m in Sources */,
 				FC6A2C3D1F418349001D6B2B /* NSArray+MASAdditions.m in Sources */,
-				FCA53A1422A6784000840CBD /* RoundCornerButton.m in Sources */,
 				FC6A2C391F418349001D6B2B /* MASConstraintMaker.m in Sources */,
 				FC872A1A1FA7098000DE2A4B /* SSHUDHelper.m in Sources */,
 				FC6A2C031F418349001D6B2B /* UIViewController+Category.m in Sources */,
 				FC6A2C511F41834A001D6B2B /* SCPopView.m in Sources */,
 				FC351AD422A4FC9B00E38860 /* MMAlertView.m in Sources */,
 				FC6A2C191F418349001D6B2B /* KeyTableViewController.m in Sources */,
+				FCA6444F22A8E9D00062463E /* RoundCornerButton.m in Sources */,
 				FCA6442922A78F550062463E /* KeypadAddViewController.m in Sources */,
 				FC6A2C011F418349001D6B2B /* RequestService.m in Sources */,
 				FC6A2C3E1F418349001D6B2B /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
