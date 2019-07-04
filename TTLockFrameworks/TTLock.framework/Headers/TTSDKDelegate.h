@@ -340,6 +340,22 @@
  Clear Passage Mode Successfully
  */
 - (void)onClearPassageMode;
+/**
+ Set Lock Freeze State Successfully
+ */
+- (void)onSetLockFreezeState;
+/**
+ Get Lock Freeze State Successfully
+ */
+- (void)onGetLockFreezeState:(BOOL)isOn;
+/**
+ Set Light Time Successfully
+ */
+- (void)onSetLightTime;
+/**
+ Get Light Time Successfully
+ */
+- (void)onGetLightTime:(int)time;
 
 #pragma mark --- 废弃
 -(void)onFoundDevice_peripheral:(CBPeripheral *)peripheral RSSI:(NSNumber*)rssi lockName:(NSString*)lockName mac:(NSString*)mac advertisementData:(NSDictionary *)advertisementData isContainAdmin:(BOOL)isContainAdmin protocolCategory:(int)protocolCategory __attribute__((deprecated("SDK2.6 onFoundDevice_peripheralWithInfoDic" )));

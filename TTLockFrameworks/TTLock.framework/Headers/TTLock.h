@@ -2,7 +2,7 @@
 //
 //  Created by TTLock on 2017/8/11.
 //  Copyright © 2017年 TTLock. All rights reserved.
-//  version:2.8.9
+//  version:2.9.0
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -663,12 +663,12 @@
 /**
  *  Add Or Modify Passage Mode
  *  type                 PassageModeType
- *  weekDays        if type == PassageModeTypeWeek,  week：1~7,1 means Sunday，2 means  Monday ,...,6 means Saturday,  0 means everyday
+ *  weekDays        if type == PassageModeTypeWeek,  week：1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
  if type != PassageModeTypeWeek,  effective value ：1~31
  *  month                   effective value ：1~12， set 0 if type != PassageModeTypeMonthAndDay
  *  startDate               millisecond ,0 means all day
  *  endDate                 millisecond ,0 means all day
- *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  adminPS                 ad min code, which only belongs to the admin ekey, will be used to verify the admin permission.
  *  lockkey                 The key data which will be used to unlock
  *  aesKey                  AES encryption key
  *  unlockFlag              The flag which will be used to check the validity of the ekey
@@ -699,6 +699,54 @@
  *  @see  TTError: command: errorMsg:
  */
 - (void)clearPassageModeWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Set Lock Freeze State
+ *  isOn                    NO-off  YES-on
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onSetLockFreezeState
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)setLockFreezeStateWithIsOn:(BOOL)isOn AdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Get Lock Freeze State
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onGetLockFreezeState:
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)getLockFreezeStateWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Set Light Time
+ *  time                    Light Time
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onSetLightTime
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)setLightTime:(int)time AdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Get Light Time
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *  @see  onGetLightTime:
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)getLightTimeWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+
+
 #pragma mark --- 废弃
 
 @property (nonatomic) BOOL parklockAction __attribute__((deprecated("SDK2.6.3")));

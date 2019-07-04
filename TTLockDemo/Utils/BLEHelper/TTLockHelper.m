@@ -72,7 +72,7 @@ static  TTLockHelper *instace;
     [self.TTObject setupBlueTooth];
     _bleBlockDict = [NSMutableDictionary dictionary];
    // Whether or not print the log in SDK
-//    [TTLock setDebug:YES];
+    [TTLock setDebug:YES];
     
     return self;
     
