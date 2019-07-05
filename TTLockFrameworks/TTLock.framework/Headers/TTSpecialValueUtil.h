@@ -66,10 +66,10 @@
  */
 + (BOOL)isSupportGatewayUnlock:(long long)specialValue;
 /**
- Whether to support the freezing and thawing of the gateway
- 是否支持网关冻结、解冻
+ Whether to support freezing
+ 是否支持锁冻结
  */
-+ (BOOL)isSupportFreezeLock:(long long)specialValue;
++ (BOOL)isSupportLockFreeze:(long long)specialValue;
 /**
  Whether the Cycle password is supported
  是否支持循环密码
@@ -115,7 +115,10 @@
  是否支持无线键盘
  */
 + (BOOL)isSupportWirelessKeyboard:(long long)specialValue;
-
-+ (BOOL)isSupportLighting:(long long)specialValue;
+/**
+ Whether to support Light
+ 是否支持照明灯
+ */
++ (BOOL)isSupportLight:(long long)specialValue;
 
 @end
