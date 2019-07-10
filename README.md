@@ -181,7 +181,7 @@ Such as,you want to unlock ,and  calibrate time.  
 <br>3.All callbacks in the TTLock are in the child thread.
   
 <br>4.In order to record who operates the lock,you should assign values to attributes 'uid' before sending instruction in the callback {@link onBTConnectSuccess_peripheral:lockName:}. 
-      ```objective-c  
-        TTObject.uid = openid; 
-    ```
+```objective-c  
+  TTObject.uid = openid; 
+```
 <br>5.{@link connectPeripheralWithLockMac:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link cancelConnectPeripheralWithLockMac:}. {@link connect:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect:}.
