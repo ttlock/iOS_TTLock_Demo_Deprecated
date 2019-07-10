@@ -176,12 +176,12 @@ Such as,you want to unlock ,and  calibrate time.  
 }
 ```
 
-  2.The callback {@link onFoundDevice_peripheralWithInfoDic:} will scan all supported devices nearby, just connect which you really need.
+<br>2.The callback {@link onFoundDevice_peripheralWithInfoDic:} will scan all supported devices nearby, just connect which you really need.
   
-  3.All callbacks in the TTLock are in the child thread.
+<br>3.All callbacks in the TTLock are in the child thread.
   
-  4.In order to record who operates the lock,you should assign values to attributes 'uid' before sending instruction in the callback {@link onBTConnectSuccess_peripheral:lockName:}. 
+<br>4.In order to record who operates the lock,you should assign values to attributes 'uid' before sending instruction in the callback {@link onBTConnectSuccess_peripheral:lockName:}. 
       ```objective-c  
         TTObject.uid = openid; 
     ```
-   5.{@link connectPeripheralWithLockMac:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link cancelConnectPeripheralWithLockMac:}. {@link connect:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect:}.
+<br>5.{@link connectPeripheralWithLockMac:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link cancelConnectPeripheralWithLockMac:}. {@link connect:}Connection attempts never time out .Pending attempts are cancelled automatically upon deallocation of <i>peripheral</i>, and explicitly via {@link disconnect:}.
