@@ -70,13 +70,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     TTWirelessKeypadScanModel *scanModel = _dataArray[indexPath.row];
     [self showHUDToWindow:nil];
-    [TTWirelessKeypad initializeKeypadWithMac:scanModel.keypadMac factorydDate:@"" block:^(long long specialValue, TTKeypadStatus status) {
-        if (status != TTKeypadSuccess) {
+	[TTWirelessKeypad initializeKeypadWithKeypadMac:scanModel.keypadMac lockMac:self.selectedKey.lockMac block:^(NSString *wirelessKeypadFeatureValue, TTKeypadStatus status) {
+		if (status != TTKeypadSuccess) {
           
             [self showToast:LS(@"alter_Failed")];
         }else{
             NSString *wirelessKeypadName = [NSString stringWithFormat:@"Keypad-%ld",random()];
-            [NetworkHelper addWirelessKeypadName:wirelessKeypadName number:scanModel.keypadName mac:scanModel.keypadMac specialValue:specialValue lockId:@(self.selectedKey.lockId) completion:^(id info, NSError *error) {
+            [NetworkHelper addWirelessKeypadName:wirelessKeypadName number:scanModel.keypadName mac:scanModel.keypadMac wirelessKeypadFeatureValue:wirelessKeypadFeatureValue lockId:@(self.selectedKey.lockId) completion:^(id info, NSError *error) {
                 if (error)return ;
            
                 [SSToastHelper showToastWithStatus:LS(@"words_add_success")];
@@ -86,7 +86,7 @@
                 
             }];
         }
-    }];
+	}];
 }
 
 @end

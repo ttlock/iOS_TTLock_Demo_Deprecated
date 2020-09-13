@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, TTError)
     TTErrorPasswordLengthInvalid = 0x0f,                 /** Invalid password length */
     TTErrorSuperPasswordIsSameWithDeletePassword = 0x10, /** Admin Passcode is the same as Erase Passcode */
     TTErrorEkeyNotToDate = 0x11,                         /** Short of validity */
-    TTErrorAesKey = 0x12,                                /** No login, no operation permissions */
+    TTErrorLockUserNotLogin = 0x12,                                /** No login, no operation permissions */
     TTErrorFail = 0x13,                                  /** operation failed */
     TTErrorPsswordExist = 0x14,                          /** The added password has already existed */
     TTErrorPasswordNotExist = 0x15,                      /** The password that are deleted or modified does not exist */
@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, TTError)
     TTErrorRecordNotExist = 0x1F,                        /** Record not exist */
     TTErrorNotSupportModifyPwd = 0x60,                   /** Do not support the modification of the password */
     TTErrorGetOperateLog = 0x61,                         /** Bluetooth disconnection */
+    TTErrorAesParse = 0x62,                              /** The lock may have been reset or Data transfer error*/
 };
 
 /*!
@@ -270,6 +271,22 @@ typedef NS_ENUM(NSInteger, PassageModeType)
     PassageModeTypeMonthAndDay = 3,
 };
 
+typedef NS_ENUM(NSInteger ,TTLockConfigType) {
+    TTLockTamperAlert = 1,
+    TTLockResetButton,
+    TTLockPrivacyLock
+    
+};
+
+typedef NS_ENUM(NSInteger ,TTCardType) {
+    TTCardTypeCommon = 1,
+    TTCardTypeCycle = 4,
+};
+
+typedef NS_ENUM(NSInteger ,TTFingerprintType) {
+    TTFingerprintTypeCommon = 1,
+    TTFingerprintTypeCycle = 4,
+};
 
 @interface TTUtils : NSObject
 
@@ -303,6 +320,8 @@ typedef NS_ENUM(NSInteger, PassageModeType)
 +(int)intFromHexBytes:(Byte*)bytes length:(int)dataLen;
 //4 bytes and above
 +(long long)longFromHexBytes:(Byte*)bytes length:(int)dataLen;
+
++(NSString *)hexStringWithBytes:(Byte*)bytes length:(int)dataLen;
 
 +(NSString*)stringFormBytes:(Byte*)bytes length:(int)dataLen;
 

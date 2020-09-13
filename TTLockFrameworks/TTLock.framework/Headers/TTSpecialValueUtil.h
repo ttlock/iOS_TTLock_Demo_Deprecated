@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+NS_CLASS_DEPRECATED_IOS(2_0, 6_0)//"Use -[TTLockFeatureValueUtil lockFeatureValue:suportFunction]"
+
 @interface TTSpecialValueUtil : NSObject
-
-
 /**
  Whether to support the password
 
@@ -101,6 +101,11 @@
  */
 + (BOOL)isSupportGetAdminPasscode:(long long)specialValue;
 /**
+Whether to support Hotel Card
+是否支持酒店卡
+*/
++ (BOOL)isSupportHotelCard:(long long)specialValue;
+/**
  Whether to support Passage Mode
  是否支持常开模式
  */
@@ -117,8 +122,37 @@
 + (BOOL)isSupportWirelessKeyboard:(long long)specialValue;
 /**
  Whether to support Light
- 是否支持照明灯
+ 是否支持照明灯时间配置
  */
 + (BOOL)isSupportLight:(long long)specialValue;
-
+/**
+ Whether to support hotel card blacklist
+ 是否支持酒店卡黑名单
+ */
++ (BOOL)isSupportHotelCardBlacklist:(long long)specialValue;
+/**
+ Whether to support identity card
+ 是否支持身份证
+ */
++ (BOOL)isSupportIdentityCard:(long long)specialValue;
+/**
+ Whether to support TamperAlert Swicth
+ 是否支持防撬开关配置
+ */
++ (BOOL)isSupportTamperAlertConfig:(long long)specialValue;
+/**
+ Whether to support reset key Switch
+ 是否支持重置键开关配置
+ */
++ (BOOL)isSupportResetButtonConfig:(long long)specialValue;
+/**
+ Whether to support reset key Switch
+ 是否支持反锁开关配置
+ */
++ (BOOL)isSupportPrivacyLockConfig:(long long)specialValue;
+/**
+ Whether to support deadLock
+ 是否支持DeadLock闭锁
+ */
++ (BOOL)isSupportDeadLock:(long long)specialValue;
 @end

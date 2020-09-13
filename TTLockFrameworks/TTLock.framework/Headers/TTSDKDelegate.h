@@ -86,7 +86,7 @@
     pwdInfo
     timestamp
     pwdInfo
-    specialValue
+    featureValue
     electricQuantity
     timezoneRawOffset
     modelNum
@@ -141,7 +141,6 @@
 
 /**
  *  Get Lock Battery Successfully
- *  @param electricQuantity
  */
 -(void)onGetElectricQuantity:(int)electricQuantity;
 
@@ -170,10 +169,10 @@
  */
 - (void)onAddUserKeyBoardPassword;
 /**
- *  Get Device Characteristic Successfully
-    characteristic  Use "TTSpecialValueUtil.h" to judge
- */
-- (void)onGetDeviceCharacteristic:(long long)characteristic;
+*  Get Feature Value Successfully
+   featureValue use "TTFeatureValueUtil.h" to judge
+*/
+- (void)onGetFeatureValue:(NSString *)featureValue;
 /**
  *  Get Lock Time Successfully
  */
@@ -194,6 +193,10 @@
  *  Low Power Callback (Only "LOCK" will be a callback)
  */
 - (void)onLowPower;
+
+- (void)onQueryICCardList:(NSString *)identityCardList;
+
+- (void)onQueryCyclicICCardList:(NSString *)cyclicConfigList;
 /**
  *  Add IC Card Successfully
  *
@@ -213,6 +216,8 @@
  *   Modify IC Successfully
  */
 - (void)onModifyIC;
+
+- (void)onQueryFingerprintList:(NSString *)fingerprintList;
 /**
  Add Fingerprint Successfully
  
@@ -300,7 +305,7 @@
  @param type reference enum:OprationType
  @param stateInfo
         key:"state" , type:BOOL , NO is close, YES is open, When the type is OprationTypeQuery, this parameter has value.
-        key:"specialValue" , type:long long ,When the switch is modified, the characteristic value in the lock will change. When the type is OprationTypeModify, this parameter has value.
+        key:"featureValue" , type:NSString ,When the switch is modified, the feature value in the lock will change. When the type is OprationTypeModify, this parameter has value.
  */
 - (void)onOperateRemoteUnlockSwicth_type:(OprationType)type stateInfo:(NSDictionary*)stateInfo;
 /**
@@ -356,7 +361,26 @@
  Get Light Time Successfully
  */
 - (void)onGetLightTime:(int)time;
-
+/**
+Set Lock Config Successfully
+*/
+- (void)onSetLockConfigWithType:(TTLockConfigType)type;
+/**
+Get Lock Config Successfully
+*/
+- (void)onGetLockConfigWithType:(TTLockConfigType)type isOn:(BOOL)isOn;
+/**
+Set Hotel Card Sector Successfully
+*/
+- (void)onSetHotelCardSector;
+/**
+Deadlock Successfully
+*/
+- (void)onDeadlockWithLockTime:(NSTimeInterval)lockTime electricQuantity:(int)electricQuantity;
+/**
+Set HotelInfo Successfully
+*/
+- (void)onSetHotelInfo;
 #pragma mark --- 废弃
 -(void)onFoundDevice_peripheral:(CBPeripheral *)peripheral RSSI:(NSNumber*)rssi lockName:(NSString*)lockName mac:(NSString*)mac advertisementData:(NSDictionary *)advertisementData isContainAdmin:(BOOL)isContainAdmin protocolCategory:(int)protocolCategory __attribute__((deprecated("SDK2.6 onFoundDevice_peripheralWithInfoDic" )));
 -(void)onAddAdministrator_adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey version:(NSString*)versionStr mac:(NSString*)mac timestamp:(NSString *)timestamp pwdInfo:(NSString *)pwdInfo electricQuantity:(int)electricQuantity adminPassword:(NSString*)adminPassward deletePassword:(NSString*)deletePassward Characteristic:(int)characteristic  __attribute__((deprecated("onAddAdministrator_addAdminInfoDic")));
@@ -369,4 +393,5 @@
 -(void)onUnlockWithLockTime:(NSTimeInterval)lockTime __attribute__((deprecated("SDK2.7.5")));
 - (void)onLockingWithLockTime:(NSTimeInterval)lockTime __attribute__((deprecated("SDK2.7.5")));
 -(void)onAddAdministrator_addAdminInfoDic:(NSDictionary*)addAdminInfoDic __attribute__((deprecated("SDK2.7.7")));
+- (void)onGetDeviceCharacteristic:(long long)characteristic __attribute__((deprecated("SDK2.9.1")));
 @end

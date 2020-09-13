@@ -100,11 +100,11 @@ typedef void(^RequestBlock)(id info, NSError* error);
                              completion:(RequestBlock) completion;
 
 +(void)addWirelessKeypadName:(NSString *)name
-                      number:(NSString *)number
-                         mac:(NSString *)mac
-                specialValue:(long long)specialValue
-                      lockId:(NSNumber *)lockId
-                  completion:(RequestBlock) completion;
+					number:(NSString *)number
+					   mac:(NSString *)mac
+wirelessKeypadFeatureValue:(long long)wirelessKeypadFeatureValue
+					lockId:(NSNumber *)lockId
+				completion:(RequestBlock) completion;
 
 + (void)deleteWirelessKeypadWithID:(NSString *)ID completion:(RequestBlock) completion;
 

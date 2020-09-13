@@ -10,6 +10,7 @@
 #import "RequestService.h"
 #import "KeyDetailViewController.h"
 #import "OnFoundDeviceModel.h"
+#import <TTLock/TTUtils.h>
 
 @interface AppDelegate ()
 {
@@ -31,9 +32,8 @@
     
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = nav;
-    
     [self.window makeKeyAndVisible];
-
+    
     return YES;
     
 }

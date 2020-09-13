@@ -10,22 +10,25 @@
 #import "TTGatewayScanModel.h"
 #import "TTSystemInfoModel.h"
 
-typedef enum {
-    TTGatewayConnectTimeout,
-    TTGatewayConnectSuccess,
-    TTGatewayConnectFail,
-}TTGatewayConnectStatus;
+typedef NS_ENUM(NSInteger, TTGatewayConnectStatus){
+    TTGatewayConnectTimeout = 1,
+    TTGatewayConnectSuccess = 2,
+    TTGatewayConnectFail = 3,
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, TTGatewayStatus){
     TTGatewaySuccess = 0,
-    TTGatewayFail = 1,
     TTGatewayWrongSSID = 3,
     TTGatewayWrongWifiPassword = 4,
     TTGatewayWrongCRC = -1,
     TTGatewayWrongAeskey = -2,
     TTGatewayNotConnect = -3,
     TTGatewayDisconnect = -4,
-}TTGatewayStatus;
+    TTGatewayFailConfigRouter = -5,
+    TTGatewayFailConfigServer = -6,
+    TTGatewayFailConfigAccount = -7,
+
+};
 
 @interface TTLockGateway : NSObject
 /**
@@ -69,6 +72,7 @@ typedef void(^TTInitializeGatewayBlock)(TTSystemInfoModel *systemInfoModel,TTGat
  initialize Gateway
  
  @param infoDic  @{@"SSID": xxx, @"wifiPwd": xxx, @"uid": xxx ,@"userPwd": xxx, @"gatewayName": xxx}
+                 gatewayName  Cannot exceed 48 bytes, exceeding will be truncated
  
  */
 + (void)initializeGatewayWithInfoDic:(NSDictionary *)infoDic block:(TTInitializeGatewayBlock)block;
@@ -103,9 +107,10 @@ typedef void(^TTSmartLinkFailBlock)(void);
 /**
    Start configuration (method two)
 
- @param infoDic @{@"SSID": xxx, @"wifiPwd": xxx, @"uid": xxx ,@"userPwd": xxx}
-                wifiPwd   Cannot contain Chinese
- 
+ @param infoDic @{@"SSID": xxx, @"wifiPwd": xxx, @"uid": xxx ,@"userPwd": xxx，@"gatewayName":xxx}
+                wifiPwd        Cannot contain Chinese
+                gatewayName    Cannot exceed 51 bytes, exceeding will be truncated
+
  @param pblock    Process Block
  @param sblock    Success Block
  @param fblock    Fail Block

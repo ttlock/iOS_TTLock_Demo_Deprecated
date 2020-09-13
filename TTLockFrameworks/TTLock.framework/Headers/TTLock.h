@@ -2,12 +2,12 @@
 //
 //  Created by TTLock on 2017/8/11.
 //  Copyright © 2017年 TTLock. All rights reserved.
-//  version:2.9.0
+//  version:2.9.1
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "TTSpecialValueUtil.h"
+#import "TTLockFeatureValueUtil.h"
 #import "TTUtils.h"
 #import "SecurityUtil.h"
 #import "TTLockGateway.h"
@@ -16,6 +16,7 @@
 #import "TTWirelessKeypadScanModel.h"
 #import "TTGatewayScanModel.h"
 #import "TTSystemInfoModel.h"
+#import "TTSpecialValueUtil.h"
 
 @interface TTLock : NSObject<CBPeripheralDelegate,CBCentralManagerDelegate>
 
@@ -196,14 +197,14 @@
 
 /**
  lock （It also applies to door locks that support this function and Parking Lock rise）
- @param lockkey  The key data which will be used to unlock
- @param aesKey   AES encryption key
- @param  flag    The flag which will be used to check the validity of the ekey
- @param uniqueid It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds)
- @param isAdmin  YSE is the administrator,otherwise it's ekey
- @param sdate    The time when it becomes valid.  If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
- @param edate    The time when it is expired. If it's a permanent key ,set the [NSDate dateWithTimeIntervalSince1970:0]
- @param timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey   AES encryption key
+ *  flag    The flag which will be used to check the validity of the ekey
+ *  uniqueid It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds)
+ *  isAdmin  YSE is the administrator,otherwise it's ekey
+ *  sdate    The time when it becomes valid.  If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  edate    The time when it is expired. If it's a permanent key ,set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onLockingWithLockTime:
  *  @see  TTError: command: errorMsg:
@@ -328,21 +329,20 @@
  */
 - (void)modifyKeyboardPassword_newPassword:(NSString *)newPassword oldPassword:(NSString *)oldPassword  startDate:(NSDate*)startDate endDate:(NSDate*)endDate adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
 
-
 /**
  Recover the keyboard passcode
  
- @param passwordType  Passcode Type
- @param cycleType     Cycle Type , if passwordType != KeyboardPsTypeCycle ,can set any value
- @param newPassword   New Passcode
- @param oldPassword   Old Passcode
- @param startDate The time when it becomes valid
- @param endDate The time when it is expired, if passwordType != KeyboardPsTypePeriod ,can set nil
- @param adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
- @param lockkey  The key data which will be used to unlock
- @param aesKey AES encryption key
- @param flag The flag which will be used to check the validity of the ekey
- @param timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
+ *  passwordType  Passcode Type
+ *  cycleType     Cycle Type , if passwordType != KeyboardPsTypeCycle ,can set any value
+ *  newPassword   New Passcode
+ *  oldPassword   Old Passcode
+ *  startDate The time when it becomes valid
+ *  endDate The time when it is expired, if passwordType != KeyboardPsTypePeriod ,can set nil
+ *  adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey AES encryption key
+ *  flag The flag which will be used to check the validity of the ekey
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onRecoverUserKeyBoardPassword
  *  @see  TTError: command: errorMsg:
@@ -352,14 +352,14 @@
 /**
  Add keyboard passcode
  
- @param keyboardPs The Passcode to add ,Passcode range : 4 - 9 Digits in length. If you do not need to modify the password, set the nil
- @param startDate The time when it becomes valid
- @param endDate The time when it is expired
- @param adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
- @param lockkey The key data which will be used to unlock
- @param aesKey AES encryption key
- @param flag The flag which will be used to check the validity of the ekey
- @param timezoneRawOffset  The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
+ *  keyboardPs The Passcode to add ,Passcode range : 4 - 9 Digits in length. If you do not need to modify the password, set the nil
+ *  startDate The time when it becomes valid
+ *  endDate The time when it is expired
+ *  adminPS admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey The key data which will be used to unlock
+ *  aesKey AES encryption key
+ *  flag The flag which will be used to check the validity of the ekey
+ *  timezoneRawOffset  The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
  *
  *  @see  onAddUserKeyBoardPassword
  *  @see  TTError: command: errorMsg:
@@ -391,54 +391,14 @@
  */
 - (void)getLockTime_aesKey:(NSString*)aesKey version:(NSString*)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset;
 /**
- *  Get Lock SpecialValue
+ *  Get Lock Feature Value
  *  lockkey The key data which will be used to unlock
  *  aesKey  AES encryption key
  *
- *  @see  onGetDeviceCharacteristic:
+ *  @see  onGetFeatureValue:
  *  @see  TTError: command: errorMsg:
  */
-- (void)getDeviceCharacteristic_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey;
-/**
- *  Operate IC
- *  type      OprationType
- *  ICNumber  Card Number , if (type == OprationTypeClear || type == OprationTypeAdd || type == OprationTypeQuery) ,set the nil.
- *  adminPS   Admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
- *  lockkey   The key data which will be used to unlock
- *  aesKey    AES encryption key
- *  startDate The time when it becomes valid. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
- *  endDate   The time when it is expired. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
- *  flag      The flag which will be used to check the validity of the ekey
- *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
- *
- *  @see onAddICWithState: ICNumber:
- *  @see onClearIC
- *  @see onDeleteIC
- *  @see onModifyIC
- *  @see onGetOperateLog_LockOpenRecordStr:
- *  @see  TTError: command: errorMsg:
- */
-- (void)operate_type:(OprationType)type adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey ICNumber:(NSString*)ICNumber startDate:(NSDate*)startDate endDate:(NSDate*)endDate unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
-
-/**
- *  Operate  Fingerprint
- *  type                OprationType
- *  FingerprintNumber   Fingerprint Number , if (type == OprationTypeClear || type == OprationTypeAdd || type == OprationTypeQuery) ,set the nil.
- *  adminPS             admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
- *  lockkey             The key data which will be used to unlock
- *  aesKey              AES encryption key
- *  startDate  The time when it becomes valid. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
- *  endDate    The time when it is expired. if(type == OprationTypeModify || type == OprationTypeRecover),need to set.If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
- *  unlockFlag  The flag which will be used to check the validity of the ekey
- *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
- *
- *  @see onAddFingerprintWithState:fingerprintNumber:currentCount:totalCount:
- *  @see onClearFingerprint
- *  @see onDeleteFingerprint
- *  @see onGetOperateLog_LockOpenRecordStr:
- *  @see  TTError: command: errorMsg:
- */
-- (void)operateFingerprint_type:(OprationType)type adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey FingerprintNumber:(NSString*)FingerprintNumber startDate:(NSDate*)startDate endDate:(NSDate*)endDate unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+- (void)getFeatureValueWithlockKey:(NSString*)lockkey aesKey:(NSString*)aesKey;
 
 /**
  *  Set Locking Time
@@ -485,12 +445,12 @@
 /**
  Whether the input password is displayed on the screen
  
- @param type   1- Query 2- Modify
- @param isShow Whether or not to display a password , NO-hide  YES-show ,It is useful when the operation type is 2- Modify
- @param adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
- @param lockkey  The key data which will be used to unlock
- @param aesKey  AES encryption key
- @param unlockFlag The flag which will be used to check the validity of the ekey
+ *  type   1- Query 2- Modify
+ *  isShow Whether or not to display a password , NO-hide  YES-show ,It is useful when the operation type is 2- Modify
+ *  adminPS  admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey  AES encryption key
+ *  unlockFlag The flag which will be used to check the validity of the ekey
  *
  *  @see onGetLockSwitchState:
  *  @see onModifyScreenShowState
@@ -662,12 +622,12 @@
 - (void)queryPassageModeWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 /**
  *  Add Or Modify Passage Mode
- *  type                 PassageModeType
- *  weekDays        if type == PassageModeTypeWeek,  week：1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
- if type != PassageModeTypeWeek,  effective value ：1~31
+ *  type                    PassageModeType
+ *  weekDays                if type == PassageModeTypeWeek,  week：1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
+                      if type != PassageModeTypeWeek,  effective value ：1~31
  *  month                   effective value ：1~12， set 0 if type != PassageModeTypeMonthAndDay
- *  startDate               millisecond ,0 means all day
- *  endDate                 millisecond ,0 means all day
+ *  startDate               The time when it becomes valid (minutes from 0 clock) ,0 means all day
+ *  endDate                 The time when it is expired (minutes from 0 clock) ,0 means all day
  *  adminPS                 ad min code, which only belongs to the admin ekey, will be used to verify the admin permission.
  *  lockkey                 The key data which will be used to unlock
  *  aesKey                  AES encryption key
@@ -745,9 +705,195 @@
  *  @see  TTError: command: errorMsg:
  */
 - (void)getLightTimeWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+*  Set Lock Config
+*  type                    TTLockConfigType
+*  isOn                    NO-off  YES-on
+*  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+*  lockkey                 The key data which will be used to unlock
+*  aesKey                  AES encryption key
+*  unlockFlag              The flag which will be used to check the validity of the ekey
+*
+*  @see  onSetLockConfigWithType:
+*  @see  TTError: command: errorMsg:
+*/
+- (void)setLockConfigWithType:(TTLockConfigType)type isOn:(BOOL)isOn adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+*  Get Lock Config
+*  type                    TTLockConfigType
+*  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+*  lockkey                 The key data which will be used to unlock
+*  aesKey                  AES encryption key
+*  unlockFlag              The flag which will be used to check the validity of the ekey
+*
+*  @see  onGetLockConfigWithType:
+*  @see  TTError: command: errorMsg:
+*/
+- (void)getLockConfigWithType:(TTLockConfigType)type adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+/**
+ *  Set Hotel Card Sector
+ *  sector  sector = @[] means all sectors can use. The sector value range is 1 - 16.
+			Such as, sector = @"1,4,16" means First, fourth and sixteenth sectors can use.
+ *  adminPS                 admin code, which only belongs to the admin ekey, will be used to verify the admin permission.
+ *  lockkey                 The key data which will be used to unlock
+ *  aesKey                  AES encryption key
+ *  unlockFlag              The flag which will be used to check the validity of the ekey
+ *
+ *   @see  onSetHotelCardSector
+ *   @see  TTError: command: errorMsg:
+*/
+- (void)setHotelCardSector:(NSString *)sector adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
 
+/**
+ *  Deadlock
+ *  lockkey  The key data which will be used to unlock
+ *  aesKey   AES encryption key
+ *  unlockFlag    The flag which will be used to check the validity of the ekey
+ *  uniqueid It is used to identify the lock record inside the lock, and the size can not exceed 4 bytes.Recommended time stamp (in seconds)
+ *  isAdmin  YSE is the administrator,otherwise it's ekey
+ *  startDate    The time when it becomes valid.  If it's a permanent key, set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  endDate    The time when it is expired. If it's a permanent key ,set the [NSDate dateWithTimeIntervalSince1970:0]
+ *  timezoneRawOffset The offset between your time zone and UTC, in millisecond. Without this value, set the -1.
+ *
+ *  @see  onDeadlockWithLockTime:
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)deadlockWithLockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag uniqueid:(NSNumber*)uniqueid isAdmin:(BOOL)isAdmin startDate:(NSDate *)startDate endDate:(NSDate *)endDate timezoneRawOffset:(long)timezoneRawOffset;
 
-#pragma mark --- 废弃
+/**
+ *  Set HotelInfo
+ *  hotelInfo          hotelInfo
+ *  buildingNumber     building Number
+ *  floorNumber        floor Number
+ *
+ *  @see  onSetHotelInfo
+ *  @see  TTError: command: errorMsg:
+ */
+- (void)setHotelDataWithHotelInfo:(NSString *)hotelInfo buildingNumber:(int)buildingNumber floorNumber:(int)floorNumber adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+
+/**
+*  Query IC Card List
+*
+*  @see  onQueryICCardList
+*  @see  TTError: command: errorMsg:
+*/
+- (void)queryICCardListWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+*  Add IC Card
+*  startDate      If it's a permanent key, set 0
+*  endDate        If it's a permanent key, set 0
+*  cyclicConfig   weekDay  1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
+              startTime The time when it becomes valid (minutes from 0 clock)
+              endTime  The time when it is expired (minutes from 0 clock)
+              such as @[@{@"weekDay":@1,@"startTime":@10,@"endTime":@100},@{@"weekDay":@2,@"startTime":@10,@"endTime":@100}]
+*  @see  onAddICWithState:ICNumber:
+*  @see  TTError: command: errorMsg:
+*/
+- (void)addICCardWithCardType:(TTCardType)cardType startDate:(long long)startDate endDate:(long long)endDate cyclicConfig:(NSArray <NSDictionary *> *)cyclicConfig adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+*  Modify IC Card
+*  startDate      If it's a permanent key, set 0
+*  endDate        If it's a permanent key, set 0
+*  cyclicConfig   weekDay  1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
+              startTime The time when it becomes valid (minutes from 0 clock)
+              endTime  The time when it is expired (minutes from 0 clock)
+              such as @[@{@"weekDay":@1,@"startTime":@10,@"endTime":@100},@{@"weekDay":@2,@"startTime":@10,@"endTime":@100}]
+*  @see  onModifyIC
+*  @see  TTError: command: errorMsg:
+*/
+- (void)modifyICCardWithCardType:(TTCardType)cardType cardNumber:(NSString *)cardNumber startDate:(long long)startDate endDate:(long long)endDate cyclicConfig:(NSArray <NSDictionary *> *)cyclicConfig adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+*  Delete IC Card
+*  @see  onDeleteIC
+*  @see  TTError: command: errorMsg:
+*/
+- (void)deleteICCardWithCardNumber:(NSString *)cardNumber adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+
+/**
+*  Clear IC Card
+*  @see  onClearIC
+*  @see  TTError: command: errorMsg:
+*/
+- (void)clearICCardWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+
+/**
+*  Recover IC Card
+*  startDate      If it's a permanent key, set 0
+*  endDate        If it's a permanent key, set 0
+*  cyclicConfig   weekDay  1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
+              startTime The time when it becomes valid (minutes from 0 clock)
+              endTime  The time when it is expired (minutes from 0 clock)
+              such as @[@{@"weekDay":@1,@"startTime":@10,@"endTime":@100},@{@"weekDay":@2,@"startTime":@10,@"endTime":@100}]
+*  @see  onAddICWithState:ICNumber:
+*  @see  TTError: command: errorMsg:
+*/
+- (void)recoverICCardWithCardType:(TTCardType)cardType cardNumber:(NSString *)cardNumber startDate:(long long)startDate endDate:(long long)endDate cyclicConfig:(NSArray <NSDictionary *> *)cyclicConfig adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+*  Query Fingerprint List
+*
+*  @see  onQueryFingerprintList
+*  @see  TTError: command: errorMsg:
+*/
+- (void)queryFingerprintListWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+*  Add Fingerprint
+*  startDate      If it's a permanent key, set 0
+*  endDate        If it's a permanent key, set 0
+*  cyclicConfig   weekDay  1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
+              startTime The time when it becomes valid (minutes from 0 clock)
+              endTime  The time when it is expired (minutes from 0 clock)
+              such as @[@{@"weekDay":@1,@"startTime":@10,@"endTime":@100},@{@"weekDay":@2,@"startTime":@10,@"endTime":@100}]
+*  @see  onAddFingerprintWithState:fingerprintNumber:currentCount:totalCount:
+*  @see  TTError: command: errorMsg:
+*/
+- (void)addFingerprintWithFingerprintType:(TTFingerprintType)fingerprintType startDate:(long long)startDate endDate:(long long)endDate cyclicConfig:(NSArray <NSDictionary *> *)cyclicConfig adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+*  Modify Fingerprint
+*  startDate      If it's a permanent key, set 0
+*  endDate        If it's a permanent key, set 0
+*  cyclicConfig   weekDay  1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
+              startTime The time when it becomes valid (minutes from 0 clock)
+              endTime  The time when it is expired (minutes from 0 clock)
+              such as @[@{@"weekDay":@1,@"startTime":@10,@"endTime":@100},@{@"weekDay":@2,@"startTime":@10,@"endTime":@100}]
+*  @see  onModifyFingerprint
+*  @see  TTError: command: errorMsg:
+*/
+- (void)modifyFingerprintWithFingerprintType:(TTFingerprintType)fingerprintType fingerprintNumber:(NSString *)fingerprintNumber startDate:(long long)startDate endDate:(long long)endDate cyclicConfig:(NSArray <NSDictionary *> *)cyclicConfig adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+/**
+*  Delete Fingerprint
+*  @see  onDeleteFingerprint
+*  @see  TTError: command: errorMsg:
+*/
+- (void)deleteFingerprintWithFingerprintNumber:(NSString *)fingerprintNumber adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+
+/**
+*  Clear Fingerprint
+*  @see  onClearFingerprint
+*  @see  TTError: command: errorMsg:
+*/
+- (void)clearFingerprintWithAdminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag;
+
+/**
+*  Recover Fingerprint
+*  startDate      If it's a permanent key, set 0
+*  endDate        If it's a permanent key, set 0
+*  cyclicConfig   weekDay  1~7,1 means Monday，2 means  Tuesday ,...,7 means Sunday
+              startTime The time when it becomes valid (minutes from 0 clock)
+              endTime  The time when it is expired (minutes from 0 clock)
+              such as @[@{@"weekDay":@1,@"startTime":@10,@"endTime":@100},@{@"weekDay":@2,@"startTime":@10,@"endTime":@100}]
+*  @see  onAddFingerprintWithState:fingerprintNumber:currentCount:totalCount:
+*  @see  TTError: command: errorMsg:
+*/
+- (void)recoverFingerprintWithFingerprintType:(TTFingerprintType)fingerprintType fingerprintNumber:(NSString *)fingerprintNumber startDate:(long long)startDate endDate:(long long)endDate cyclicConfig:(NSArray <NSDictionary *> *)cyclicConfig adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset;
+
+#pragma mark --- deprecated
 
 @property (nonatomic) BOOL parklockAction __attribute__((deprecated("SDK2.6.3")));
 @property (nonatomic,readonly) int allowUnlock __attribute__((deprecated("SDK2.6")));
@@ -764,7 +910,9 @@
 -(int)getPower;
 -(void)addAdministrator_addDic:(NSDictionary *)addDic __attribute__((deprecated("SDK2.7.7")));
 -(void)getOperateLog_aesKey:(NSString*)aesKey version:(NSString *)version unlockFlag:(int)flag timezoneRawOffset:(long)timezoneRawOffset __attribute__((deprecated("SDK2.7.7")));
-
+- (void)getDeviceCharacteristic_lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey __attribute__((deprecated("SDK2.9.1 use [TTLock getFeatureValueWithlockKey:aesKey:]")));
+- (void)operate_type:(OprationType)type adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey ICNumber:(NSString*)ICNumber startDate:(NSDate*)startDate endDate:(NSDate*)endDate unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset __attribute__((deprecated("SDK2.9.1 use [-queryICCardList -addICCard -modifyICCard -deleteICCard -clearICCard -recoverICCard]")));
+- (void)operateFingerprint_type:(OprationType)type adminPS:(NSString*)adminPS lockKey:(NSString*)lockkey aesKey:(NSString*)aesKey FingerprintNumber:(NSString*)FingerprintNumber startDate:(NSDate*)startDate endDate:(NSDate*)endDate unlockFlag:(int)unlockFlag timezoneRawOffset:(long)timezoneRawOffset __attribute__((deprecated("SDK2.9.1 use [-queryFingerprintList -addFingerprint -modifyFingerprint  -deleteFingerprint  -clearFingerprint -recoverFingerprint]")));
 @end
 
 

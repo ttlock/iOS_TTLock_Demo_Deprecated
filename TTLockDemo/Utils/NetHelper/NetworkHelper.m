@@ -335,7 +335,7 @@ static NSString *const AppDomain = @"AppDomain";
 +(void)addWirelessKeypadName:(NSString *)name
                       number:(NSString *)number
                          mac:(NSString *)mac
-                specialValue:(long long)specialValue
+  wirelessKeypadFeatureValue:(long long)wirelessKeypadFeatureValue
                       lockId:(NSNumber *)lockId
                   completion:(RequestBlock) completion{
     NSMutableDictionary *parame = [NetworkHelper initParame];
@@ -343,7 +343,7 @@ static NSString *const AppDomain = @"AppDomain";
     parame[@"wirelessKeyboardNumber"] = number;
     parame[@"wirelessKeyboardName"] = name;
     parame[@"wirelessKeyboardMac"] = mac;
-    parame[@"wirelessKeyboardSpecialValue"] = @(specialValue);
+    parame[@"wirelessKeypadFeatureValue"] = @(wirelessKeypadFeatureValue);
     [NetworkHelper apiPost:@"wirelessKeyboard/add" parameters:parame completion:^(id info, NSError *error) {
         completion(info,error);
     }];

@@ -1167,6 +1167,7 @@
 					"$(PROJECT_DIR)/TTLockSDK2.6.2",
 					"$(PROJECT_DIR)/Utils/BLE/TTLockSDK",
 				);
+				MARKETING_VERSION = 2.9.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1214,6 +1215,7 @@
 					"$(PROJECT_DIR)/TTLockSDK2.6.2",
 					"$(PROJECT_DIR)/Utils/BLE/TTLockSDK",
 				);
+				MARKETING_VERSION = 2.9.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-ObjC",

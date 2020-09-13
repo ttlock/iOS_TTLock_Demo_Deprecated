@@ -55,6 +55,7 @@
     ginfoDic[@"gatewayName"]= _gatewayNameTextField.text;
     [TTLockGateway initializeGatewayWithInfoDic:ginfoDic block:^(TTSystemInfoModel *systemInfoModel, TTGatewayStatus status) {
         
+#warning todo
         if (status == TTGatewayNotConnect || status == TTGatewayDisconnect) {
             [self notConnect];
             return ;
