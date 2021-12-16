@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name          = "TTLockDFU"
-s.version       = "2.8.9"
+s.version       = "2.9.1"
 s.summary       = "TTLockDFU SDK for iOS."
 s.homepage      = "https://github.com/ttlock/iOS_TTLock_Demo"
 s.license       = { :type => "MIT", :file => "LICENSE" }
@@ -14,8 +14,7 @@ s.library       = "z"
 s.requires_arc  = true
 s.swift_version   =  "4.0"
 s.ios.deployment_target = "9.0"
-s.dependency "ZIPFoundation", '~> 0.9.8'
-s.dependency "iOSDFULibrary", '~> 4.3.0'
-s.dependency "TTLock", '~> 2.8.9'
+s.dependency "iOSDFULibrary", '~> 4.11.0'
+s.dependency "TTLock"
 s.xcconfig     = { "OTHER_LDFLAGS" => "-ObjC" }
 end

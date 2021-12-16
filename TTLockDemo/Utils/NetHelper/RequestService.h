@@ -21,4 +21,5 @@
 
 +(id)UseKPSWithLockId:(int)lockId keyboardPwdVersion:(int)keyboardPwdVersion keyboardPwdType:(int)keyboardPwdType receiverUsername:(NSString *)receiverUsername startDate:(NSString*)startDate endDate:(NSString*)endDate;
 
++(NSString *) md5:(NSString *)inPutText;
 @end

@@ -19,7 +19,7 @@
 +(id)loginWithUsername:(NSString*)username
               password:(NSString*)password{
     
-    NSString * contentString = [NSString stringWithFormat:@"client_id=%@&client_secret=%@&grant_type=%@&username=%@&password=%@&redirect_uri=%@",TTAppkey,TTAppSecret,@"password",username,[RequestService md5:password],TTRedirectUri];
+    NSString * contentString = [NSString stringWithFormat:@"client_id=%@&client_secret=%@&username=%@&password=%@",TTAppkey,TTAppSecret,username,[RequestService md5:password]];
     
     contentString = [contentString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
     

@@ -66,10 +66,6 @@
             return;
         }
         if (status == TTGatewayWrongSSID) {
-            [self showToast:LS(@"words_Choose_WiFi")];
-            return;
-        }
-        if (status == TTGatewayWrongSSID) {
             [self showToast:LS(@"tint_Bad_WiFi_name")];
             return;
         }

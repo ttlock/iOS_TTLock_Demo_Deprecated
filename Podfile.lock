@@ -1,46 +1,29 @@
 PODS:
-  - AFNetworking (3.1.0):
-    - AFNetworking/NSURLSession (= 3.1.0)
-    - AFNetworking/Reachability (= 3.1.0)
-    - AFNetworking/Security (= 3.1.0)
-    - AFNetworking/Serialization (= 3.1.0)
-    - AFNetworking/UIKit (= 3.1.0)
-  - AFNetworking/NSURLSession (3.1.0):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.1.0)
-  - AFNetworking/Security (3.1.0)
-  - AFNetworking/Serialization (3.1.0)
-  - AFNetworking/UIKit (3.1.0):
-    - AFNetworking/NSURLSession
-  - iOSDFULibrary (4.3.0):
-    - ZIPFoundation (~> 0.9.8)
+  - iOSDFULibrary (4.11.0):
+    - ZIPFoundation (= 0.9.11)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.12)
-  - ZIPFoundation (0.9.8)
+  - ZIPFoundation (0.9.11)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.0)
-  - iOSDFULibrary (~> 4.3.0)
+  - iOSDFULibrary (= 4.11.0)
   - MJExtension
   - MJRefresh
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - AFNetworking
-    - iOSDFULibrary
+  https://github.com/CocoaPods/Specs.git:
     - MJExtension
     - MJRefresh
+  trunk:
+    - iOSDFULibrary
     - ZIPFoundation
 
 SPEC CHECKSUMS:
-  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  iOSDFULibrary: 41a38d1d2550bf2b0c81e7ccd006af3a96c8149b
+  iOSDFULibrary: ca2a4da1f1680fe4957b0a33ad605c9e10f7ae7c
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  ZIPFoundation: b1f07e4409baf1641f3fe5948b2a1c3f5c500cb1
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
 
-PODFILE CHECKSUM: 411cf587a21f87ae888df507eed7a935d13628d0
+PODFILE CHECKSUM: dbc35d0701d97dfc1a6063723296a14ef1bb35af
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.9.3

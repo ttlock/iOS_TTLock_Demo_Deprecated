@@ -20,6 +20,13 @@
 		FC351AD822A4FC9B00E38860 /* MMPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC351ACE22A4FC9B00E38860 /* MMPopupView.m */; };
 		FC351AD922A4FC9B00E38860 /* MMPopupitem.m in Sources */ = {isa = PBXBuildFile; fileRef = FC351AD122A4FC9B00E38860 /* MMPopupitem.m */; };
 		FC351ADA22A4FC9B00E38860 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FC351AD222A4FC9B00E38860 /* README.md */; };
+		FC3A961D276751B300DC5921 /* TTLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC3A961C276751B300DC5921 /* TTLock.framework */; };
+		FC3A962C2767562A00DC5921 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3A96232767562A00DC5921 /* AFURLResponseSerialization.m */; };
+		FC3A962D2767562A00DC5921 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3A96242767562A00DC5921 /* AFHTTPSessionManager.m */; };
+		FC3A962E2767562A00DC5921 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3A96262767562A00DC5921 /* AFURLSessionManager.m */; };
+		FC3A962F2767562A00DC5921 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3A96272767562A00DC5921 /* AFURLRequestSerialization.m */; };
+		FC3A96302767562A00DC5921 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3A96292767562A00DC5921 /* AFNetworkReachabilityManager.m */; };
+		FC3A96312767562A00DC5921 /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = FC3A962A2767562A00DC5921 /* AFSecurityPolicy.m */; };
 		FC6A2BE91F418349001D6B2B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC6A2AFC1F418349001D6B2B /* Images.xcassets */; };
 		FC6A2BEC1F418349001D6B2B /* AddLockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B011F418349001D6B2B /* AddLockModel.m */; };
 		FC6A2BEF1F418349001D6B2B /* LockModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FC6A2B071F418349001D6B2B /* LockModel.m */; };
@@ -94,7 +101,6 @@
 		FCA6443022A790620062463E /* KeypadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA6442E22A790610062463E /* KeypadModel.m */; };
 		FCA6444F22A8E9D00062463E /* RoundCornerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FCA6444D22A8E9D00062463E /* RoundCornerButton.m */; };
 		FCDDE71922A119560004B2A5 /* TTLockDFU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC83484B1F53C3F400728817 /* TTLockDFU.framework */; };
-		FCDDE71A22A1195A0004B2A5 /* TTLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */; };
 		FCDDE79422A12DD00004B2A5 /* PlugLockListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDDE78722A12DD00004B2A5 /* PlugLockListModel.m */; };
 		FCDDE79622A12DD00004B2A5 /* GatewayListLockVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDDE78E22A12DD00004B2A5 /* GatewayListLockVC.m */; };
 		FCDDE79722A12DD00004B2A5 /* Gateway1AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCDDE79022A12DD00004B2A5 /* Gateway1AddViewController.m */; };
@@ -128,7 +134,20 @@
 		FC351AD022A4FC9B00E38860 /* MMPopupCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPopupCategory.h; sourceTree = "<group>"; };
 		FC351AD122A4FC9B00E38860 /* MMPopupitem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPopupitem.m; sourceTree = "<group>"; };
 		FC351AD222A4FC9B00E38860 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TTLock.framework; sourceTree = "<group>"; };
+		FC3A961C276751B300DC5921 /* TTLock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TTLock.framework; sourceTree = "<group>"; };
+		FC3A961F2767562A00DC5921 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFSecurityPolicy.h; sourceTree = "<group>"; };
+		FC3A96202767562A00DC5921 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		FC3A96212767562A00DC5921 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
+		FC3A96222767562A00DC5921 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		FC3A96232767562A00DC5921 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		FC3A96242767562A00DC5921 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		FC3A96252767562A00DC5921 /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		FC3A96262767562A00DC5921 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		FC3A96272767562A00DC5921 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		FC3A96282767562A00DC5921 /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		FC3A96292767562A00DC5921 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		FC3A962A2767562A00DC5921 /* AFSecurityPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFSecurityPolicy.m; sourceTree = "<group>"; };
+		FC3A962B2767562A00DC5921 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		FC6A2AFC1F418349001D6B2B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FC6A2B001F418349001D6B2B /* AddLockModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddLockModel.h; sourceTree = "<group>"; };
 		FC6A2B011F418349001D6B2B /* AddLockModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddLockModel.m; sourceTree = "<group>"; };
@@ -297,7 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2299A8FB1A075DC700291A38 /* Foundation.framework in Frameworks */,
-				FCDDE71A22A1195A0004B2A5 /* TTLock.framework in Frameworks */,
+				FC3A961D276751B300DC5921 /* TTLock.framework in Frameworks */,
 				2299A8F91A075D8100291A38 /* UIKit.framework in Frameworks */,
 				FCDDE71922A119560004B2A5 /* TTLockDFU.framework in Frameworks */,
 				228B8BB71A0085FF0060244F /* CoreBluetooth.framework in Frameworks */,
@@ -484,11 +503,31 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		FC3A961E2767562A00DC5921 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				FC3A961F2767562A00DC5921 /* AFSecurityPolicy.h */,
+				FC3A96202767562A00DC5921 /* AFNetworkReachabilityManager.h */,
+				FC3A96212767562A00DC5921 /* AFURLSessionManager.h */,
+				FC3A96222767562A00DC5921 /* AFURLRequestSerialization.h */,
+				FC3A96232767562A00DC5921 /* AFURLResponseSerialization.m */,
+				FC3A96242767562A00DC5921 /* AFHTTPSessionManager.m */,
+				FC3A96252767562A00DC5921 /* AFURLResponseSerialization.h */,
+				FC3A96262767562A00DC5921 /* AFURLSessionManager.m */,
+				FC3A96272767562A00DC5921 /* AFURLRequestSerialization.m */,
+				FC3A96282767562A00DC5921 /* AFNetworking.h */,
+				FC3A96292767562A00DC5921 /* AFNetworkReachabilityManager.m */,
+				FC3A962A2767562A00DC5921 /* AFSecurityPolicy.m */,
+				FC3A962B2767562A00DC5921 /* AFHTTPSessionManager.h */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
 		FC61C2EC1F43EB4E009D9B25 /* TTLockFrameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FC3A961C276751B300DC5921 /* TTLock.framework */,
 				FC83484B1F53C3F400728817 /* TTLockDFU.framework */,
-				FC61C2EE1F43EB4E009D9B25 /* TTLock.framework */,
 			);
 			path = TTLockFrameworks;
 			sourceTree = "<group>";
@@ -580,6 +619,7 @@
 		FC6A2B8E1F418349001D6B2B /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				FC3A961E2767562A00DC5921 /* AFNetworking */,
 				FC872A141FA7098000DE2A4B /* MBProgressHUD */,
 				FC6A2B8F1F418349001D6B2B /* KMDatePicker */,
 				FC6A2B981F418349001D6B2B /* Masonry */,
@@ -902,7 +942,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TTLockDemo/Pods-TTLockDemo-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/MJExtension/MJExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/MJRefresh/MJRefresh.framework",
 				"${BUILT_PRODUCTS_DIR}/ZIPFoundation/ZIPFoundation.framework",
@@ -910,7 +949,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJExtension.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MJRefresh.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZIPFoundation.framework",
@@ -938,10 +976,13 @@
 				FC6A2C101F418349001D6B2B /* SendKpsViewController.m in Sources */,
 				FC872A1D1FA70B1800DE2A4B /* SSToastHelper.m in Sources */,
 				FC6A2C0C1F418349001D6B2B /* TTUpgradeViewController.m in Sources */,
+				FC3A96302767562A00DC5921 /* AFNetworkReachabilityManager.m in Sources */,
 				FC6A2C3B1F418349001D6B2B /* MASViewAttribute.m in Sources */,
 				FC6A2C3F1F418349001D6B2B /* View+MASAdditions.m in Sources */,
+				FC3A962F2767562A00DC5921 /* AFURLRequestSerialization.m in Sources */,
 				FC6A2C0D1F418349001D6B2B /* FirmwareUpdateModel.m in Sources */,
 				FCA6442D22A78F550062463E /* KeypadAddGuide2ViewController.m in Sources */,
+				FC3A962C2767562A00DC5921 /* AFURLResponseSerialization.m in Sources */,
 				FC6A2C0E1F418349001D6B2B /* ICAndFingerprintManagerVC.m in Sources */,
 				FC6A2BFB1F418349001D6B2B /* CopyableLabel.m in Sources */,
 				FC6A2C3D1F418349001D6B2B /* NSArray+MASAdditions.m in Sources */,
@@ -951,6 +992,7 @@
 				FC6A2C511F41834A001D6B2B /* SCPopView.m in Sources */,
 				FC351AD422A4FC9B00E38860 /* MMAlertView.m in Sources */,
 				FC6A2C191F418349001D6B2B /* KeyTableViewController.m in Sources */,
+				FC3A96312767562A00DC5921 /* AFSecurityPolicy.m in Sources */,
 				FCA6444F22A8E9D00062463E /* RoundCornerButton.m in Sources */,
 				FCA6442922A78F550062463E /* KeypadAddViewController.m in Sources */,
 				FC6A2C011F418349001D6B2B /* RequestService.m in Sources */,
@@ -974,6 +1016,7 @@
 				FC6A2C1F1F418349001D6B2B /* Tab0ViewController.m in Sources */,
 				FC6A2C331F418349001D6B2B /* KMDatePicker.m in Sources */,
 				13A06A7E1D792A2D002E51C2 /* AppDelegate.m in Sources */,
+				FC3A962E2767562A00DC5921 /* AFURLSessionManager.m in Sources */,
 				FC6A2C001F418349001D6B2B /* Reachability.m in Sources */,
 				FC6A2C421F41834A001D6B2B /* MMChoiceOneView.m in Sources */,
 				FC6A2C371F418349001D6B2B /* MASCompositeConstraint.m in Sources */,
@@ -1002,6 +1045,7 @@
 				FC6A2BFF1F418349001D6B2B /* NetworkHelper.m in Sources */,
 				FC6A2C411F41834A001D6B2B /* README.md in Sources */,
 				FC6A2C351F418349001D6B2B /* NSDate+CalculateDay.m in Sources */,
+				FC3A962D2767562A00DC5921 /* AFHTTPSessionManager.m in Sources */,
 				FCA53A0C22A65B0000840CBD /* ParkKeyDetailVC.m in Sources */,
 				FC351AD822A4FC9B00E38860 /* MMPopupView.m in Sources */,
 				FC351AD622A4FC9B00E38860 /* MMPopupCategory.m in Sources */,
@@ -1145,10 +1189,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 74L56HWE77;
 				ENABLE_BITCODE = YES;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/TTLockDemo/TTLockFrameworks",
 					"$(PROJECT_DIR)/TTLockFrameworks",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -1156,17 +1200,7 @@
 				INFOPLIST_FILE = "TTLockDemo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/TTLockSDK",
-					"$(PROJECT_DIR)/TTLockSDK2.4.1",
-					"$(PROJECT_DIR)/TTLockSDK2.5",
-					"$(PROJECT_DIR)/TTLockSDK2.6",
-					"$(PROJECT_DIR)/wifiSDK",
-					"$(PROJECT_DIR)/TTLockGatewaySDK1.0",
-					"$(PROJECT_DIR)/TTLockSDK2.6.2",
-					"$(PROJECT_DIR)/Utils/BLE/TTLockSDK",
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
 				MARKETING_VERSION = 2.9.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1193,10 +1227,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 74L56HWE77;
 				ENABLE_BITCODE = YES;
+				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/TTLockDemo/TTLockFrameworks",
 					"$(PROJECT_DIR)/TTLockFrameworks",
 				);
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
@@ -1204,17 +1238,7 @@
 				INFOPLIST_FILE = "TTLockDemo/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/TTLockSDK",
-					"$(PROJECT_DIR)/TTLockSDK2.4.1",
-					"$(PROJECT_DIR)/TTLockSDK2.5",
-					"$(PROJECT_DIR)/TTLockSDK2.6",
-					"$(PROJECT_DIR)/wifiSDK",
-					"$(PROJECT_DIR)/TTLockGatewaySDK1.0",
-					"$(PROJECT_DIR)/TTLockSDK2.6.2",
-					"$(PROJECT_DIR)/Utils/BLE/TTLockSDK",
-				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
 				MARKETING_VERSION = 2.9.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
